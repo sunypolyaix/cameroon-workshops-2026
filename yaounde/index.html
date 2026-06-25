@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools for Research — Affiche Atelier (Université de Yaoundé I)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .poster {
+      font-family: 'Inter', sans-serif;
+      background: #085041;
+      color: #E1F5EE;
+      padding: 48px 52px 52px;
+      border-radius: 8px;
+      width: 680px;
+      box-sizing: border-box;
+    }
+    .eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #5DCAA5; font-weight: 500; margin-bottom: 28px;
+    }
+    .eyebrow-line { flex: 1; height: 0.5px; background: #1D9E75; }
+    .headline-en {
+      font-size: 44px; font-weight: 900; line-height: 1.05;
+      color: #ffffff; margin: 0 0 6px; letter-spacing: -0.5px;
+    }
+    .headline-fr {
+      font-size: 26px; font-weight: 500; line-height: 1.2;
+      color: #9FE1CB; margin: 0 0 10px;
+    }
+    .subhead {
+      font-size: 14px; font-weight: 400; line-height: 1.5;
+      color: #9FE1CB; margin: 0 0 36px; max-width: 520px;
+    }
+    .circuit-rule { display: flex; align-items: center; margin: 0 0 36px; }
+    .circuit-rule svg { width: 100%; height: 18px; }
+    .info-block {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-bottom: 36px;
+    }
+    .info-card {
+      background: rgba(29, 158, 117, 0.25);
+      border: 0.5px solid #1D9E75;
+      border-radius: 6px;
+      padding: 18px 20px;
+    }
+    .info-card .label {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #5DCAA5; margin-bottom: 10px; font-weight: 500;
+    }
+    .sessions { display: flex; flex-direction: column; gap: 7px; }
+    .session-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .session-date { font-size: 15px; font-weight: 700; color: #ffffff; }
+    .session-date.first { color: #FAC775; }
+    .session-num { font-size: 10px; color: #5DCAA5; letter-spacing: 0.06em; }
+    .time-line {
+      font-size: 12px; color: #9FE1CB; margin-top: 12px; padding-top: 12px;
+      border-top: 0.5px solid #1D9E75; line-height: 1.5;
+    }
+    .info-card .value { font-size: 15px; font-weight: 700; color: #ffffff; line-height: 1.2; }
+    .meet-link {
+      display: inline-block; margin-top: 10px;
+      font-size: 13px; font-weight: 500;
+      color: #FAC775; word-break: break-all; line-height: 1.4;
+      text-decoration: none;
+    }
+    .meet-link:hover { text-decoration: underline; }
+    .dial-info { font-size: 11px; color: #5DCAA5; margin-top: 8px; line-height: 1.5; }
+    .section-title {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #5DCAA5; margin: 0 0 14px; font-weight: 500;
+    }
+    .topics {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 36px;
+    }
+    .topic {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: #E1F5EE; line-height: 1.4;
+    }
+    .topic-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #EF9F27; flex-shrink: 0; margin-top: 5px;
+    }
+    .topic-fr { font-size: 11px; color: #9FE1CB; margin-top: 2px; }
+    .tools-row { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; align-items: center; }
+    .tool-badge {
+      padding: 7px 16px; border-radius: 4px;
+      font-size: 12px; font-weight: 500;
+      background: rgba(239, 159, 39, 0.15);
+      border: 0.5px solid #EF9F27; color: #FAC775;
+      letter-spacing: 0.02em;
+    }
+    .free-badge {
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 0.5px solid #1D9E75; border-radius: 20px;
+      padding: 4px 12px; color: #5DCAA5;
+    }
+    .divider { height: 0.5px; background: #1D9E75; margin-bottom: 28px; }
+    .who-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-bottom: 36px;
+    }
+    .who-block .who-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+      color: #5DCAA5; margin-bottom: 8px; font-weight: 500;
+    }
+    .who-block .who-text { font-size: 13px; color: #E1F5EE; line-height: 1.6; }
+    .cta-block {
+      background: #EF9F27; border-radius: 6px;
+      padding: 20px 24px;
+    }
+    .cta-top {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; margin-bottom: 12px;
+    }
+    .cta-main { font-size: 15px; font-weight: 700; color: #412402; line-height: 1.3; }
+    .cta-sub { font-size: 12px; color: #633806; margin-top: 3px; }
+    .cta-url {
+      font-size: 12px; font-weight: 500; color: #412402;
+      border: 1.5px solid #412402; border-radius: 4px;
+      padding: 8px 14px; white-space: nowrap; text-decoration: none;
+      flex-shrink: 0;
+    }
+    .cta-url:hover { background: rgba(65,36,2,0.1); }
+    .cta-divider { height: 0.5px; background: rgba(65,36,2,0.25); margin-bottom: 10px; }
+    .cta-register {
+      font-size: 11px; color: #633806; line-height: 1.5;
+    }
+    .cta-register a {
+      color: #412402; font-weight: 600; word-break: break-all;
+      text-decoration: none;
+    }
+    .cta-register a:hover { text-decoration: underline; }
+    .footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 24px;
+    }
+    .footer-logos { font-size: 11px; color: #5DCAA5; letter-spacing: 0.05em; }
+    .footer-logos span { color: #9FE1CB; font-weight: 500; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .poster { border-radius: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="poster">
+
+  <div class="eyebrow">
+    <span>Université de Yaoundé I</span>
+    <div class="eyebrow-line"></div>
+    <span>Capacity-Building Series</span>
+    <div class="eyebrow-line"></div>
+    <span>2026</span>
+  </div>
+
+  <div class="headline-en">AI Tools for<br>Research</div>
+  <div class="headline-fr">Outils d'IA pour la Recherche</div>
+  <div class="subhead">A four-session workshop series for graduate students and faculty in science and engineering · Série de quatre ateliers pour doctorants et enseignants-chercheurs en sciences et ingénierie</div>
+
+  <div class="circuit-rule">
+    <svg viewBox="0 0 620 18" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="9" x2="60" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <circle cx="64" cy="9" r="3" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+      <line x1="67" y1="9" x2="120" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <rect x="120" y="5" width="18" height="8" rx="1" fill="none" stroke="#EF9F27" stroke-width="0.5"/>
+      <line x1="138" y1="9" x2="200" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <circle cx="204" cy="9" r="3" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+      <line x1="207" y1="9" x2="260" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <rect x="260" y="5" width="18" height="8" rx="1" fill="none" stroke="#EF9F27" stroke-width="0.5"/>
+      <line x1="278" y1="9" x2="340" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <circle cx="344" cy="9" r="3" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+      <line x1="347" y1="9" x2="400" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <rect x="400" y="5" width="18" height="8" rx="1" fill="none" stroke="#EF9F27" stroke-width="0.5"/>
+      <line x1="418" y1="9" x2="480" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+      <circle cx="484" cy="9" r="3" fill="none" stroke="#1D9E75" stroke-width="0.5"/>
+      <line x1="487" y1="9" x2="620" y2="9" stroke="#1D9E75" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <div class="info-block">
+    <div class="info-card">
+      <div class="label">Four Wednesdays · Quatre mercredis · 16h00</div>
+      <div class="sessions">
+        <div class="session-row">
+          <span class="session-date first">July 1</span>
+          <span class="session-num">Session 1</span>
+        </div>
+        <div class="session-row">
+          <span class="session-date">July 8</span>
+          <span class="session-num">Session 2</span>
+        </div>
+        <div class="session-row">
+          <span class="session-date">July 15</span>
+          <span class="session-num">Session 3</span>
+        </div>
+        <div class="session-row">
+          <span class="session-date">July 22</span>
+          <span class="session-num">Session 4</span>
+        </div>
+      </div>
+      <div class="time-line">Cameroon time · WAT (UTC+1)<br>Heure du Cameroun</div>
+    </div>
+    <div class="info-card">
+      <div class="label">Join · Rejoindre via Google Meet</div>
+      <div class="value">Online · En ligne</div>
+      <a class="meet-link" href="https://meet.google.com/gkt-wuyz-atq">meet.google.com/gkt-wuyz-atq</a>
+      <div class="dial-info">
+        Or dial (US): +1 219-208-4402<br>
+        PIN: 384 651 471#
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">What we'll cover · Thèmes abordés</div>
+  <div class="topics">
+    <div class="topic"><div class="topic-dot"></div><div><div>Literature review &amp; source analysis</div><div class="topic-fr">Revue de littérature</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Data analysis with AI</div><div class="topic-fr">Analyse de données par IA</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Research methodology</div><div class="topic-fr">Méthodologie de recherche</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Academic writing quality</div><div class="topic-fr">Rédaction scientifique</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Live demos with real student projects</div><div class="topic-fr">Démonstrations en direct</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>AI-assisted coding for research</div><div class="topic-fr">Codage assisté par IA</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Reference management &amp; version control</div><div class="topic-fr">Gestion des références</div></div></div>
+    <div class="topic"><div class="topic-dot"></div><div><div>Free tools, low-bandwidth friendly</div><div class="topic-fr">Outils gratuits, faible débit</div></div></div>
+  </div>
+
+  <div class="section-title">Tools · Outils</div>
+  <div class="tools-row">
+    <div class="tool-badge">NotebookLM</div>
+    <div class="tool-badge">Claude Projects</div>
+    <div class="tool-badge">Zotero</div>
+    <div class="tool-badge">GitHub</div>
+    <div class="free-badge">Free · Gratuit</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="who-grid">
+    <div class="who-block">
+      <div class="who-label">For whom · Pour qui</div>
+      <div class="who-text">Graduate students and faculty in science and engineering at the Université de Yaoundé I<br><span style="color:#9FE1CB">Étudiants en master/doctorat et enseignants-chercheurs</span></div>
+    </div>
+    <div class="who-block">
+      <div class="who-label">Format</div>
+      <div class="who-text">Interactive sessions with live use cases from real student projects<br><span style="color:#9FE1CB">Ateliers interactifs avec cas réels de recherche étudiante</span></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-top">
+      <div>
+        <div class="cta-main">Register &amp; learn more · Inscription / Informations</div>
+        <div class="cta-sub">Visit our website · Visitez notre site web</div>
+      </div>
+      <a class="cta-url" href="https://sunypolyaix.github.io">sunypolyaix.github.io</a>
+    </div>
+    <div class="cta-divider"></div>
+    <div class="cta-register">
+      Register now · Inscrivez-vous maintenant: &nbsp;
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScvczbjOefell4GrF4rW_QolZZ4A951K9H_ade0H1SEy__cYQ/viewform?usp=sharing&ouid=118298096415990599037">
+        Registration Form · Formulaire d'inscription
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logos">
+      <span>SUNY Polytechnic Institute</span> · <span>Université de Yaoundé I</span> · <span>University of Buea</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
