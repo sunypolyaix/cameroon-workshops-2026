@@ -1,21 +1,26 @@
 ---
 layout: default
-title: "AI Tools for Research — University of Yaoundé I"
+title: "AI Tools for Research — Université de Yaoundé I"
 description: >
   Four-session capacity-building workshop for graduate students and faculty
-  at the University of Yaoundé I, July 2026.
+  at the Université de Yaoundé I, July 2026.
 author: Steven M. Schneider
 date: 2026-06-25
 workshop: yaounde
 ---
 
-# AI Tools for Research — University of Yaoundé I
+# AI Tools for Research — Université de Yaoundé I
 
 A four-session hands-on workshop for graduate students and faculty in science and engineering.
 
-**Dates:** July 1 – July 22, 2026 · Tuesdays at 4:00 PM WAT (UTC+1)  
-**Format:** Interactive online sessions  
+**Dates:** July 1 – July 22, 2026 · Wednesdays at 4:00 PM WAT (UTC+1)  
+**Format:** Interactive online sessions via Google Meet  
 **Cost:** Free
+
+**Join:** [meet.google.com/gkt-wuyz-atq](https://meet.google.com/gkt-wuyz-atq)  
+Dial-in: +1 219-208-4402, PIN 384 651 471#
+
+**Register:** [Registration form](https://docs.google.com/forms/d/e/1FAIpQLScvczbjOefell4GrF4rW_QolZZ4A951K9H_ade0H1SEy__cYQ/viewform?usp=sharing&ouid=118298096415990599037)
 
 ## Sessions
 
@@ -35,12 +40,12 @@ AI-assisted coding (Python, R, MATLAB) and reference management with Zotero and 
 
 All tools are free and web-based.
 
-| Tool | Purpose |
-|------|---------|
-| NotebookLM | Interactive research source analysis |
-| Claude Projects | AI-assisted research workflows |
-| Zotero | Citation and bibliography management |
-| GitHub | Version control for research code and data |
+| Tool            | Purpose                                    |
+| --------------- | ------------------------------------------ |
+| NotebookLM      | Interactive research source analysis       |
+| Claude Projects | AI-assisted research workflows             |
+| Zotero          | Citation and bibliography management       |
+| GitHub          | Version control for research code and data |
 
 ## Before You Join
 
