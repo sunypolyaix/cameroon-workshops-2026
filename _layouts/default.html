@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 720px; margin: 4rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+    h1 { font-size: 1.4rem; font-weight: normal; border-bottom: 1px solid #ccc; padding-bottom: .5rem; }
+    h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; color: #666; margin-top: 2.5rem; }
+    h3 { font-size: 1rem; font-weight: bold; margin-bottom: .25rem; }
+    a { color: #1a4a8a; }
+    p { line-height: 1.6; }
+    .card { margin: 1.2rem 0; }
+    .card a { font-size: 1.05rem; }
+    .card .desc { margin: .25rem 0 .15rem; font-size: .92rem; color: #333; }
+    .card .meta { font-size: .8rem; color: #888; }
+    nav { font-size: .85rem; margin-bottom: 2rem; color: #888; }
+    nav a { color: #1a4a8a; margin-right: 1rem; }
+    footer { margin-top: 4rem; font-size: .8rem; color: #aaa; border-top: 1px solid #eee; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="{{ site.baseurl }}/">Home</a>
+  <a href="{{ site.baseurl }}/buea/">Buea</a>
+  <a href="{{ site.baseurl }}/yaounde/">Yaoundé I</a>
+  <a href="{{ site.baseurl }}/shared/">Resources</a>
+</nav>
+
+{{ content }}
+
+<footer>
+  <a href="https://sunypolyaix.github.io/">AIX Center</a> ·
+  <a href="https://github.com/sunypolyaix/cameroon-workshops-2026">GitHub</a> ·
+  SUNY Polytechnic Institute · Utica, NY
+</footer>
+
+</body>
+</html>
