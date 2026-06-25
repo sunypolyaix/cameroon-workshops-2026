@@ -1,0 +1,1 @@
+Two parallel workshop series bring AI research tools to graduate students and faculty at the University of Buea and Université de Yaoundé I. Four sessions each, fully online, covering the complete research workflow: literature review, data analysis, academic writing, and coding. All tools are free and chosen for low-bandwidth environments.
