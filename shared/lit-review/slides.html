@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI First: LLM Literature Review Workflow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:            #FFFFFF;
+      --surface:       #F6F8FA;
+      --surface-2:     #EAEEF2;
+      --border:        #D0D7DE;
+      --border-muted:  #EAEEF2;
+      --text-primary:  #0D1117;
+      --text-secondary:#24292F;
+      --text-muted:    #6E7781;
+      --blue:          #0969DA;
+      --blue-dim:      rgba(9,105,218,0.07);
+      --blue-mid:      rgba(9,105,218,0.18);
+      --amber:         #9A6700;
+      --amber-dim:     rgba(154,103,0,0.07);
+      --amber-mid:     rgba(154,103,0,0.18);
+      --green:         #1A7F37;
+      --green-dim:     rgba(26,127,55,0.07);
+      --mono:         'JetBrains Mono', monospace;
+      --display:      'Space Grotesk', sans-serif;
+      --serif:        'Source Serif 4', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--display);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ──────────────────────────────────────────────── */
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 36px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      background: var(--bg);
+    }
+    .site-header .title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+    .site-header .title span { color: var(--blue); }
+    .site-header .meta {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* ─── TAB NAV ─────────────────────────────────────────────── */
+    .tab-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 36px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: var(--bg);
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 13px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text-secondary); }
+    .tab-btn.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+    .tab-btn .tab-num {
+      color: var(--border);
+      margin-right: 6px;
+    }
+    .tab-btn.active .tab-num { color: var(--blue-mid); }
+
+    /* ─── CONTENT WRAPPER ─────────────────────────────────────── */
+    .tab-pane {
+      display: none;
+      padding: 48px 36px 80px;
+      max-width: 840px;
+      margin: 0 auto;
+      animation: paneFade 0.18s ease;
+    }
+    .tab-pane.active { display: block; }
+
+    @keyframes paneFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── TYPOGRAPHY ──────────────────────────────────────────── */
+    .eyebrow {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    p {
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 1.78;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    p strong {
+      font-family: var(--display);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    ul, ol { padding-left: 0; list-style: none; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 36px 0;
+    }
+
+    /* ─── QUOTE BLOCK ─────────────────────────────────────────── */
+    .quote-block {
+      border-left: 3px solid var(--amber);
+      background: var(--amber-dim);
+      padding: 22px 28px;
+      border-radius: 0 8px 8px 0;
+      margin: 28px 0;
+    }
+    .quote-block p {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      line-height: 1.68;
+      margin: 0;
+    }
+    .quote-source {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    /* ─── CHIPS ───────────────────────────────────────────────── */
+    .chip {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 100px;
+    }
+    .chip-machine {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border: 1px solid rgba(9,105,218,0.22);
+    }
+    .chip-human {
+      background: var(--amber-dim);
+      color: var(--amber);
+      border: 1px solid rgba(154,103,0,0.25);
+    }
+    .chip-verified {
+      background: var(--green-dim);
+      color: var(--green);
+      border: 1px solid rgba(26,127,55,0.22);
+    }
+
+    /* ─── CARDS ───────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    /* ─── STAT ROW ────────────────────────────────────────────── */
+    .stat-row {
+      display: flex;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    .stat-box {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .stat-box .stat-num {
+      font-family: var(--mono);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-box .stat-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .stat-box.blue  { border-color: rgba(9,105,218,0.3);   background: var(--blue-dim); }
+    .stat-box.blue  .stat-num { color: var(--blue); }
+    .stat-box.amber { border-color: rgba(154,103,0,0.3);   background: var(--amber-dim); }
+    .stat-box.amber .stat-num { color: var(--amber); }
+    .stat-box.green { border-color: rgba(26,127,55,0.3);   background: var(--green-dim); }
+    .stat-box.green .stat-num { color: var(--green); }
+
+    /* ─── COMPARISON TABLE ────────────────────────────────────── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 24px 0;
+    }
+    .compare-table th {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      text-align: left;
+      background: var(--surface);
+    }
+    .compare-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border-muted);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .compare-table td:first-child {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .compare-table td.claude-val { color: var(--blue); font-family: var(--display); font-weight: 500; }
+    .compare-table td.gpt-val   { color: var(--amber); font-family: var(--display); font-weight: 500; }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+
+    /* ─── UTILITY LIST ────────────────────────────────────────── */
+    .utility-list { margin: 24px 0; }
+    .utility-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .utility-item:last-child { border-bottom: none; }
+    .utility-item .ui-label {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* ─── TOOLKIT CARDS ───────────────────────────────────────── */
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .tool-icon {
+      font-size: 1.2rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .tool-body h3 { font-size: 0.95rem; margin-bottom: 4px; }
+    .tool-body p  { font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.55; }
+    .tool-body .tool-url {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ─── WARNING / CALLOUT BOX ───────────────────────────────── */
+    .warning-box {
+      background: var(--amber-dim);
+      border: 1px solid rgba(154,103,0,0.28);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warning-box .warn-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .warning-box p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .warning-box p strong { color: var(--amber); }
+
+    /* ─── WORKFLOW STEPPER ────────────────────────────────────── */
+    .stepper { margin: 32px 0; }
+
+    .step-item {
+      display: flex;
+      gap: 20px;
+    }
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 40px;
+    }
+    .step-node {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .step-connector {
+      width: 2px;
+      flex: 1;
+      min-height: 20px;
+      background: var(--border);
+    }
+    .step-body {
+      flex: 1;
+      padding-bottom: 32px;
+    }
+    .step-item:last-child .step-body    { padding-bottom: 0; }
+    .step-item:last-child .step-connector { display: none; }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .step-time {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .step-demo {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-dim);
+      border: 1px solid rgba(26,127,55,0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .step-bullets { margin: 10px 0; }
+    .step-bullets li {
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding: 5px 0 5px 16px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .step-bullets li::before {
+      content: '—';
+      font-family: var(--mono);
+      color: var(--text-muted);
+      position: absolute;
+      left: 0;
+      font-size: 0.75rem;
+      top: 7px;
+    }
+
+    /* active step highlight */
+    .step-item.active .step-node {
+      background: var(--blue-dim);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .step-item.active .step-title { color: var(--blue); }
+    .step-item.active .step-connector { background: rgba(9,105,218,0.25); }
+
+    /* ─── CLOSING ─────────────────────────────────────────────── */
+    .warrant-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--amber);
+      border-radius: 0 0 8px 8px;
+      padding: 28px 32px;
+      margin: 28px 0;
+    }
+    .warrant-box .wt {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+    .warrant-box .hl-machine { color: var(--blue); }
+    .warrant-box .hl-human   { color: var(--amber); }
+
+    .materials-list { margin: 20px 0; }
+    .materials-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .materials-list li:last-child { border-bottom: none; }
+    .materials-list .mfile {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--blue);
+      background: var(--blue-dim);
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* ─── OPENING HERO GRID ───────────────────────────────────── */
+    .opening-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .hero-card .hc-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .hero-card .hc-text {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .hero-card .hc-sub {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .tab-pane    { padding: 32px 20px 60px; }
+      .site-header { padding: 14px 20px; }
+      .tab-nav     { padding: 0 20px; }
+      h2           { font-size: 1.5rem; }
+      .card-grid   { grid-template-columns: 1fr; }
+      .stat-row    { flex-wrap: wrap; }
+      .opening-hero { grid-template-columns: 1fr; }
+      .compare-table td, .compare-table th { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="title"><span>AI First</span> — LLM Literature Review Workflow</div>
+    <span class="meta">SUNY Poly AIX Workshop</span>
+    <span class="meta">~8 min demo</span>
+  </header>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="opening"><span class="tab-num">01</span>Opening</button>
+    <button class="tab-btn" data-tab="models"><span class="tab-num">02</span>Models</button>
+    <button class="tab-btn" data-tab="utility"><span class="tab-num">03</span>Utility</button>
+    <button class="tab-btn" data-tab="toolkit"><span class="tab-num">04</span>Toolkit</button>
+    <button class="tab-btn" data-tab="workflow"><span class="tab-num">05</span>Workflow</button>
+    <button class="tab-btn" data-tab="closing"><span class="tab-num">06</span>Closing</button>
+  </nav>
+
+  <!-- ═══ TAB 1: OPENING ═══════════════════════════════════════ -->
+  <section class="tab-pane active" id="pane-opening">
+    <span class="eyebrow">01 / Opening</span>
+    <h2>A Student's Research Topic</h2>
+
+    <div class="quote-block">
+      <p>"Interconnection of the Northern Interconnected Grid (NIG) [Cameroon] with the Chad National Power Grid — determining the busbars that will yield minimal power losses, adequate voltage levels, and frequency within acceptable limits, leveraging artificial intelligence tools to propose innovative and sustainable solutions."</p>
+      <span class="quote-source">Real topic. Real student. Real problem.</span>
+    </div>
+
+    <p>The first thing everyone tells you to do is a literature review.</p>
+    <p>I'm an <strong>AI First</strong> person. So my first step was: ask AI.</p>
+
+    <div class="divider"></div>
+
+    <div class="opening-hero">
+      <div class="hero-card">
+        <span class="hc-label">Technical core</span>
+        <div class="hc-text">Busbar selection for minimal losses + stable frequency</div>
+        <div class="hc-sub">225 kV interconnection, Cameroon NIG ↔ Chad National Grid</div>
+      </div>
+      <div class="hero-card">
+        <span class="hc-label">Analytical frame</span>
+        <div class="hc-text">AI tools for power systems optimization</div>
+        <div class="hc-sub">OPF, load-frequency control, voltage stability, GNNs</div>
+      </div>
+      <div class="hero-card">
+        <span class="hc-label">The assignment</span>
+        <div class="hc-text">Write a literature review to begin your study</div>
+        <div class="hc-sub">Standard first step in any graduate research project</div>
+      </div>
+      <div class="hero-card">
+        <span class="hc-label">My first move</span>
+        <div class="hc-text">Ask two LLMs the same 1-shot prompt</div>
+        <div class="hc-sub">What came back is the next tab</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB 2: MODELS ════════════════════════════════════════ -->
+  <section class="tab-pane" id="pane-models">
+    <span class="eyebrow">02 / What I Got Back</span>
+    <h2>Same Prompt. Different Universe.</h2>
+
+    <p>I asked two models — <strong>Claude Sonnet 4.6</strong> and <strong>ChatGPT o1</strong> — the exact same prompt. Here's what came back.</p>
+
+    <div class="stat-row">
+      <div class="stat-box blue">
+        <span class="stat-num">25</span>
+        <span class="stat-label">Claude refs</span>
+      </div>
+      <div class="stat-box amber">
+        <span class="stat-num">20</span>
+        <span class="stat-label">ChatGPT refs</span>
+      </div>
+      <div class="stat-box green">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Shared refs</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">~7%</span>
+        <span class="stat-label">Overlap rate</span>
+      </div>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Claude Sonnet 4.6</th>
+          <th>ChatGPT o1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Artifact type</td>
+          <td class="claude-val">Draft literature review</td>
+          <td class="gpt-val">Planning framework</td>
+        </tr>
+        <tr>
+          <td>Format</td>
+          <td class="claude-val">Continuous prose</td>
+          <td class="gpt-val">Scaffolded outline</td>
+        </tr>
+        <tr>
+          <td>Words</td>
+          <td class="claude-val">4,224</td>
+          <td class="gpt-val">3,602</td>
+        </tr>
+        <tr>
+          <td>Bullet lines</td>
+          <td class="claude-val">0</td>
+          <td class="gpt-val">108</td>
+        </tr>
+        <tr>
+          <td>Table rows</td>
+          <td class="claude-val">0</td>
+          <td class="gpt-val">41</td>
+        </tr>
+        <tr>
+          <td>Emphasis</td>
+          <td class="claude-val">AI/ML tools, CAPP policy, regional framing</td>
+          <td class="gpt-val">World Bank docs, OPF algorithms, Ethiopian comparators</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <h3>Three papers both models cited</h3>
+    <div class="card" style="margin-top:14px;">
+      <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text-muted);margin-bottom:12px;letter-spacing:0.04em;text-transform:uppercase;">DOI-verified matches</div>
+      <ul class="step-bullets">
+        <li><em>Investigation of the Stability of the Cameroon NIG: A Transient Analysis</em> — 10.1155/jcse/2524618</li>
+        <li><em>Optimizing Power Flow in Northern Cameroon's Interconnected Grid</em> — 10.4236/jpee.2024.129005</li>
+        <li><em>Leveraging Power Grid Topology in ML-Assisted Optimal Power Flow</em> — title match</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="warning-box">
+      <span class="warn-label">Key insight</span>
+      <p>The non-overlap isn't hallucination — it's <strong>corpus selection bias</strong>. Each model drew from a different slice of parametric memory, filtered through its interpretation of the task. Both are useful. <strong>Neither is a literature review.</strong></p>
+    </div>
+
+    <p>What you get from a single prompt is a starting point, not a destination. LLMs are fabulous at this process — but it's a process, not a prompt.</p>
+  </section>
+
+  <!-- ═══ TAB 3: UTILITY ═══════════════════════════════════════ -->
+  <section class="tab-pane" id="pane-utility">
+    <span class="eyebrow">03 / LLM Utility</span>
+    <h2>What LLMs Are Actually Good For</h2>
+
+    <p>Thirty seconds. Here's the list.</p>
+
+    <div class="utility-list">
+      <div class="utility-item">
+        <span class="chip chip-machine">Machine</span>
+        <span class="ui-label">Helping you understand what the scientific literature says about your topic</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-machine">Machine</span>
+        <span class="ui-label">Summarizing trends, history, and frameworks</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-machine">Machine</span>
+        <span class="ui-label">Identifying a framework to study and explore</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-human">Human</span>
+        <span class="ui-label">Applying that framework to identify gaps and opportunities</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-machine">Machine</span>
+        <span class="ui-label">Helping you decide which sources to read closely</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-machine">Machine</span>
+        <span class="ui-label">Tracking your observations as you do close readings</span>
+      </div>
+      <div class="utility-item">
+        <span class="chip chip-human">Human</span>
+        <span class="ui-label">Integrating those observations into your literature synthesis</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card" style="border-left: 3px solid var(--text-primary);">
+      <p style="margin:0; font-size:1.05rem; color: var(--text-primary); line-height:1.65; font-family:var(--display); font-weight:500;">
+        None of that happens in one prompt. It's a workflow.
+      </p>
+    </div>
+
+    <div class="card-grid" style="margin-top:28px;">
+      <div class="card" style="border-top: 3px solid var(--blue);">
+        <div style="margin-bottom:8px;"><span class="chip chip-machine">Machine labor</span></div>
+        <h3 style="color:var(--blue); margin-bottom:8px;">Find · Screen · Extract · Organize</h3>
+        <p style="font-size:0.88rem; margin:0; color:var(--text-secondary);">LLMs save 60–80 hours of volume work on a well-scoped topic. The tools are fabulous.</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--amber);">
+        <div style="margin-bottom:8px;"><span class="chip chip-human">Human analysis</span></div>
+        <h3 style="color:var(--amber); margin-bottom:8px;">Identify · Argue · Synthesize · Warrant</h3>
+        <p style="font-size:0.88rem; margin:0; color:var(--text-secondary);">Gaps are defined by absence. The model lives inside the corpus. You stand outside it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB 4: TOOLKIT ═══════════════════════════════════════ -->
+  <section class="tab-pane" id="pane-toolkit">
+    <span class="eyebrow">04 / Toolkit</span>
+    <h2>What You Need</h2>
+
+    <p><em>We're not setting this up now.</em> When you go to do this on your own, here's what you need.</p>
+
+    <div class="tool-card">
+      <div class="tool-icon">📚</div>
+      <div class="tool-body">
+        <h3>Zotero Desktop</h3>
+        <p>Free, open-source reference manager. Your verified bibliography lives here. Import <code style="font-family:var(--mono);font-size:0.82rem;">.bib</code> files, manage PDFs, tag by source model.</p>
+        <span class="tool-url">zotero.org</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">🔌</div>
+      <div class="tool-body">
+        <h3>Zotero Browser Extension</h3>
+        <p>One-click save from any database, journal page, or Google Scholar result — metadata, abstract, and PDF when available. Install from the same page as the desktop app.</p>
+        <span class="tool-url">zotero.org → Downloads</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">🗒️</div>
+      <div class="tool-body">
+        <h3>NotebookLM <span style="font-size:0.75rem;color:var(--text-muted);font-weight:400;">(Google)</span></h3>
+        <p>Upload PDFs and get an instant AI-generated synthesis across all of them. No prompting skill required. Fast, useful — a reading aid, not a research contribution.</p>
+        <span class="tool-url">notebooklm.google.com — free with a Google account</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">✦</div>
+      <div class="tool-body">
+        <h3>Gemini <span style="font-size:0.75rem;color:var(--text-muted);font-weight:400;">(Google)</span></h3>
+        <p>Where the seed bibliography and the Paper Extractor Gem run. One call per paper: argument, methods, findings, relevance, quotable passage, DOI anchor — grounded in the actual document.</p>
+        <span class="tool-url">gemini.google.com</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">📁</div>
+      <div class="tool-body">
+        <h3>Google Drive</h3>
+        <p>Where your verified PDFs live and how you share them with collaborators. Separate from your Zotero data folder — important.</p>
+        <span class="tool-url">drive.google.com</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="warning-box">
+      <span class="warn-label">Architecture Note — Zotero + Google Drive</span>
+      <p>Don't put your Zotero data folder inside Google Drive. Zotero runs on a SQLite database that Drive will try to sync while Zotero has it open — that causes corruption. <strong>Correct architecture:</strong> let Zotero Sync (built-in, free) handle your library metadata. Keep your PDFs in a <strong>separate Google Drive folder</strong> alongside your Zotero library, not inside it. That folder is also what you share with collaborators.</p>
+    </div>
+  </section>
+
+  <!-- ═══ TAB 5: WORKFLOW ══════════════════════════════════════ -->
+  <section class="tab-pane" id="pane-workflow">
+    <span class="eyebrow">05 / The Five Steps</span>
+    <h2>Eight Minutes, Start to Finish</h2>
+
+    <div class="stepper">
+
+      <div class="step-item active" data-step="1">
+        <div class="step-left">
+          <div class="step-node" onclick="setStep(1)">01</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-header">
+            <span class="step-title">Prompt → Seed Bibliography</span>
+            <span class="step-time">~1 min</span>
+            <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Already shown</span>
+          </div>
+          <ul class="step-bullets">
+            <li>One well-formed prompt gets you 20–30 candidate references</li>
+            <li>Export as <code style="font-family:var(--mono);font-size:0.82rem;color:var(--blue);">.bib</code> file directly from the model</li>
+            <li>Treat it as a <em>seed</em>, not a bibliography — every item needs verification</li>
+            <li>Run two models; import both as separate collections with keyword tags</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="2">
+        <div class="step-left">
+          <div class="step-node" onclick="setStep(2)">02</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-header">
+            <span class="step-title">Import .bib → Zotero → Verify → Attach PDFs</span>
+            <span class="step-time">~2 min</span>
+            <span class="step-demo">Live demo</span>
+          </div>
+          <ul class="step-bullets">
+            <li><code style="font-family:var(--mono);font-size:0.82rem;color:var(--blue);">File &gt; Import &gt; BibTeX</code> — entire bibliography lands as a Zotero collection</li>
+            <li>Click through each item: DOI first, URL second, title search third</li>
+            <li>Find Available PDF for open-access items; download and attach manually for the rest</li>
+            <li>Roughly <strong>60–80%</strong> will resolve to real, accessible papers on a well-scoped topic</li>
+            <li>What doesn't resolve is your confabulation rate — worth noting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="3">
+        <div class="step-left">
+          <div class="step-node" onclick="setStep(3)">03</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-header">
+            <span class="step-title">Upload PDFs to NotebookLM → "Brain Dead" Lit Review</span>
+            <span class="step-time">~2 min</span>
+            <span class="step-demo">Live demo</span>
+          </div>
+          <ul class="step-bullets">
+            <li>Open NotebookLM, create a new notebook</li>
+            <li>Upload all verified PDFs (3–5 from Zotero)</li>
+            <li>NotebookLM synthesizes across all sources automatically — no prompting skill required</li>
+            <li>What you get: a summary of what the papers collectively say, with citations pinned to passages</li>
+          </ul>
+          <div class="warning-box" style="margin-top:14px;">
+            <span class="warn-label">The ceiling</span>
+            <p>Fast and useful. But not a warranted literature review. It summarizes <strong>presence</strong>. It does not argue about <strong>absence</strong>. No standpoint, no gap claim, no theoretical framing. A reading aid, not a research contribution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="4">
+        <div class="step-left">
+          <div class="step-node" onclick="setStep(4)">04</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-header">
+            <span class="step-title">Export PDFs → Paper Extractor Gem → Grounded Notes</span>
+            <span class="step-time">~2 min</span>
+            <span class="step-demo">Live demo — Gem pre-loaded</span>
+          </div>
+          <ul class="step-bullets">
+            <li>Export 3–5 verified PDFs from Zotero to a local folder</li>
+            <li>Upload to Gemini with the Paper Extractor Gem active</li>
+            <li>One call per paper: argument · methods · key findings · relevance · quotable passage · DOI anchor</li>
+            <li>Output is a structured note grounded in the document, not model memory</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="5">
+        <div class="step-left">
+          <div class="step-node" onclick="setStep(5)">05</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-header">
+            <span class="step-title">Handoff — Replicate It Yourself</span>
+            <span class="step-time">~1 min</span>
+            <span style="font-family:var(--mono);font-size:0.65rem;color:var(--amber);background:var(--amber-dim);border:1px solid rgba(154,103,0,0.3);padding:2px 8px;border-radius:4px;letter-spacing:0.06em;text-transform:uppercase;">Share Drive link</span>
+          </div>
+          <ul class="step-bullets">
+            <li>All demo papers are in the shared Drive folder</li>
+            <li>The <code style="font-family:var(--mono);font-size:0.82rem;color:var(--blue);">.bib</code>, Zotero export, and extracted notes — all there</li>
+            <li>Paper Extractor Gem instructions in the folder — copy into your own Gemini session</li>
+            <li>Replication is the point</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ TAB 6: CLOSING ═══════════════════════════════════════ -->
+  <section class="tab-pane" id="pane-closing">
+    <span class="eyebrow">06 / Closing</span>
+    <h2>What You Cannot Hand Off</h2>
+
+    <p>The tools are fabulous. Use them for everything that can be specified — retrieval, organization, extraction, cataloging.</p>
+
+    <div class="warrant-box">
+      <div class="wt">
+        <span class="hl-machine">LLMs give you organized material to think with.</span><br>
+        <span class="hl-human">The thinking is yours.</span>
+      </div>
+    </div>
+
+    <p>That is not a limitation to work around. It is the condition of doing research. You'll get there faster, and on a firmer foundation, if the organizational work is done right.</p>
+
+    <div class="divider"></div>
+
+    <h3>What LLMs cannot warrant</h3>
+    <div class="card-grid">
+      <div class="card">
+        <p style="font-size:0.9rem;margin:0;line-height:1.6;">Gaps are defined by <strong>absence</strong>. The model lives inside the corpus. You stand outside it.</p>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin:0;line-height:1.6;">LLMs <strong>interpolate</strong>. Novel synthesis means moving to a position the existing literature hasn't occupied.</p>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin:0;line-height:1.6;">LLMs smooth contradiction. The intellectual work often lives in the <strong>incommensurability</strong>.</p>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin:0;line-height:1.6;">Phase 4 — analysis — takes 60–100 hours on a serious research question. <strong>There is no shortcut.</strong></p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3>Materials in the Drive folder</h3>
+    <ul class="materials-list">
+      <li>
+        <span class="mfile">llm-litreview-lesson.md</span>
+        Full workflow documentation — four-level taxonomy, structural argument, Zotero workflow
+      </li>
+      <li>
+        <span class="mfile">Google Drive</span>
+        AIX Research Workbench folder — all demo papers, .bib files, extracted notes
+      </li>
+      <li>
+        <span class="mfile">Gem instructions</span>
+        Paper Extractor Gem prompt — copy into your own Gemini session to replicate Step 4
+      </li>
+      <li>
+        <span class="mfile">zotero.org/groups/6596845</span>
+        AI Tools for Research — shared Zotero group library for the workshop series
+      </li>
+    </ul>
+  </section>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('pane-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function setStep(n) {
+      document.querySelectorAll('.step-item').forEach(el => {
+        el.classList.toggle('active', parseInt(el.dataset.step) === n);
+      });
+    }
+  </script>
+
+</body>
+</html>
