@@ -30,23 +30,9 @@ tags:
 
 ## Generate Your Own Personalized Guide
 
-This document was produced from a single prompt. You can generate a version customized to **your operating system, browser, and preferred folder location** by copying the prompt below, filling in the three bracketed fields, and submitting it to Claude, Gemini, or ChatGPT.
+This document was produced from a single prompt. Use the interactive tool to fill in your OS, browser, and folder location and get a customized version:
 
-```
-Generate a step-by-step Zotero setup guide for a researcher. Cover:
-(1) installing Zotero Desktop with the data directory moved to an easy-to-find 
-location — my OS is [macOS / Windows / Linux] and I want the folder at [e.g. Documents/Zotero];
-(2) installing the Zotero Connector browser extension for [Chrome / Firefox / Brave / Edge / Safari];
-(3) testing the connector by capturing an open-access article, a Google Scholar result, 
-and a result from my university library — confirming a PDF attaches each time;
-(4) generating a .bib bibliography with an LLM and importing it into Zotero, 
-with a verification step for each record;
-(5) finding and attaching full-text PDFs for records that are missing them.
-Include the critical warning that the Zotero data directory must NOT be placed 
-inside Google Drive or any other cloud sync folder.
-```
-
-> **Tip:** Most AI chat interfaces show a **copy icon** when you hover over a code block. Use it to grab the prompt above, then paste into your preferred model and fill in the three bracketed fields before sending.
+**[→ Generate your personalized Zotero setup prompt](zotero-prompt-customizer.html)**
 
 ---
 This guide walks you through a complete Zotero setup: desktop app, browser connector, library location, and four ways to populate your first collection. Complete these steps before the workshop session.
@@ -131,6 +117,8 @@ This is the core skill. Work through all three sources below. Each time, verify 
 - The item appears in your Zotero collection ✓
 - A **PDF was downloaded** and attached to the record ✓ (look for the PDF icon under the item)
 
+> **About PDF attachment:** For open-access sources, the connector often downloads the PDF automatically. For paywalled sources it may not — you may need to navigate directly to the PDF page, then trigger the connector there, or drag a downloaded PDF onto the record manually. Manual association works fine when you're starting out, but it doesn't scale: for a large literature review, you'll want automated tools (Zotero's **Find Available PDF**, or the Unpaywall integration in the research workbench).
+
 ### 2a. Open-access journal article
 
 1. Navigate to any open-access article — try [PLOS ONE](https://journals.plos.org/plosone/) or search Google for a topic and filter to open access
@@ -150,7 +138,10 @@ This is the core skill. Work through all three sources below. Each time, verify 
 
 ### 2c. Your university library
 
-1. Log in to your library's discovery system (e.g., SUNY OneSearch, EBSCOhost, Web of Science)
+1. Log in to your library's discovery system:
+   - **University of Buea** → [ubuea.cm — Library](https://www.ubuea.cm/index.php/student-services/library/) (OPAC and e-resources)
+   - **Université de Yaoundé I** → [uy1.uninet.cm — Digital Library](https://uy1.uninet.cm/en/bibliotheque-centrale/)
+   - Other institutions: look for EBSCOhost, Web of Science, or your institution's OneSearch portal
 2. Open a full article record
 3. Click the **Connector icon**
 4. Zotero will usually capture metadata and attempt to download a PDF through your institutional access
