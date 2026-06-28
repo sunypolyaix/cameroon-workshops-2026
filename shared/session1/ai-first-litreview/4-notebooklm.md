@@ -45,3 +45,24 @@ Auto-generates structured summaries, FAQs, and timelines from your uploaded sour
 ## The pedagogical value
 
 Most AI tools expand outward — they connect your question to everything they know. NotebookLM contracts inward — it connects your question only to what you gave it. For research purposes, that is often exactly what you need: a way to stay inside the literature rather than drift beyond it.
+
+---
+
+## Gisèle's notebook
+
+<a href="https://notebooklm.google.com/notebook/93454ab8-7437-4fbd-b698-6d23ccafa211" target="_blank" rel="noopener">Open the NIG–Chad notebook ↗</a>
+
+Five sources loaded: the three reference PDFs from Zotero plus the Perplexity and Gemini outputs.
+
+---
+
+## Audio overview — how it was generated
+
+Format: **Critique** — an expert review of the sources offering constructive feedback.
+Length: Default · Language: English · Sources: 5
+
+Focus prompt given to the AI hosts:
+
+> Help me develop a review of literature to begin studying the "Interconnection of the Northern Interconnected Grid (NIG) [Cameroon] with the Chad National Power Grid," to determine the busbars that will yield minimal power losses, adequate voltage levels, and frequency within acceptable limits. This project will focus on analyzing the technical, economic, and strategic challenges of this interconnection with the Chadian grid, leveraging artificial intelligence tools to propose innovative and sustainable solutions to enhance service quality, stability, and reliability of the power system.
+
+The Critique format is particularly useful here: rather than a neutral summary, the hosts evaluate the literature — identifying where coverage is strong, where it is thin, and what a researcher working on this specific problem still needs to find.
