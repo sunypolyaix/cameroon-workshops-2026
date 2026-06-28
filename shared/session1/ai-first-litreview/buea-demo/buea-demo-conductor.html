@@ -239,17 +239,40 @@
 
 <div class="pipeline">
 
-  <!-- STEP 0 -->
+  <!-- STEP 0: TOOLKIT -->
+  <div class="step open" id="s-toolkit">
+    <div class="step-header" onclick="toggle('s-toolkit')">
+      <span class="step-num s0">0</span>
+      <span class="step-title">Set up your toolkit</span>
+      <span class="step-tool">Browser · Extensions · Bookmarks</span>
+      <span class="step-toggle">▼</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">Before the pipeline starts: install six extensions, create an AI Models bookmark folder, and set up your archive folder in Google Drive. Ten minutes, done once.</p>
+      <button class="launch-btn s0" onclick="launch('0-toolkit.md', 'step-0-toolkit')">↗ Open 0-toolkit.md</button>
+      <div class="output-label">What you need installed</div>
+      <div class="output-box">
+        <h2>Extensions</h2>
+        <p>Claude Conversation Exporter · Claude QoL · Claude Usage Tracker · ChatGPT Exporter · Gemini Chat Exporter · Zotero Connector · Markdown Reader · Google Docs Offline</p>
+        <h2>Bookmarks folder: AI Models</h2>
+        <p>Claude · ChatGPT · Gemini · NotebookLM · Perplexity · DeepSeek · Mistral · Groq · Meta AI · Copilot</p>
+        <h2>Archive folder in Google Drive</h2>
+        <p>/research-archive/ → /claude/ · /chatgpt/ · /gemini/</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1: FRAME -->
   <div class="step" id="s0">
     <div class="step-header" onclick="toggle('s0')">
-      <span class="step-num s0">0</span>
+      <span class="step-num s0">1</span>
       <span class="step-title">Frame the question</span>
       <span class="step-tool">Claude</span>
       <span class="step-toggle">▼</span>
     </div>
     <div class="step-body">
       <p class="step-desc">A broad interest is not yet a research question. Claude asks one question at a time — you answer. The question that emerges is genuinely yours.</p>
-      <button class="launch-btn s0" onclick="launch('https://claude.ai', 'step-0-claude')">↗ Open Claude</button>
+      <button class="launch-btn s0" onclick="launch('0-claude-framing.md', 'step-0-claude')">↗ Open 0-claude-framing.md</button>
       <div class="output-label">The prompt that shaped this demo</div>
       <div class="output-box">
         <p>"Don't propose a topic. Ask me one question at a time to sharpen my interest into a specific, answerable research question."</p>
@@ -308,7 +331,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Use the Zotero Connector to capture each source Perplexity surfaced while still on the page. One click. Full metadata. Export the PDFs.</p>
-      <button class="launch-btn s2" onclick="launch('https://zotero.org', 'step-2-zotero')">↗ Open Zotero</button>
+      <button class="launch-btn s2" onclick="launch('2-zotero.md', 'step-2-zotero')">↗ Open 2-zotero.md</button>
       <div class="output-label">Three sources captured · 2-zotero.md</div>
       <div class="file-list">
         Imdadullah et al. (2021) <span>— Electric Power Network Interconnection · Electronics</span><br>
@@ -329,7 +352,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Upload the three PDFs plus the Perplexity output to Gemini. Ask it to walk through overlaps, distinctions, and gaps. Gemini's large context window reads all three papers together.</p>
-      <button class="launch-btn s3" onclick="launch('https://gemini.google.com', 'step-3-gemini')">↗ Open Gemini</button>
+      <button class="launch-btn s3" onclick="launch('3-gemini.md', 'step-3-gemini')">↗ Open 3-gemini.md</button>
       <div class="output-label">Pre-generated output · 3-gemini.txt</div>
       <div class="output-box">
         <h2>1. Overlaps — The Common Ground</h2>
@@ -358,7 +381,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Upload the PDFs into a NotebookLM notebook. Ask specific questions grounded in your sources. Generate an audio overview — five minutes of spoken synthesis for any student.</p>
-      <button class="launch-btn s4" onclick="launch('https://notebooklm.google.com', 'step-4-notebooklm')">↗ Open NotebookLM</button>
+      <button class="launch-btn s4" onclick="launch('4-notebooklm.md', 'step-4-notebooklm')">↗ Open 4-notebooklm.md</button>
       <p class="note">Run live during demo. NotebookLM has no export extension — take notes in a Google Doc alongside the session.</p>
     </div>
   </div>
@@ -373,7 +396,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Bring everything in — the Perplexity framework, the Gemini gap analysis, the NotebookLM notes. Ask Claude to draft the literature review section. <strong>This is the writing stage.</strong> All prior steps feed it.</p>
-      <button class="launch-btn" onclick="launch('https://claude.ai', 'step-5-claude')">↗ Open Claude</button>
+      <button class="launch-btn" onclick="launch('5-claude-draft.md', 'step-5-claude')">↗ Open 0-claude-framing.md</button>
       <p class="note">Generate live during the demo, or pre-generate and paste the output here.</p>
     </div>
   </div>
@@ -398,7 +421,7 @@
   }
 
   // Open step 0 by default
-  document.getElementById('s0').classList.add('open');
+  // s-toolkit is already open via class; s0 stays closed by default
 </script>
 </body>
 </html>
