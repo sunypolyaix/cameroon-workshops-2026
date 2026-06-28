@@ -26,9 +26,19 @@ Capacity-building workshops for graduate students and faculty in science and eng
   <div class="meta">July 1 – July 22, 2026 · University of Yaoundé I · 4 sessions · Free</div>
 </div>
 
-## Shared Resources
+## Resources
 
-Workshop materials, lesson documents, and literature review examples are in the [shared resources]({{ site.baseurl }}/shared/) section.
+<div class="card">
+  <a href="{{ site.baseurl }}/shared/lit-review/ai-first-litreview.html" target="_blank" rel="noopener">AI First — LLM Literature Review Workflow</a>
+  <div class="desc">Slideshow: a practical workflow for using LLMs in the literature review process.</div>
+</div>
+
+<div class="card">
+  <a href="{{ site.baseurl }}/shared/research-first-steps/first_steps_sunypoly.pptx">Research First Steps</a>
+  <div class="desc">Introductory slides on getting started with AI-assisted research.</div>
+</div>
+
+All materials: [Shared Resources]({{ site.baseurl }}/shared/)
 
 ## About
 

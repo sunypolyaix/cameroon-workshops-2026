@@ -7,13 +7,14 @@ title: "Shared Resources"
 
 Materials shared across both workshops.
 
+## Materials
+
+- <a href="lit-review/ai-first-litreview.html" target="_blank" rel="noopener">AI First Lit Review</a> — Slideshow: LLM-assisted literature review workflow
+- <a href="research-first-steps/first_steps_sunypoly.pptx" target="_blank" rel="noopener">First Steps</a> — Introductory slides on AI-assisted research (PowerPoint)
+
 ## Overview
 
 - <a href="cameroon-workshops-desc" target="_blank" rel="noopener">cameroon-workshops-desc</a> — One-paragraph overview of both workshop series
-
-## Literature Review
-
-- <a href="lit-review/ai-first-litreview.html" target="_blank" rel="noopener">ai-first-litreview</a> — Slides: AI First LLM literature review workflow
 
 ### Claude vs. ChatGPT: One-Shot Lit Review Study
 

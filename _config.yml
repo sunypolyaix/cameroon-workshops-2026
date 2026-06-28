@@ -15,3 +15,4 @@ theme: null
 exclude:
   - "*.DS_Store"
   - "shared/lit-review/*.bib"
+  - "lit-rev-v0"
