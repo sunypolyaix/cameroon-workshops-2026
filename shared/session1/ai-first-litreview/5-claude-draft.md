@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Step 5 — Claude Draft"
+---
+
 # 5-claude-draft.md — Literature Review Draft
 
 ## Tool

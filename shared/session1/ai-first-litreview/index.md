@@ -5,9 +5,32 @@ title: "AI-First Literature Review"
 
 # AI-First Literature Review
 
-- <a href="llm-utility" target="_blank" rel="noopener">What LLMs Are Actually Good For</a> — Where AI adds value; where human judgment begins
-- <a href="workflow" target="_blank" rel="noopener">Five-Step Workflow</a> — Seed bibliography through Zotero, NotebookLM, and per-paper notes
-- <a href="toolkit" target="_blank" rel="noopener">Toolkit</a> — Five tools, setup links, free-tier notes, Zotero + Google Drive architecture
-- <a href="closing" target="_blank" rel="noopener">What You Cannot Hand Off</a> — The four things LLMs cannot independently warrant
+A five-step workflow demonstrated live with a real graduate research project on the NIG–Chad power grid interconnection.
+
+## Live Demo Notes
+
+- <a href="0-claude-framing" target="_blank" rel="noopener">Step 0 — Frame the Question</a> — Using Claude to sharpen a broad topic into a researchable question
+- <a href="1-perplexity" target="_blank" rel="noopener">Step 1 — Perplexity Search</a> — Initial landscape scan and source discovery
+- <a href="2-zotero" target="_blank" rel="noopener">Step 2 — Zotero Export</a> — Capturing and organizing references
+- <a href="3-gemini" target="_blank" rel="noopener">Step 3 — Gemini Synthesis</a> — Large-context source synthesis across full PDFs
+- <a href="4-notebooklm" target="_blank" rel="noopener">Step 4 — NotebookLM</a> — Interactive Q&A over your reference corpus
+- <a href="5-claude-draft" target="_blank" rel="noopener">Step 5 — Claude Draft</a> — Structured first draft from synthesized notes
+
+## Facilitator
+
+- <a href="buea-demo-conductor.html" target="_blank" rel="noopener">Conductor View</a> — Step sequence and talking points for live delivery
+- <a href="buea-demo-conductor-collab.html" target="_blank" rel="noopener">Conductor (Collab Version)</a>
+
+## Supporting Tools
+
+- <a href="zotero-setup-guide" target="_blank" rel="noopener">Zotero Setup Guide</a> — Installation and Google Drive integration
+- <a href="zotero-prompt-customizer.html" target="_blank" rel="noopener">Zotero Prompt Customizer</a> — Generate custom Zotero export prompts
+
+## Reference PDFs
+
+- Camille et al. (2020) — Roadmap for the Transformation of the South Cameroon Interconnected Network (RIS) into Smart-Grid
+- Imdadullah et al. (2021) — Electric Power Network Interconnection: A Review on Current Status, Future Prospects and Research Directions
+- Kelly et al. (2023) — Off-grid PV/Diesel/Wind/Batteries energy system options for the electrification of isolated regions
+- Wu et al. (2017) — Strategic siting and regional grid interconnections key to low-carbon futures in African countries
 
 [← Session 1](../)

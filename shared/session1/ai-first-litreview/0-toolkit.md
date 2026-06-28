@@ -1,3 +1,8 @@
+---
+layout: default
+title: "AI Research Toolkit"
+---
+
 # 0-toolkit.md — Your AI Research Toolkit
 
 Before running the pipeline, set up your browser. This takes about ten minutes and only needs to be done once.

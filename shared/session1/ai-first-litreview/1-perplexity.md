@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Step 1 — Perplexity Search"
+---
+
 <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" style="height:64px;margin-right:32px"/>
 
 # Help me develop a review of literature to begin studying the “Interconnection of the Northern Interconnected Grid (NIG) [cameroon] with the Chad National Power Grid,” to determine the busbars that will yield minimal power losses, adequate voltage levels, and frequency within acceptable limits. This project will focus on analyzing the technical, economic, and strategic challenges of this interconnection with the Chadian grid, leveraging artificial intelligence tools to propose innovative and sustainable solutions to enhance service quality, stability, and reliability of the power system.

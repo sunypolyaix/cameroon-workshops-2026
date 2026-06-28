@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Step 4 — NotebookLM"
+---
+
 # 4-notebooklm.md — NotebookLM
 
 ## Tool

@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Step 2 — Zotero Export"
+---
+
 # 2-zotero.md — Zotero Export Stage
 
 ## Pipeline Position

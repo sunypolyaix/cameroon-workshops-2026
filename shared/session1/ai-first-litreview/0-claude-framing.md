@@ -1,3 +1,8 @@
+---
+layout: default
+title: "From Interest to a Question"
+---
+
 # 0-claude-framing.md — From Interest to a Question
 
 ## Tool

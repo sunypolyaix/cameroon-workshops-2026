@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Step 3 — Gemini Synthesis"
+---
+
 # 3-gemini.md — Source Synthesis
 
 ## Tool
