@@ -224,6 +224,20 @@
     line-height: 1.6;
   }
   .step-desc strong { color: var(--text); }
+
+  .setup-bar {
+    background: #1a1d27;
+    border-bottom: 1px solid #2a2d3a;
+    padding: 10px 32px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #7b7f95;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .setup-bar strong { color: #e2e4ed; }
+  .setup-icon { font-size: 14px; }
 </style>
 </head>
 <body>
@@ -237,6 +251,11 @@
   <strong>Research question:</strong> Interconnection of the Northern Interconnected Grid (NIG) [Cameroon] with the Chad National Power Grid — determining busbars that yield minimal power losses, adequate voltage levels, and frequency within acceptable limits, using AI-assisted multicriteria analysis.
 </div>
 
+<div class="setup-bar">
+  <span class="setup-icon">⚙</span>
+  <span><strong>Before starting:</strong> open a browser window and position it on the right half of your screen. Every Launch button loads into that window.</span>
+</div>
+
 <div class="pipeline">
 
   <!-- STEP 0: TOOLKIT -->
@@ -248,7 +267,7 @@
       <span class="step-toggle">▼</span>
     </div>
     <div class="step-body">
-      <p class="step-desc">Before the pipeline starts: install six extensions, create an AI Models bookmark folder, and set up your archive folder in Google Drive. Ten minutes, done once.</p>
+      <p class="step-desc">Extensions, bookmarks, and archive folder — everything you need before the pipeline starts.</p>
       <button class="launch-btn s0" onclick="launch('0-toolkit.md', 'step-0-toolkit')">↗ Open 0-toolkit.md</button>
       <div class="output-label">What you need installed</div>
       <div class="output-box">
@@ -409,15 +428,7 @@
   }
 
   function launch(url, name) {
-    var sw = window.screen.width;
-    var sh = window.screen.height;
-    var w  = Math.round(sw / 2);
-    var h  = sh;
-    var left = sw - w;   // right half
-    var top  = 0;
-    var specs = 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
-                ',toolbar=1,menubar=1,scrollbars=1,resizable=1';
-    window.open(url, name, specs);
+    window.open(url, 'demo-right');
   }
 
   // Open step 0 by default
