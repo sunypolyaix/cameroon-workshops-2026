@@ -14,7 +14,6 @@
     --green: #3dba7a;
     --text: #e2e4ed;
     --muted: #7b7f95;
-    --step-w: 420px;
     --mono: 'Courier New', monospace;
   }
 
@@ -49,6 +48,7 @@
     color: var(--muted);
     font-family: Arial, sans-serif;
   }
+
   .question-bar {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -58,10 +58,7 @@
     font-family: Arial, sans-serif;
     line-height: 1.5;
   }
-  .question-bar strong {
-    color: var(--text);
-    font-weight: normal;
-  }
+  .question-bar strong { color: var(--text); font-weight: normal; }
 
   .pipeline {
     display: flex;
@@ -110,7 +107,6 @@
   .step-num.s2 { background: #e0622a; }
   .step-num.s3 { background: #1a73e8; }
   .step-num.s4 { background: #0f9d58; }
-  .step-num.s5 { background: var(--accent); }
 
   .step-title {
     font-family: Arial, sans-serif;
@@ -133,10 +129,7 @@
   }
   .step.open .step-toggle { transform: rotate(180deg); }
 
-  .step-body {
-    display: none;
-    padding: 20px;
-  }
+  .step-body { display: none; padding: 20px; }
   .step.open .step-body { display: block; }
 
   .launch-btn {
@@ -156,7 +149,6 @@
     cursor: pointer;
     margin-bottom: 20px;
     transition: background 0.15s, color 0.15s;
-    text-decoration: none;
   }
   .launch-btn:hover { background: var(--accent); color: #fff; }
   .launch-btn.s0 { border-color: var(--accent2); color: var(--accent2); }
@@ -199,10 +191,7 @@
   }
   .output-box h2:first-child { margin-top: 0; }
   .output-box p { margin-bottom: 10px; }
-  .output-box ol, .output-box ul {
-    padding-left: 18px;
-    margin-bottom: 10px;
-  }
+  .output-box ol, .output-box ul { padding-left: 18px; margin-bottom: 10px; }
   .output-box li { margin-bottom: 4px; }
 
   .file-list {
@@ -216,10 +205,7 @@
     padding: 12px 16px;
     margin-bottom: 14px;
   }
-  .file-list span {
-    color: var(--muted);
-    font-size: 11px;
-  }
+  .file-list span { color: var(--muted); font-size: 11px; }
 
   .note {
     font-family: Arial, sans-serif;
@@ -263,7 +249,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">A broad interest is not yet a research question. Claude asks one question at a time — you answer. The question that emerges is genuinely yours.</p>
-      <a class="launch-btn s0" href="https://claude.ai" target="step-0-claude">↗ Open Claude</a>
+      <button class="launch-btn s0" onclick="launch('https://claude.ai', 'step-0-claude')">↗ Open Claude</button>
       <div class="output-label">The prompt that shaped this demo</div>
       <div class="output-box">
         <p>"Don't propose a topic. Ask me one question at a time to sharpen my interest into a specific, answerable research question."</p>
@@ -282,7 +268,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Paste the research question into Perplexity. It returns a structured framework and surfaces sources with inline citations — a map of the field in under two minutes.</p>
-      <a class="launch-btn" href="https://perplexity.ai" target="step-1-perplexity">↗ Open Perplexity</a>
+      <button class="launch-btn" onclick="launch('1-perplexity.md', 'step-1-perplexity')">↗ Open 1-perplexity.md</button>
       <div class="output-label">Pre-generated output · 1-perplexity.md</div>
       <div class="output-box">
         <h2>Review focus</h2>
@@ -321,8 +307,8 @@
       <span class="step-toggle">▼</span>
     </div>
     <div class="step-body">
-      <p class="step-desc">Use the Zotero Connector to capture each source Perplexity surfaced while you are still on the page. One click. Full metadata. Export the PDFs.</p>
-      <a class="launch-btn s2" href="https://zotero.org" target="step-2-zotero">↗ Open Zotero</a>
+      <p class="step-desc">Use the Zotero Connector to capture each source Perplexity surfaced while still on the page. One click. Full metadata. Export the PDFs.</p>
+      <button class="launch-btn s2" onclick="launch('https://zotero.org', 'step-2-zotero')">↗ Open Zotero</button>
       <div class="output-label">Three sources captured · 2-zotero.md</div>
       <div class="file-list">
         Imdadullah et al. (2021) <span>— Electric Power Network Interconnection · Electronics</span><br>
@@ -343,11 +329,11 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Upload the three PDFs plus the Perplexity output to Gemini. Ask it to walk through overlaps, distinctions, and gaps. Gemini's large context window reads all three papers together.</p>
-      <a class="launch-btn s3" href="https://gemini.google.com" target="step-3-gemini">↗ Open Gemini</a>
+      <button class="launch-btn s3" onclick="launch('https://gemini.google.com', 'step-3-gemini')">↗ Open Gemini</button>
       <div class="output-label">Pre-generated output · 3-gemini.txt</div>
       <div class="output-box">
         <h2>1. Overlaps — The Common Ground</h2>
-        <p><strong>Renewable integration & decarbonization:</strong> All three sources frame grid development around moving away from fossil fuels. Kelly et al. — Chad relies on expensive thermal plants. Wu et al. — African interconnections unlock wind and solar. Imdadullah et al. — transmission interconnections are the primary tool for decarbonizing electricity systems.</p>
+        <p><strong>Renewable integration & decarbonization:</strong> All three sources frame grid development around moving away from fossil fuels. Kelly et al. — Chad relies on expensive thermal plants. Wu et al. — African interconnections unlock wind and solar. Imdadullah et al. — transmission interconnections are the primary decarbonization tool.</p>
         <p><strong>Economic optimization:</strong> Cost is a primary factor in all three. Kelly et al. use COE/NPC. Wu et al. show 6–20% cost savings. Imdadullah et al. highlight economic benefits of balancing supply/demand mismatches.</p>
         <p><strong>Strategic siting:</strong> All three argue infrastructure must be placed deliberately — Wu et al. via multicriteria assessment, Imdadullah et al. via transmission technology selection, Kelly et al. via localized load profiles.</p>
         <h2>2. Distinctions — Different Angles</h2>
@@ -372,7 +358,7 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Upload the PDFs into a NotebookLM notebook. Ask specific questions grounded in your sources. Generate an audio overview — five minutes of spoken synthesis for any student.</p>
-      <a class="launch-btn s4" href="https://notebooklm.google.com" target="step-4-notebooklm">↗ Open NotebookLM</a>
+      <button class="launch-btn s4" onclick="launch('https://notebooklm.google.com', 'step-4-notebooklm')">↗ Open NotebookLM</button>
       <p class="note">Run live during demo. NotebookLM has no export extension — take notes in a Google Doc alongside the session.</p>
     </div>
   </div>
@@ -387,8 +373,8 @@
     </div>
     <div class="step-body">
       <p class="step-desc">Bring everything in — the Perplexity framework, the Gemini gap analysis, the NotebookLM notes. Ask Claude to draft the literature review section. <strong>This is the writing stage.</strong> All prior steps feed it.</p>
-      <a class="launch-btn" href="https://claude.ai" target="step-5-claude">↗ Open Claude</a>
-      <p class="note">The draft lives here. Generate live during the demo — or pre-generate and paste the output below.</p>
+      <button class="launch-btn" onclick="launch('https://claude.ai', 'step-5-claude')">↗ Open Claude</button>
+      <p class="note">Generate live during the demo, or pre-generate and paste the output here.</p>
     </div>
   </div>
 
@@ -396,9 +382,21 @@
 
 <script>
   function toggle(id) {
-    const el = document.getElementById(id);
-    el.classList.toggle('open');
+    document.getElementById(id).classList.toggle('open');
   }
+
+  function launch(url, name) {
+    var sw = window.screen.width;
+    var sh = window.screen.height;
+    var w  = Math.round(sw / 2);
+    var h  = sh;
+    var left = sw - w;   // right half
+    var top  = 0;
+    var specs = 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+                ',toolbar=1,menubar=1,scrollbars=1,resizable=1';
+    window.open(url, name, specs);
+  }
+
   // Open step 0 by default
   document.getElementById('s0').classList.add('open');
 </script>
