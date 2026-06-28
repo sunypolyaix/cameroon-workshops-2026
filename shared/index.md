@@ -7,18 +7,13 @@ title: "Shared Resources"
 
 Materials shared across both workshops.
 
-## This Project
+## Overview
 
-- <a href="PROJECT-INSTRUCTIONS" target="_blank" rel="noopener">PROJECT-INSTRUCTIONS</a> — File conventions, YAML schema, naming rules
 - <a href="cameroon-workshops-desc" target="_blank" rel="noopener">cameroon-workshops-desc</a> — One-paragraph overview of both workshop series
-- <a href="steve" target="_blank" rel="noopener">steve</a> — Contact page for Steven M. Schneider
 
 ## Literature Review
 
-- <a href="lit-review/llm-litreview-lesson" target="_blank" rel="noopener">llm-litreview-lesson</a> — Lesson: LLMs handle the mechanical lit review parts
-- <a href="lit-review/litreview-talk-outline" target="_blank" rel="noopener">litreview-talk-outline</a> — Talk outline: four-step LLM lit review workflow
-- <a href="lit-review/litreview-talk-slides.html" target="_blank" rel="noopener">litreview-talk-slides</a> — Slides for the lit review talk, dark theme
-- <a href="lit-review/slides.html" target="_blank" rel="noopener">slides</a> — Same slides, light theme
+- <a href="lit-review/ai-first-litreview.html" target="_blank" rel="noopener">ai-first-litreview</a> — Slides: AI First LLM literature review workflow
 
 ### Claude vs. ChatGPT: One-Shot Lit Review Study
 
