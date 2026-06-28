@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Steps in a Research Project — AIX Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:            #FFFFFF;
+  --surface:       #F6F8FA;
+  --surface-2:     #EAEEF2;
+  --border:        #D0D7DE;
+  --border-muted:  #EAEEF2;
+  --text-primary:  #0D1117;
+  --text-secondary:#24292F;
+  --text-muted:    #6E7781;
+  --blue:          #0969DA;
+  --blue-dim:      rgba(9,105,218,0.07);
+  --blue-mid:      rgba(9,105,218,0.18);
+  --amber:         #9A6700;
+  --amber-dim:     rgba(154,103,0,0.07);
+  --amber-mid:     rgba(154,103,0,0.18);
+  --green:         #1A7F37;
+  --green-dim:     rgba(26,127,55,0.07);
+  --purple:        #6E40C9;
+  --purple-dim:    rgba(110,64,201,0.07);
+  --mono:    'JetBrains Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+  --serif:   'Source Serif 4', Georgia, serif;
+}
+
+body { font-family: var(--display); background: var(--bg); color: var(--text-primary); padding: 32px 24px; -webkit-font-smoothing: antialiased; }
+.mono { font-family: var(--mono); }
+
+/* ─── PAGE HEADER ──────────────────── */
+.page-header { max-width: 1100px; margin: 0 auto 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); text-align: center; }
+.page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 6px; }
+.page-header h1 span { color: var(--blue); }
+.page-header .ph-meta { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ─── ACCORDION ────────────────────── */
+details { margin-bottom: 16px; }
+summary { font-size: 18px; font-weight: 600; color: var(--text-primary); cursor: pointer; padding: 20px 28px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); list-style: none; display: flex; align-items: center; gap: 12px; transition: all 0.2s ease; user-select: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '▸'; font-size: 14px; color: var(--text-muted); transition: transform 0.2s ease; display: inline-block; flex-shrink: 0; }
+details[open] > summary::before { transform: rotate(90deg); }
+summary:hover { background: var(--surface); border-color: rgba(9,105,218,0.2); }
+details[open] > summary { border-radius: 12px 12px 0 0; border-bottom-color: transparent; }
+
+.summary-tag { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 6px; margin-left: auto; flex-shrink: 0; }
+.tag-slides  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(9,105,218,0.2); }
+.tag-utility { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(154,103,0,0.2); }
+
+.section-body { background: var(--bg); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; padding: 36px 40px; box-shadow: 0 4px 16px -8px rgba(0,0,0,0.06); }
+
+/* ─── SLIDE ENGINE ─────────────────── */
+@keyframes staggerIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.slides-wrap { outline: none; }
+.slides-wrap:focus .slide-card { box-shadow: 0 0 0 2px rgba(9,105,218,0.25), 0 8px 32px -8px rgba(0,0,0,0.08); }
+
+.progress { display: flex; gap: 4px; margin-bottom: 16px; }
+.progress-pip { height: 3px; border-radius: 2px; flex: 1; cursor: pointer; background: var(--border); transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.progress-pip.active  { background: var(--blue); }
+.progress-pip.visited { background: rgba(9,105,218,0.35); }
+
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px 44px 28px; display: flex; flex-direction: column; min-height: 400px; transition: box-shadow 0.2s ease; }
+.slide-header { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.slide-counter { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--text-muted); }
+.timing-badge  { font-family: var(--mono); font-size: 0.62rem; color: var(--text-muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
+.step-badge    { font-family: var(--mono); font-size: 0.62rem; color: var(--blue); background: var(--blue-dim); border: 1px solid rgba(9,105,218,0.25); border-radius: 4px; padding: 2px 7px; }
+
+.slide-content { flex: 1; animation: fadeSlide 0.4s ease both; }
+.stagger { animation: staggerIn 0.4s ease both; }
+
+/* slide typography */
+.sl-title { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.025em; color: var(--text-primary); margin-bottom: 20px; line-height: 1.2; }
+.sl-title-meta { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.sl-title-main { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; color: var(--text-primary); margin-bottom: 10px; }
+.sl-title-main span { color: var(--blue); }
+.sl-title-fr { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4; }
+.sl-title-sub { font-family: var(--serif); font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; }
+.sl-closing-main { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 20px; }
+.sl-closing-border { border-left: 3px solid var(--blue); padding: 18px 22px; background: var(--blue-dim); border-radius: 0 8px 8px 0; }
+.sl-closing-text { font-family: var(--serif); font-size: 0.95rem; color: var(--text-secondary); line-height: 1.72; }
+.sl-closing-items { margin-top: 16px; }
+.sl-closing-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(9,105,218,0.15); }
+.sl-closing-item:last-child { border-bottom: none; }
+.sl-closing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 7px; }
+.sl-closing-item-text { font-family: var(--serif); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+.sl-closing-item-fr { font-family: var(--serif); font-size: 0.78rem; font-style: italic; color: var(--text-muted); }
+
+/* bullets */
+.sl-bullet-list { margin-top: 6px; }
+.sl-bullet-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 13px; }
+.sl-bullet-marker { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+.sl-bullet-text { font-family: var(--serif); font-size: 0.93rem; color: var(--text-secondary); line-height: 1.6; }
+.sl-bullet-fr { font-family: var(--serif); font-size: 0.78rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 1px; }
+
+/* split */
+.sl-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.sl-split-col { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+.sl-split-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.sl-split-point { display: flex; gap: 10px; margin-bottom: 10px; }
+.sl-split-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+.sl-split-text { font-family: var(--serif); font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+.sl-callout { background: var(--amber-dim); border: 1px solid rgba(154,103,0,0.25); border-radius: 8px; padding: 12px 16px; margin-top: 14px; }
+.sl-callout-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; display: block; }
+.sl-callout p { font-family: var(--serif); font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.sl-callout p strong { color: var(--amber); font-family: var(--display); }
+
+/* ─── LAYERS slide type ─────────────── */
+.sl-layer-stack { margin-top: 10px; }
+.sl-layer-row { display: flex; align-items: flex-start; gap: 14px; padding: 11px 14px; border-radius: 8px; margin-bottom: 7px; border-left: 3px solid; }
+.sl-layer-num { font-family: var(--mono); font-size: 1.05rem; font-weight: 700; line-height: 1; flex-shrink: 0; min-width: 22px; margin-top: 2px; }
+.sl-layer-body { flex: 1; }
+.sl-layer-label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+.sl-layer-sub { font-family: var(--serif); font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; font-style: italic; }
+.sl-layer-tag { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+.sl-layer-tag.you { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(154,103,0,0.22); }
+.sl-layer-tag.ai  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(9,105,218,0.22); }
+
+/* ─── DIALOGUE slide type ───────────── */
+.sl-intro-text { font-family: var(--serif); font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 12px; }
+.sl-dialogue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sl-dialogue-col { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.sl-dialogue-who { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.sl-dialogue-who strong { color: var(--text-primary); }
+.sl-msg { font-family: var(--serif); font-size: 0.78rem; line-height: 1.5; padding: 5px 0; border-bottom: 1px solid var(--border-muted); display: flex; gap: 6px; align-items: flex-start; }
+.sl-msg:last-of-type { border-bottom: none; }
+.sl-msg-tag { font-family: var(--mono); font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 3px; }
+.sl-msg.student .sl-msg-tag { color: var(--text-muted); }
+.sl-msg.claude  .sl-msg-tag { color: var(--blue); }
+.sl-msg.student .sl-msg-text { color: var(--text-primary); font-weight: 500; }
+.sl-msg.claude  .sl-msg-text { color: var(--text-muted); font-style: italic; }
+.sl-result { background: var(--blue-dim); border: 1px solid rgba(9,105,218,0.22); border-radius: 6px; padding: 10px 12px; margin-top: 10px; }
+.sl-result-label { font-family: var(--mono); font-size: 0.57rem; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; display: block; }
+.sl-result-text { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--blue); line-height: 1.4; }
+
+/* nav bar */
+.nav-bar { display: flex; align-items: center; gap: 12px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+.nav-btn { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; }
+.nav-btn:hover:not(:disabled) { color: var(--blue); border-color: rgba(9,105,218,0.3); background: var(--blue-dim); }
+.nav-btn:disabled { opacity: 0.35; cursor: default; }
+.nav-center { font-family: var(--mono); font-size: 0.6rem; color: var(--text-muted); text-align: center; flex: 1; letter-spacing: 0.04em; text-transform: uppercase; }
+.focus-hint { font-family: var(--mono); font-size: 0.6rem; color: var(--text-muted); text-align: center; margin-top: 10px; letter-spacing: 0.04em; opacity: 0.55; }
+
+/* ─── INNER TAB NAV ─────────────────── */
+.inner-tab-nav { display: flex; border-bottom: 1px solid var(--border); margin: 0 -40px 32px; padding: 0 40px; overflow-x: auto; scrollbar-width: none; background: var(--surface); }
+.inner-tab-nav::-webkit-scrollbar { display: none; }
+.inner-tab-btn { font-family: var(--mono); font-size: 0.67rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 13px 18px; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+.inner-tab-btn:hover { color: var(--text-secondary); }
+.inner-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.inner-tab-btn .tab-num { color: var(--border); margin-right: 6px; }
+.inner-tab-btn.active .tab-num { color: var(--blue-mid); }
+.inner-tab-pane { display: none; }
+.inner-tab-pane.active { display: block; animation: paneFade 0.18s ease; }
+@keyframes paneFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── TAKEAWAY CONTENT ──────────────── */
+.s-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
+.s-h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 12px; color: var(--text-primary); }
+.s-h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; color: var(--text-primary); }
+.s-p  { font-family: var(--serif); font-size: 0.95rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 14px; }
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+.chip { display: inline-block; font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; flex-shrink: 0; }
+.chip-ai    { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(9,105,218,0.22); }
+.chip-you   { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(154,103,0,0.25); }
+.chip-guard { background: var(--green-dim); color: var(--green); border: 1px solid rgba(26,127,55,0.22); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px 22px; }
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+
+/* prompt box */
+.prompt-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 16px 22px; margin: 10px 0 22px; }
+.prompt-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; display: block; }
+.prompt-fr-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; display: block; }
+.prompt-text { font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: var(--text-primary); line-height: 1.65; }
+.prompt-fr   { font-family: var(--serif); font-style: italic; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-muted); }
+
+/* do-it-yourself warning */
+.warn-box { background: var(--amber-dim); border: 1px solid rgba(154,103,0,0.28); border-radius: 8px; padding: 14px 18px; margin: 18px 0; }
+.warn-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; display: block; }
+.warn-box .s-p { font-size: 0.88rem; margin: 0; }
+.warn-box .s-p strong { color: var(--amber); font-family: var(--display); }
+
+/* guardrail box */
+.guard-box { background: var(--green-dim); border: 1px solid rgba(26,127,55,0.25); border-radius: 8px; padding: 14px 18px; margin: 18px 0; }
+.guard-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; display: block; }
+.guard-box .s-p { font-size: 0.88rem; margin: 0; }
+
+/* warrant box */
+.warrant-box { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 0 0 8px 8px; padding: 24px 28px; margin: 24px 0; }
+.warrant-box .wt { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; line-height: 1.65; color: var(--text-primary); }
+.hl-machine { color: var(--blue); }
+.hl-human   { color: var(--amber); }
+
+/* stepper */
+.stepper { margin: 20px 0; }
+.step-item { display: flex; gap: 18px; }
+.step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 38px; }
+.step-node { width: 38px; height: 38px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.72rem; font-weight: 500; color: var(--text-muted); flex-shrink: 0; position: relative; z-index: 1; }
+.step-connector { width: 2px; flex: 1; min-height: 20px; background: var(--border); }
+.step-body { flex: 1; padding-bottom: 24px; }
+.step-item:last-child .step-body { padding-bottom: 0; }
+.step-item:last-child .step-connector { display: none; }
+.step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.step-title  { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+.step-bullets { margin: 6px 0; }
+.step-bullets li { font-family: var(--serif); font-size: 0.88rem; color: var(--text-secondary); padding: 4px 0 4px 14px; position: relative; line-height: 1.55; list-style: none; }
+.step-bullets li::before { content: '—'; font-family: var(--mono); color: var(--text-muted); position: absolute; left: 0; font-size: 0.72rem; top: 6px; }
+
+/* live example conversation display */
+.example-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+.example-col { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.example-header { background: var(--surface-2); padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.example-person { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.example-school { font-family: var(--mono); font-size: 0.62rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.example-body { padding: 14px 16px; }
+.ex-msg { font-family: var(--serif); font-size: 0.84rem; line-height: 1.5; padding: 6px 0; display: flex; gap: 8px; align-items: flex-start; border-bottom: 1px solid var(--border-muted); }
+.ex-msg:last-of-type { border-bottom: none; }
+.ex-msg-who { font-family: var(--mono); font-size: 0.57rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 3px; min-width: 40px; }
+.ex-msg.you .ex-msg-who { color: var(--text-muted); }
+.ex-msg.ai  .ex-msg-who { color: var(--blue); }
+.ex-msg.you .ex-msg-text { color: var(--text-primary); font-weight: 500; }
+.ex-msg.ai  .ex-msg-text { color: var(--text-muted); font-style: italic; }
+.example-result { background: var(--blue-dim); border-top: 1px solid rgba(9,105,218,0.2); padding: 12px 16px; }
+.example-result-label { font-family: var(--mono); font-size: 0.58rem; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; display: block; }
+.example-result-text { font-family: var(--display); font-size: 0.85rem; font-weight: 600; color: var(--blue); line-height: 1.4; }
+
+/* ─── RESPONSIVE ───────────────────── */
+@media (max-width: 640px) {
+  body { padding: 16px 14px; }
+  .slide-card { padding: 24px 22px 18px; min-height: 300px; }
+  .section-body { padding: 24px 20px; }
+  .sl-split-grid   { grid-template-columns: 1fr; }
+  .sl-dialogue-grid { grid-template-columns: 1fr; }
+  .card-grid       { grid-template-columns: 1fr; }
+  .example-grid    { grid-template-columns: 1fr; }
+  .inner-tab-nav   { margin: 0 -20px 24px; padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>First Steps in a <span>Research Project</span></h1>
+  <p class="ph-meta">SUNY Poly AIX Workshop · University of Buea · Université de Yaoundé I · June 2026</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ 1. PRESENTATION ════════════════════════════════ -->
+<details open>
+  <summary>
+    AIX Workshop Presentation
+    <span class="summary-tag tag-slides">8 Slides</span>
+  </summary>
+  <div class="section-body">
+    <div class="slides-wrap" id="slidesWrap" tabindex="0">
+      <div class="progress" id="progress"></div>
+      <div class="slide-card">
+        <div style="flex:1">
+          <div class="slide-header">
+            <span class="slide-counter mono" id="counter"></span>
+            <span class="timing-badge" id="timing"></span>
+            <span id="stepBadge"></span>
+          </div>
+          <div class="slide-content" id="slideContent"></div>
+        </div>
+        <div class="nav-bar">
+          <button class="nav-btn" id="prevBtn" onclick="slideGo(-1)">← Previous</button>
+          <span class="nav-center">First Steps in a Research Project · AIX Workshop</span>
+          <button class="nav-btn" id="nextBtn" onclick="slideGo(1)">Next →</button>
+        </div>
+      </div>
+      <p class="focus-hint">Click here, then use arrow keys to navigate</p>
+    </div>
+  </div>
+</details>
+
+<!-- ═══ 2. TAKEAWAYS ═════════════════════════════════ -->
+<details>
+  <summary>
+    Takeaways
+    <span class="summary-tag tag-utility">4 Tabs</span>
+  </summary>
+  <div class="section-body" style="padding-top:0;">
+    <nav class="inner-tab-nav" role="tablist">
+      <button class="inner-tab-btn active" data-itab="prompts"><span class="tab-num">01</span>Try These Prompts</button>
+      <button class="inner-tab-btn" data-itab="step2"><span class="tab-num">02</span>Step 2 in Detail</button>
+      <button class="inner-tab-btn" data-itab="examples"><span class="tab-num">03</span>Live Examples</button>
+      <button class="inner-tab-btn" data-itab="principles"><span class="tab-num">04</span>Principles</button>
+    </nav>
+
+    <!-- TAB 01: PROMPTS ─────────────────────────────── -->
+    <div class="inner-tab-pane active" id="itab-prompts">
+      <span class="s-eyebrow">One prompt per step · Prompts à essayer</span>
+      <h2 class="s-h2">Try These Prompts</h2>
+      <p class="s-p">Each step has a prompt designed to keep the thinking yours. Copy, adapt, paste into your Claude Project.</p>
+
+      <h3 class="s-h3">Step 1 — From Interest to a Question</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Try This Prompt · Essayez cette consigne</span>
+        <div class="prompt-text">"Don't propose a topic. Ask me one question at a time to sharpen my interest into a specific, answerable research question."</div>
+        <div class="prompt-fr">« Ne propose pas de sujet. Pose-moi une question à la fois pour affiner mon intérêt en une question de recherche précise et répondable. »</div>
+      </div>
+
+      <h3 class="s-h3">Step 2 — Set Up the Project</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Project Instructions · Consignes du Projet</span>
+        <div class="prompt-text">"This project supports my thesis: [question]. Be my critical reading partner. Use only sources I upload — never invent citations. Flag what you're unsure of."</div>
+        <div class="prompt-fr">« Ce projet porte sur ma thèse : [question]. Sois mon partenaire de lecture critique. Utilise seulement les sources que je téléverse — n'invente jamais de références. Signale ce dont tu n'es pas sûr. »</div>
+      </div>
+
+      <h3 class="s-h3">Step 2 — Map Search Terms</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Try This Prompt · Essayez cette consigne</span>
+        <div class="prompt-text">"Break my question into core concepts. Give me synonyms and 5 query strings for Google Scholar and arXiv, plus the subfields and venues where this work appears."</div>
+        <div class="prompt-fr">« Décompose ma question en concepts clés. Donne-moi des synonymes et 5 requêtes pour Google Scholar et arXiv, et les revues où paraît ce travail. »</div>
+      </div>
+
+      <h3 class="s-h3">Step 2 — Interrogate the Corpus</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Try This Prompt · Essayez cette consigne</span>
+        <div class="prompt-text">"Build a table comparing these papers by method, workload type, key metric, and limitation. Where do they disagree? What hasn't been tested yet?"</div>
+        <div class="prompt-fr">« Construis un tableau comparant ces articles par méthode, type de charge de travail, métrique clé et limite. Où sont les désaccords ? Qu'est-ce qui n'a pas encore été testé ? »</div>
+      </div>
+
+      <h3 class="s-h3">Step 3 — Identifying the Gap</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Try This Prompt · Essayez cette consigne</span>
+        <div class="prompt-text">"Map the contending approaches and where they disagree. Do not tell me my gap — just lay out the landscape."</div>
+        <div class="prompt-fr">« Cartographie les approches concurrentes et leurs points de désaccord. Ne me dis pas quelle est ma lacune — décris simplement le paysage. »</div>
+      </div>
+
+      <h3 class="s-h3">Step 4 — Scoping &amp; Feasibility</h3>
+      <div class="prompt-box">
+        <span class="prompt-label">Try This Prompt · Essayez cette consigne</span>
+        <div class="prompt-text">"Ask me about my data, tools and time before suggesting anything, then help me judge what is realistic."</div>
+        <div class="prompt-fr">« Interroge-moi sur mes données, outils et contraintes de temps avant de suggérer quoi que ce soit, puis aide-moi à juger ce qui est réaliste. »</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="warrant-box">
+        <div class="wt">
+          <span class="hl-machine">These prompts keep AI in the asking role.</span><br>
+          <span class="hl-human">The answers — and the gap claim — are yours.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 02: STEP 2 IN DETAIL ─────────────────────── -->
+    <div class="inner-tab-pane" id="itab-step2">
+      <span class="s-eyebrow">Step 2 · S'orienter dans le domaine</span>
+      <h2 class="s-h2">Orienting to the Field — 5 Moves</h2>
+      <p class="s-p">All five moves happen inside a single Claude Project. The project becomes your persistent research workspace — not a chat session, a configured environment.</p>
+
+      <div class="stepper">
+        <div class="step-item">
+          <div class="step-left"><div class="step-node">01</div><div class="step-connector"></div></div>
+          <div class="step-body">
+            <div class="step-header">
+              <span class="step-title">Set up the Project</span>
+              <span class="chip chip-ai">Claude Project</span>
+            </div>
+            <ul class="step-bullets">
+              <li>Create one Project for the whole thesis — not per-chat, per-thesis</li>
+              <li>Put your research question and short context in the Project instructions</li>
+              <li>Tell Claude how to behave: critical reading partner, no invented citations</li>
+            </ul>
+            <div class="prompt-box" style="margin-top:10px;">
+              <span class="prompt-label">Project Instructions</span>
+              <div class="prompt-text">"This project supports my thesis: [question]. Be my critical reading partner. Use only sources I upload — never invent citations. Flag what you're unsure of."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-left"><div class="step-node">02</div><div class="step-connector"></div></div>
+          <div class="step-body">
+            <div class="step-header">
+              <span class="step-title">Map search terms</span>
+              <span class="chip chip-ai">Claude</span>
+            </div>
+            <ul class="step-bullets">
+              <li>Ask Claude to break the question into core concepts and synonyms</li>
+              <li>Get ready-to-paste query strings for Google Scholar, arXiv, IEEE Xplore</li>
+              <li>Name the subfields and venues where this work typically appears</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-left"><div class="step-node">03</div><div class="step-connector"></div></div>
+          <div class="step-body">
+            <div class="step-header">
+              <span class="step-title">Gather sources</span>
+              <span class="chip chip-you">You do this</span>
+            </div>
+            <ul class="step-bullets">
+              <li>Run queries in Google Scholar, arXiv, Semantic Scholar, your library</li>
+              <li>Use "cited by" and "related articles" to snowball outward</li>
+              <li>Keep the most relevant; judge which matter — that judgment is yours</li>
+            </ul>
+            <div class="warn-box" style="margin-top:10px;">
+              <span class="warn-label">Do This Yourself · À faire vous-même</span>
+              <p class="s-p">Claude doesn't fetch papers — and shouldn't pretend to. Finding sources, and judging which are relevant, stays with you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-left"><div class="step-node">04</div><div class="step-connector"></div></div>
+          <div class="step-body">
+            <div class="step-header">
+              <span class="step-title">Build the set</span>
+              <span class="chip chip-ai">Upload to Project</span>
+            </div>
+            <ul class="step-bullets">
+              <li>Upload what you gathered into the Project as knowledge</li>
+              <li>Now Claude is grounded in your real sources — not its parametric memory</li>
+              <li>Ask: for each paper — problem, method, key result, limitation in 3 lines; then name the 5 most central to your question</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-left"><div class="step-node">05</div><div class="step-connector"></div></div>
+          <div class="step-body">
+            <div class="step-header">
+              <span class="step-title">Interrogate &amp; keep a living log</span>
+              <span class="chip chip-ai">Claude</span>
+            </div>
+            <ul class="step-bullets">
+              <li>Have Claude compare sources and surface where they disagree</li>
+              <li>Keep a running log in the Project — update it as new papers arrive</li>
+              <li>Ask: what hasn't been tested for your specific question?</li>
+            </ul>
+            <div class="guard-box" style="margin-top:10px;">
+              <span class="guard-label">Keep the Thinking Yours · Gardez la réflexion</span>
+              <p class="s-p">Claude can invent references — trust only sources you uploaded or verified. You decide what is relevant and where the gap is. Check every claim against the actual paper. Can you explain and defend this source map as your own understanding?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 03: LIVE EXAMPLES ──────────────────────────── -->
+    <div class="inner-tab-pane" id="itab-examples">
+      <span class="s-eyebrow">Step 1 Live · En direct</span>
+      <h2 class="s-h2">From Interest to a Question</h2>
+      <p class="s-p">Two students, same Socratic method. Claude was configured to ask, not answer. Each arrived at a specific, testable research question in under 5 minutes.</p>
+
+      <div class="example-grid">
+        <div class="example-col">
+          <div class="example-header">
+            <div class="example-person">Manga</div>
+            <div class="example-school">University of Buea · Computer Science</div>
+          </div>
+          <div class="example-body">
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">Web scalability, edge &amp; real-time systems — serverless + streams.</span></div>
+            <div class="ex-msg ai"><span class="ex-msg-who">Claude</span><span class="ex-msg-text">Broad! Which pulls you most — scaling, or the real-time part?</span></div>
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">Real-time streaming — but it must scale under bursty load.</span></div>
+            <div class="ex-msg ai"><span class="ex-msg-who">Claude</span><span class="ex-msg-text">When it breaks, what fails first — latency, cost, or correctness?</span></div>
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">Latency — serverless cold-starts right when bursts hit.</span></div>
+          </div>
+          <div class="example-result">
+            <span class="example-result-label">The question Manga arrived at — Claude only asked</span>
+            <div class="example-result-text">Can predictive pre-warming cut p95 latency for bursty stream-processing workloads, versus default serverless autoscaling?</div>
+          </div>
+        </div>
+
+        <div class="example-col">
+          <div class="example-header">
+            <div class="example-person">Brice</div>
+            <div class="example-school">Université de Yaoundé I · Electrical Engineering</div>
+          </div>
+          <div class="example-body">
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">AI to make Cameroon's RIS–RIN interconnection more stable &amp; efficient.</span></div>
+            <div class="ex-msg ai"><span class="ex-msg-who">Claude</span><span class="ex-msg-text">Broad! Stability or efficiency — what pulls you most?</span></div>
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">Stability — holding frequency in range when the grids connect.</span></div>
+            <div class="ex-msg ai"><span class="ex-msg-who">Claude</span><span class="ex-msg-text">Which lever — forecasting or control? And what would you measure?</span></div>
+            <div class="ex-msg you"><span class="ex-msg-who">You</span><span class="ex-msg-text">Forecasting — I want to predict the load drop before it happens.</span></div>
+          </div>
+          <div class="example-result">
+            <span class="example-result-label">The question Brice arrived at — Claude only asked</span>
+            <div class="example-result-text">Can LSTM load-forecasting reduce frequency deviation after RIS–RIN interconnection, versus the baseline controller?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <h3 class="s-h3">The Live Use Cases for This Workshop</h3>
+      <p class="s-p">These two questions drive the rest of the workshop. They are not hypothetical examples — they are the real research projects Manga and Brice are developing, and the five steps become visible through them.</p>
+      <div class="card-grid">
+        <div class="card" style="border-top: 3px solid var(--blue);">
+          <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Manga · Buea</div>
+          <p class="s-p" style="font-size:0.88rem;margin:0;font-weight:500;color:var(--text-primary);">Serverless cold-start latency under bursty load — predictive pre-warming vs. autoscaling</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--green);">
+          <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Brice · Yaoundé</div>
+          <p class="s-p" style="font-size:0.88rem;margin:0;font-weight:500;color:var(--text-primary);">LSTM load-forecasting for frequency stability after RIS–RIN interconnection</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 04: PRINCIPLES ──────────────────────────────── -->
+    <div class="inner-tab-pane" id="itab-principles">
+      <span class="s-eyebrow">Core Principles · Principes directeurs</span>
+      <h2 class="s-h2">Why HOW We Use AI Matters</h2>
+
+      <p class="s-p">Research has two purposes. The first is to create new knowledge — the thesis, the paper, the result. The second is to learn to think as a researcher — the skill the degree certifies. AI can accelerate the first while quietly eroding the second, unless you use it deliberately.</p>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3">The Guiding Principle</h3>
+      <div class="card-grid" style="margin-top:12px;">
+        <div class="card" style="border-top: 3px solid var(--blue);">
+          <div style="margin-bottom:8px;"><span class="chip chip-ai">Let AI absorb</span></div>
+          <h3 class="s-h3" style="color:var(--blue);margin-bottom:6px;">Friction that doesn't teach</h3>
+          <p class="s-p" style="font-size:0.85rem;margin:0;">Finding papers · Formatting &amp; translating · Summarizing for orientation · Organizing references</p>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--amber);">
+          <div style="margin-bottom:8px;"><span class="chip chip-you">Preserve for yourself</span></div>
+          <h3 class="s-h3" style="color:var(--amber);margin-bottom:6px;">Friction that does teach</h3>
+          <p class="s-p" style="font-size:0.85rem;margin:0;">Forming your own question · Judgment &amp; critical evaluation · Deciding where the gap sits · Defending your argument</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3">The Litmus Test</h3>
+      <div class="warrant-box" style="margin-top:12px;">
+        <div class="wt">
+          Can you explain and defend this output as <span class="hl-human">your own thinking</span>?<br>
+          <span style="font-family:var(--serif);font-size:0.95rem;font-weight:400;color:var(--text-muted);font-style:italic;">Pouvez-vous l'expliquer et le défendre comme votre propre réflexion ?</span>
+        </div>
+      </div>
+
+      <p class="s-p" style="margin-top:16px;">If you can answer yes, you've used AI well. If you can't, you've let it do the thinking. That is not a moral failure — it's a workflow miscalibration. The five steps are designed to keep you on the right side of that line.</p>
+
+      <div class="divider"></div>
+
+      <h3 class="s-h3">What You Leave With</h3>
+      <div class="card" style="border-left: 3px solid var(--blue);">
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border-muted);">
+            <span style="font-family:var(--mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;margin-top:3px;">01</span>
+            <span class="s-p" style="margin:0;font-size:0.9rem;">A sharpened research question — <em style="color:var(--text-muted);">Une question de recherche affinée</em></span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border-muted);">
+            <span style="font-family:var(--mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;margin-top:3px;">02</span>
+            <span class="s-p" style="margin:0;font-size:0.9rem;">An organized literature base — <em style="color:var(--text-muted);">Une base documentaire organisée</em></span>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;">
+            <span style="font-family:var(--mono);font-size:0.62rem;color:var(--blue);text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;margin-top:3px;">03</span>
+            <span class="s-p" style="margin:0;font-size:0.9rem;">A configured AI workspace — <em style="color:var(--text-muted);">Un espace de travail IA configuré</em></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+</div><!-- /container -->
+
+<script>
+// ===== SLIDE DATA =====
+const slides = [
+  {
+    type: 'title',
+    note: '30 sec',
+    step: null
+  },
+  {
+    type: 'split',
+    title: 'Research Has Two Purposes',
+    note: '30 sec',
+    step: null,
+    left: {
+      label: 'Create new knowledge',
+      accent: '#0969DA',
+      points: [
+        'The visible product — the thesis, the paper, the result',
+        'AI can help you get here faster and more thoroughly'
+      ]
+    },
+    right: {
+      label: 'Learn to think as a researcher',
+      accent: '#9A6700',
+      points: [
+        'The skill the degree certifies — and what AI can quietly erode',
+        'This is why HOW you use AI matters'
+      ]
+    },
+    callout: 'C\'est pourquoi la manière d\'utiliser l\'IA est essentielle.'
+  },
+  {
+    type: 'principle',
+    title: 'The Guiding Principle',
+    note: '45 sec',
+    step: null,
+    absorb: {
+      label: 'Let AI absorb',
+      sub: 'Friction that doesn\'t teach',
+      items: ['Finding papers', 'Formatting & translating', 'Summarizing for orientation']
+    },
+    preserve: {
+      label: 'Preserve for yourself',
+      sub: 'Friction that does teach',
+      items: ['Judgment · forming your own question', 'Critical evaluation of sources', 'Deciding where the gap sits']
+    },
+    litmus: 'Can the student explain and defend the output as their own thinking?'
+  },
+  {
+    type: 'layers',
+    title: 'Five First Steps',
+    note: '30 sec',
+    step: null,
+    subtitle: 'Cinq premiers pas · with Claude Projects throughout',
+    layers: [
+      { num:'1', label:'From interest to a question', sub:'De l\'intérêt à la question — Socratic sparring with Claude', accent:'#0969DA', bg:'rgba(9,105,218,0.06)', tag:null },
+      { num:'2', label:'Orienting to the field', sub:'S\'orienter dans le domaine — 5 moves in one Claude Project', accent:'#1A7F37', bg:'rgba(26,127,55,0.06)', tag:null },
+      { num:'3', label:'Identifying the gap', sub:'Identifier la lacune — AI maps, you judge', accent:'#9A6700', bg:'rgba(154,103,0,0.06)', tag:'you' },
+      { num:'4', label:'Scoping & feasibility', sub:'Cadrage et faisabilité — constraints before suggestions', accent:'#6E40C9', bg:'rgba(110,64,201,0.06)', tag:null },
+      { num:'5', label:'Workspace & habits', sub:'Espace de travail — a configured environment, not just notes', accent:'#0969DA', bg:'rgba(9,105,218,0.04)', tag:'ai' }
+    ]
+  },
+  {
+    type: 'dialogue',
+    title: 'Step 1 — From Interest to a Question',
+    note: '90 sec',
+    step: '01',
+    intro: 'Configure Claude to ask, not answer. Two students, same method — Claude only asked questions.',
+    examples: [
+      {
+        person: 'Manga', school: 'University of Buea',
+        exchange: [
+          { role:'you', text:'Web scalability, edge & real-time systems — serverless + streams.' },
+          { role:'ai',  text:'Broad! Which pulls you most — scaling, or the real-time part?' },
+          { role:'you', text:'Real-time streaming — but it must scale under bursty load.' },
+          { role:'ai',  text:'When it breaks, what fails first — latency, cost, or correctness?' },
+          { role:'you', text:'Latency — serverless cold-starts right when bursts hit.' }
+        ],
+        result: 'Can predictive pre-warming cut p95 latency for bursty stream workloads?'
+      },
+      {
+        person: 'Brice', school: 'Université de Yaoundé I',
+        exchange: [
+          { role:'you', text:'AI to make Cameroon\'s RIS–RIN interconnection more stable & efficient.' },
+          { role:'ai',  text:'Broad! Stability or efficiency — what pulls you most?' },
+          { role:'you', text:'Stability — holding frequency in range when the grids connect.' },
+          { role:'ai',  text:'Which lever — forecasting or control? What would you measure?' },
+          { role:'you', text:'Forecasting — I want to predict the load drop before it happens.' }
+        ],
+        result: 'Can LSTM load-forecasting reduce frequency deviation after RIS–RIN interconnection?'
+      }
+    ]
+  },
+  {
+    type: 'layers',
+    title: 'Step 2 — Orienting to the Field',
+    note: '60 sec',
+    step: '02',
+    subtitle: 'Five moves, all in one Claude Project · Cinq étapes, un seul Projet',
+    layers: [
+      { num:'1', label:'Set up the Project',    sub:'Question + context in instructions — every chat starts grounded', accent:'#0969DA', bg:'rgba(9,105,218,0.06)', tag:'ai' },
+      { num:'2', label:'Map search terms',      sub:'Concepts → synonyms → ready-to-paste query strings', accent:'#1A7F37', bg:'rgba(26,127,55,0.06)', tag:'ai' },
+      { num:'3', label:'Gather sources',        sub:'Run queries in Google Scholar, arXiv, IEEE Xplore — you do this', accent:'#9A6700', bg:'rgba(154,103,0,0.06)', tag:'you' },
+      { num:'4', label:'Build the set',         sub:'Upload gathered papers → Claude now grounded in your sources', accent:'#6E40C9', bg:'rgba(110,64,201,0.06)', tag:'ai' },
+      { num:'5', label:'Interrogate & log',     sub:'Compare methods, surface gaps, keep a living research log', accent:'#0969DA', bg:'rgba(9,105,218,0.04)', tag:'ai' }
+    ]
+  },
+  {
+    type: 'steps345',
+    title: 'Steps 3, 4 & 5',
+    note: '60 sec',
+    step: '03–05',
+    steps: [
+      {
+        num: '3', label: 'Identifying the gap', fr: 'Identifier la lacune',
+        accent: '#9A6700',
+        body: 'AI maps the landscape — competing methods, contradictions. You judge where the real, worthwhile gap sits. The reasoning is yours — that is the assessment.',
+        prompt: '"Map the contending approaches and where they disagree. Do not tell me my gap — just lay out the landscape."'
+      },
+      {
+        num: '4', label: 'Scoping & feasibility', fr: 'Cadrage et faisabilité',
+        accent: '#6E40C9',
+        body: 'A thinking partner for what is realistic. Ask it to probe your constraints — data, tools, time — before it suggests anything.',
+        prompt: '"Ask me about my data, tools and time before suggesting anything, then help me judge what is realistic."'
+      },
+      {
+        num: '5', label: 'Workspace & habits', fr: 'Espace de travail et habitudes',
+        accent: '#0969DA',
+        body: 'A Claude Project becomes a persistent research workspace. It models good habits: sources, a research log, why you read each paper. You leave with a configured environment, not just notes.',
+        prompt: null
+      }
+    ]
+  },
+  {
+    type: 'closing',
+    title: 'What You Leave With',
+    note: '30 sec',
+    step: null,
+    items: [
+      { en: 'A sharpened research question',   fr: 'Une question de recherche affinée' },
+      { en: 'An organized literature base',    fr: 'Une base documentaire organisée' },
+      { en: 'A configured AI workspace',       fr: 'Un espace de travail IA configuré' }
+    ],
+    litmus: 'Always ask: Can you explain and defend this as your own thinking? · Pouvez-vous l\'expliquer et le défendre ?'
+  }
+];
+
+let cur = 0;
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function pad(n) { return String(n).padStart(2,'0'); }
+
+function renderProgress() {
+  const el = document.getElementById('progress');
+  el.innerHTML = slides.map((_,i) => {
+    const cls = i===cur ? 'active' : i<cur ? 'visited' : '';
+    return '<div class="progress-pip '+cls+'" onclick="slideGoTo('+i+')"></div>';
+  }).join('');
+}
+
+function renderSlide() {
+  const s = slides[cur];
+  document.getElementById('counter').textContent = pad(cur+1)+' / '+pad(slides.length);
+  document.getElementById('timing').textContent = '⏱ '+s.note;
+  const badge = document.getElementById('stepBadge');
+  badge.innerHTML = s.step ? '<span class="step-badge">Step ' + esc(s.step) + '</span>' : '';
+
+  const c = document.getElementById('slideContent');
+  c.style.animation = 'none'; c.offsetHeight; c.style.animation = 'fadeSlide 0.4s ease both';
+  let h = '';
+
+  if (s.type === 'title') {
+    h = `<div style="display:flex;flex-direction:column;justify-content:center;height:280px">
+      <div class="sl-title-meta mono">SUNY Poly AIX Workshop · University of Buea · Université de Yaoundé I · June 2026</div>
+      <h1 class="sl-title-main">First Steps in a <span>Research Project</span></h1>
+      <div class="sl-title-fr">Premiers pas dans un projet de recherche</div>
+      <p class="sl-title-sub">How AI supports the student researcher · Comment l'IA accompagne l'étudiant-chercheur</p>
+    </div>`;
+
+  } else if (s.type === 'split') {
+    h = `<h1 class="sl-title">${esc(s.title)}</h1>
+    <div class="sl-split-grid">`;
+    [s.left, s.right].forEach((col,ci) => {
+      h += `<div class="sl-split-col stagger" style="border-top:3px solid ${col.accent};animation-delay:${ci*80}ms">
+        <span class="sl-split-label mono" style="color:${col.accent}">${esc(col.label)}</span>
+        <div>`;
+      col.points.forEach(p => {
+        h += `<div class="sl-split-point"><div class="sl-split-dot" style="background:${col.accent}"></div><span class="sl-split-text">${esc(p)}</span></div>`;
+      });
+      h += '</div></div>';
+    });
+    h += '</div>';
+    if (s.callout) {
+      h += `<div class="sl-callout"><span class="sl-callout-label">Remember</span><p>${esc(s.callout)}</p></div>`;
+    }
+
+  } else if (s.type === 'principle') {
+    h = `<h1 class="sl-title">${esc(s.title)}</h1>
+    <div class="sl-split-grid">
+      <div class="sl-split-col stagger" style="border-top:3px solid #0969DA">
+        <span class="sl-split-label mono" style="color:#0969DA">${esc(s.absorb.label)}</span>
+        <div style="font-family:var(--serif);font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:10px;">${esc(s.absorb.sub)}</div>
+        <div>`;
+    s.absorb.items.forEach(item => {
+      h += `<div class="sl-split-point"><div class="sl-split-dot" style="background:#0969DA"></div><span class="sl-split-text">${esc(item)}</span></div>`;
+    });
+    h += `</div></div>
+      <div class="sl-split-col stagger" style="border-top:3px solid #9A6700;animation-delay:80ms">
+        <span class="sl-split-label mono" style="color:#9A6700">${esc(s.preserve.label)}</span>
+        <div style="font-family:var(--serif);font-size:0.82rem;color:var(--text-muted);font-style:italic;margin-bottom:10px;">${esc(s.preserve.sub)}</div>
+        <div>`;
+    s.preserve.items.forEach(item => {
+      h += `<div class="sl-split-point"><div class="sl-split-dot" style="background:#9A6700"></div><span class="sl-split-text">${esc(item)}</span></div>`;
+    });
+    h += `</div></div></div>
+    <div class="sl-callout" style="margin-top:14px;border-left-color:var(--blue);background:var(--blue-dim);">
+      <span class="sl-callout-label" style="color:var(--blue);">The Litmus Test</span>
+      <p style="color:var(--text-primary);font-weight:500;">${esc(s.litmus)}</p>
+    </div>`;
+
+  } else if (s.type === 'layers') {
+    h = `<h1 class="sl-title">${esc(s.title)}</h1>`;
+    if (s.subtitle) h += `<div style="font-family:var(--serif);font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;font-style:italic;">${esc(s.subtitle)}</div>`;
+    h += '<div class="sl-layer-stack">';
+    s.layers.forEach((l,i) => {
+      h += `<div class="sl-layer-row stagger" style="border-left-color:${l.accent};background:${l.bg};animation-delay:${i*65}ms">
+        <span class="sl-layer-num" style="color:${l.accent}">${esc(l.num)}</span>
+        <div class="sl-layer-body">
+          <div class="sl-layer-label">${esc(l.label)}${l.tag ? '<span class="sl-layer-tag '+l.tag+'">'+(l.tag==='you'?'You':'AI')+'</span>' : ''}</div>
+          <div class="sl-layer-sub">${esc(l.sub)}</div>
+        </div>
+      </div>`;
+    });
+    h += '</div>';
+
+  } else if (s.type === 'dialogue') {
+    h = `<h1 class="sl-title">${esc(s.title)}</h1>`;
+    if (s.intro) h += `<p class="sl-intro-text">${esc(s.intro)}</p>`;
+    h += '<div class="sl-dialogue-grid">';
+    s.examples.forEach((ex,ci) => {
+      h += `<div class="sl-dialogue-col stagger" style="animation-delay:${ci*80}ms">
+        <div class="sl-dialogue-who"><strong>${esc(ex.person)}</strong> · ${esc(ex.school)}</div>`;
+      ex.exchange.forEach(msg => {
+        h += `<div class="sl-msg ${msg.role}">
+          <span class="sl-msg-tag">${msg.role === 'ai' ? 'Ask' : 'You'}</span>
+          <span class="sl-msg-text">${esc(msg.text)}</span>
+        </div>`;
+      });
+      h += `<div class="sl-result">
+        <span class="sl-result-label">Question arrived at — Claude only asked</span>
+        <div class="sl-result-text">${esc(ex.result)}</div>
+      </div></div>`;
+    });
+    h += '</div>';
+
+  } else if (s.type === 'steps345') {
+    h = `<h1 class="sl-title">${esc(s.title)}</h1>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;">`;
+    s.steps.forEach((st,i) => {
+      h += `<div class="stagger" style="background:var(--bg);border:1px solid var(--border);border-top:3px solid ${st.accent};border-radius:8px;padding:14px 16px;animation-delay:${i*70}ms">
+        <div style="font-family:var(--mono);font-size:1rem;font-weight:700;color:${st.accent};margin-bottom:4px;">${esc(st.num)}</div>
+        <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);margin-bottom:2px;line-height:1.3;">${esc(st.label)}</div>
+        <div style="font-family:var(--serif);font-size:0.74rem;color:var(--text-muted);font-style:italic;margin-bottom:8px;">${esc(st.fr)}</div>
+        <p style="font-family:var(--serif);font-size:0.8rem;color:var(--text-secondary);line-height:1.55;margin-bottom:${st.prompt?'8px':'0'}">${esc(st.body)}</p>
+        ${st.prompt ? '<div style="background:var(--blue-dim);border-left:2px solid var(--blue);padding:6px 10px;border-radius:0 4px 4px 0;font-family:var(--serif);font-size:0.75rem;font-style:italic;color:var(--text-secondary);line-height:1.5;">'+esc(st.prompt)+'</div>' : ''}
+      </div>`;
+    });
+    h += '</div>';
+
+  } else if (s.type === 'closing') {
+    h = `<div style="display:flex;flex-direction:column;justify-content:center;height:280px">
+      <h1 class="sl-closing-main">${esc(s.title)}</h1>
+      <div class="sl-closing-border">
+        <div class="sl-closing-items">`;
+    s.items.forEach(item => {
+      h += `<div class="sl-closing-item">
+        <div class="sl-closing-dot"></div>
+        <div>
+          <div class="sl-closing-item-text">${esc(item.en)}</div>
+          <div class="sl-closing-item-fr">${esc(item.fr)}</div>
+        </div>
+      </div>`;
+    });
+    h += `</div></div>
+      <div style="margin-top:16px;font-family:var(--serif);font-size:0.82rem;color:var(--text-muted);font-style:italic;line-height:1.6;">${esc(s.litmus)}</div>
+    </div>`;
+  }
+
+  c.innerHTML = h;
+  document.getElementById('prevBtn').disabled = cur === 0;
+  document.getElementById('nextBtn').disabled = cur === slides.length - 1;
+  renderProgress();
+}
+
+function slideGo(dir) { const n = cur + dir; if (n >= 0 && n < slides.length) { cur = n; renderSlide(); } }
+function slideGoTo(i) { cur = i; renderSlide(); }
+
+document.getElementById('slidesWrap').addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); slideGo(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); slideGo(-1); }
+});
+
+// ===== INNER TAB SWITCHING =====
+document.querySelectorAll('.inner-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.inner-tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('itab-' + btn.dataset.itab).classList.add('active');
+  });
+});
+
+renderSlide();
+</script>
+</body>
+</html>
