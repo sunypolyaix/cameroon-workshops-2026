@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Steps in a Research Project — AIX Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:           #FFFFFF;
+  --surface:      #F6F8FA;
+  --surface-2:    #EAEEF2;
+  --border:       #D0D7DE;
+  --text-primary: #0D1117;
+  --text-muted:   #6E7781;
+  --blue:         #0969DA;
+  --blue-dim:     rgba(9,105,218,0.08);
+  --amber:        #9A6700;
+  --amber-dim:    rgba(154,103,0,0.08);
+  --green:        #1A7F37;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+  --serif: 'Source Serif 4', Georgia, serif;
+}
+
+body { font-family: var(--display); background: var(--bg); color: var(--text-primary); padding: 32px 24px; -webkit-font-smoothing: antialiased; }
+
+/* ─── PAGE HEADER ──────── */
+.page-header { max-width: 1100px; margin: 0 auto 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border); text-align: center; }
+.page-header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 6px; }
+.page-header h1 span { color: var(--blue); }
+.page-header .ph-meta { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* ─── ACCORDION ──────────── */
+details { margin-bottom: 14px; }
+summary { font-size: 17px; font-weight: 600; color: var(--text-primary); cursor: pointer; padding: 18px 26px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; list-style: none; display: flex; align-items: center; gap: 12px; transition: all 0.2s ease; user-select: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '▸'; font-size: 13px; color: var(--text-muted); transition: transform 0.2s ease; display: inline-block; flex-shrink: 0; }
+details[open] > summary::before { transform: rotate(90deg); }
+summary:hover { background: var(--surface); border-color: rgba(9,105,218,0.2); }
+details[open] > summary { border-radius: 12px 12px 0 0; border-bottom-color: transparent; }
+.summary-tag { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 6px; margin-left: auto; flex-shrink: 0; }
+.tag-slides  { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(9,105,218,0.2); }
+.tag-ref     { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+.section-body { background: var(--bg); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; padding: 28px 32px; }
+
+/* ═══════════════════════════════════════════════════════
+   SLIDE ENGINE
+   Design canvas: 1280 × 720. JS scales to fit the viewport.
+   ═══════════════════════════════════════════════════════ */
+
+.slides-wrap { }
+
+/* 16:9 aspect-ratio container */
+.slides-viewport {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #0F1117;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.slides-viewport:fullscreen,
+.slides-viewport:-webkit-full-screen {
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: unset;
+}
+
+/* stage centers the scaled inner */
+.slides-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1280×720 design canvas — transform set by JS */
+.slides-inner {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  transform-origin: 0 0;
+  flex-shrink: 0;
+}
+
+/* individual slides */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1280px;
+  height: 720px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.32s ease;
+  pointer-events: none;
+  font-family: var(--display);
+  overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+
+/* ── THEMES ── */
+.sl-dark  { background: #0F1117; color: #FFFFFF; }
+.sl-light { background: #FFFFFF; color: #0D1117; }
+
+/* ── LAYOUT SHELL ── */
+.sl-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 80px 56px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── KICKER (top label) ── */
+.sl-kicker {
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sl-dark  .sl-kicker { color: rgba(255,255,255,0.3); }
+.sl-light .sl-kicker { color: rgba(0,0,0,0.3); }
+.sl-kicker-step {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.sl-dark  .sl-kicker-step { background: rgba(9,105,218,0.2); color: #60a5fa; border-color: rgba(9,105,218,0.35); }
+.sl-light .sl-kicker-step { background: var(--blue-dim); color: var(--blue); border-color: rgba(9,105,218,0.25); }
+
+/* ── TITLE (large) ── */
+.sl-h1 {
+  font-size: 68px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.sl-dark  .sl-h1 { color: #FFFFFF; }
+.sl-light .sl-h1 { color: #0D1117; }
+.sl-h1 em { font-style: normal; color: #60a5fa; }
+.sl-light .sl-h1 em { color: var(--blue); }
+
+/* ── TITLE (content slide, smaller) ── */
+.sl-h2 {
+  font-size: 50px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin-bottom: 36px;
+}
+.sl-dark  .sl-h2 { color: #FFFFFF; }
+.sl-light .sl-h2 { color: #0D1117; }
+
+/* ── SUBTITLE / FRENCH ── */
+.sl-sub {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.45;
+  margin-top: 8px;
+}
+.sl-dark  .sl-sub { color: rgba(255,255,255,0.45); font-style: italic; }
+.sl-light .sl-sub { color: rgba(0,0,0,0.4); font-style: italic; }
+
+/* ── TWO-COLUMN GRID ── */
+.sl-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  flex: 1;
+}
+.sl-col {
+  border-radius: 12px;
+  padding: 32px 36px;
+  border-top: 5px solid;
+  display: flex;
+  flex-direction: column;
+}
+.sl-dark  .sl-col { background: rgba(255,255,255,0.04); }
+.sl-light .sl-col { background: #F6F8FA; }
+
+.sl-col-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.sl-col-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+.sl-col-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.sl-col-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 10px;
+}
+.sl-col-text {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.5;
+}
+.sl-dark  .sl-col-text { color: rgba(255,255,255,0.75); }
+.sl-light .sl-col-text { color: #24292F; }
+
+/* ── CALLOUT BAR (bottom of slide) ── */
+.sl-callout {
+  margin-top: auto;
+  padding: 18px 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sl-dark  .sl-callout { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+.sl-light .sl-callout { background: rgba(154,103,0,0.07); border: 1px solid rgba(154,103,0,0.2); }
+.sl-callout-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.sl-dark  .sl-callout-label { color: rgba(255,255,255,0.35); }
+.sl-light .sl-callout-label { color: var(--amber); }
+.sl-callout-text {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.4;
+}
+.sl-dark  .sl-callout-text { color: rgba(255,255,255,0.6); }
+.sl-light .sl-callout-text { color: #24292F; }
+
+/* ── LAYERS (numbered rows) ── */
+.sl-layers { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.sl-layer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 22px;
+  border-radius: 10px;
+  border-left: 5px solid;
+  flex: 1;
+}
+.sl-layer-n {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 700;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+  line-height: 1;
+}
+.sl-layer-body { flex: 1; }
+.sl-layer-label {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.sl-layer-sub {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-style: italic;
+  margin-top: 3px;
+}
+.sl-light .sl-layer-sub { color: rgba(0,0,0,0.42); }
+.sl-dark  .sl-layer-sub { color: rgba(255,255,255,0.4); }
+.sl-layer-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  border: 1px solid;
+  vertical-align: middle;
+}
+.tag-you { background: rgba(154,103,0,0.1); color: #b45309; border-color: rgba(154,103,0,0.3); }
+.tag-ai  { background: rgba(9,105,218,0.1);  color: #0969DA; border-color: rgba(9,105,218,0.3); }
+
+/* ── CLOSING LAYOUT ── */
+.sl-closing-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.sl-closing-h {
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: #FFFFFF;
+  line-height: 1.05;
+}
+.sl-closing-list {
+  border-left: 3px solid rgba(9,105,218,0.5);
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.sl-closing-item {
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sl-closing-item:last-child { border-bottom: none; }
+.sl-closing-en {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.3;
+}
+.sl-closing-fr {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+}
+.sl-litmus {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.04em;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── DECORATIVE BACKGROUND ELEMENT ── */
+.sl-deco {
+  position: absolute;
+  right: 72px;
+  bottom: 48px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 220px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+.sl-dark  .sl-deco { color: rgba(255,255,255,0.03); }
+.sl-light .sl-deco { color: rgba(0,0,0,0.03); }
+
+/* ─── CONTROLS ──────────── */
+.slides-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+.slides-progress { display: flex; gap: 5px; flex: 1; }
+.pip {
+  height: 3px; border-radius: 2px; flex: 1; cursor: pointer;
+  background: var(--border);
+  transition: all 0.3s ease;
+}
+.pip.active  { background: var(--blue); }
+.pip.visited { background: rgba(9,105,218,0.35); }
+.ctrl-btn {
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
+  color: var(--text-muted); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 13px; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap; line-height: 1;
+}
+.ctrl-btn:hover:not(:disabled) { color: var(--blue); border-color: rgba(9,105,218,0.3); background: var(--blue-dim); }
+.ctrl-btn:disabled { opacity: 0.3; cursor: default; }
+.ctrl-count { font-family: var(--mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.08em; white-space: nowrap; }
+.ctrl-fs { font-size: 0.85rem; padding: 5px 10px; }
+
+/* ─── INNER TABS ─────────── */
+.inner-tab-nav { display: flex; border-bottom: 1px solid var(--border); margin: 0 -32px 28px; padding: 0 32px; overflow-x: auto; scrollbar-width: none; background: var(--surface); }
+.inner-tab-nav::-webkit-scrollbar { display: none; }
+.inner-tab-btn { font-family: var(--mono); font-size: 0.67rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 13px 16px; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+.inner-tab-btn:hover { color: var(--text-primary); }
+.inner-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.inner-tab-btn .tn { color: var(--border); margin-right: 6px; }
+.inner-tab-btn.active .tn { color: rgba(9,105,218,0.4); }
+.inner-tab-pane { display: none; }
+.inner-tab-pane.active { display: block; animation: paneFade 0.18s ease; }
+@keyframes paneFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* stub tab content */
+.stub-notice { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; background: var(--surface); border: 1px dashed var(--border); border-radius: 8px; padding: 20px 24px; text-align: center; }
+
+@media (max-width: 640px) {
+  body { padding: 14px 12px; }
+  .section-body { padding: 20px 18px; }
+  .inner-tab-nav { margin: 0 -18px 24px; padding: 0 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>First Steps in a <span>Research Project</span></h1>
+  <p class="ph-meta">SUNY Poly AIX Workshop · University of Buea · Université de Yaoundé I · June 2026 · POC Engine</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ PRESENTATION ════════════════════════════════════ -->
+<details open>
+  <summary>
+    Workshop Presentation
+    <span class="summary-tag tag-slides">4 slides — engine POC</span>
+  </summary>
+  <div class="section-body">
+    <div class="slides-wrap">
+
+      <!-- ── VIEWPORT (16:9, scales to fill) ── -->
+      <div class="slides-viewport" id="slidesViewport">
+        <div class="slides-stage" id="slidesStage">
+          <div class="slides-inner" id="slidesInner">
+
+            <!-- ░░ SLIDE 1 — TITLE ░░ -->
+            <div class="slide sl-dark active" id="s1">
+              <div class="sl-deco">01</div>
+              <div class="sl-body">
+                <div class="sl-kicker">SUNY Poly AIX Workshop · University of Buea · Université de Yaoundé I · June 2026</div>
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:20px;">
+                  <h1 class="sl-h1">First Steps in a<br><em>Research Project</em></h1>
+                  <div class="sl-sub">Premiers pas dans un projet de recherche<br>How AI supports the student researcher</div>
+                </div>
+                <div style="display:flex; gap:32px; align-items:flex-end; margin-top:auto; padding-top:32px; border-top:1px solid rgba(255,255,255,0.08);">
+                  <div>
+                    <div style="font-family:var(--mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:4px;">Presenter</div>
+                    <div style="font-size:18px;font-weight:600;color:rgba(255,255,255,0.8);">Dr. Steven Schneider</div>
+                    <div style="font-family:var(--serif);font-size:16px;color:rgba(255,255,255,0.35);font-style:italic;">Co-Director, AIX Center · SUNY Polytechnic Institute</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ░░ SLIDE 2 — TWO-COLUMN PRINCIPLE ░░ -->
+            <div class="slide sl-light" id="s2">
+              <div class="sl-deco">↕</div>
+              <div class="sl-body">
+                <div class="sl-kicker">The Guiding Principle · Le principe directeur</div>
+                <h2 class="sl-h2">AI absorbs what doesn't teach.<br>You keep what does.</h2>
+                <div class="sl-cols">
+                  <div class="sl-col" style="border-top-color:#0969DA;">
+                    <div class="sl-col-label" style="color:#0969DA;">Let AI absorb</div>
+                    <div class="sl-col-title" style="color:#0969DA;">Friction that doesn't teach</div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#0969DA;"></div><div class="sl-col-text">Finding papers · formatting · translating</div></div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#0969DA;"></div><div class="sl-col-text">Summarizing for orientation</div></div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#0969DA;"></div><div class="sl-col-text">Organizing references &amp; notes</div></div>
+                  </div>
+                  <div class="sl-col" style="border-top-color:#9A6700;">
+                    <div class="sl-col-label" style="color:#9A6700;">Preserve for yourself</div>
+                    <div class="sl-col-title" style="color:#9A6700;">Friction that does teach</div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#9A6700;"></div><div class="sl-col-text">Forming your own question</div></div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#9A6700;"></div><div class="sl-col-text">Judgment · critical evaluation</div></div>
+                    <div class="sl-col-item"><div class="sl-col-dot" style="background:#9A6700;"></div><div class="sl-col-text">Deciding where the gap sits</div></div>
+                  </div>
+                </div>
+                <div class="sl-callout" style="margin-top:20px;">
+                  <span class="sl-callout-label">The Litmus Test</span>
+                  <span class="sl-callout-text">Can you explain and defend this output as your own thinking? · Pouvez-vous l'expliquer et le défendre ?</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ░░ SLIDE 3 — FIVE STEPS (LAYERS) ░░ -->
+            <div class="slide sl-light" id="s3">
+              <div class="sl-body">
+                <div class="sl-kicker">Five First Steps · Cinq premiers pas</div>
+                <h2 class="sl-h2">Five First Steps</h2>
+                <div class="sl-layers">
+                  <div class="sl-layer" style="border-left-color:#0969DA; background:rgba(9,105,218,0.05);">
+                    <div class="sl-layer-n" style="color:#0969DA;">1</div>
+                    <div class="sl-layer-body">
+                      <div class="sl-layer-label">From interest to a question <span class="sl-layer-tag tag-ai">AI</span></div>
+                      <div class="sl-layer-sub">De l'intérêt à la question — Socratic sparring with your AI workspace</div>
+                    </div>
+                  </div>
+                  <div class="sl-layer" style="border-left-color:#1A7F37; background:rgba(26,127,55,0.05);">
+                    <div class="sl-layer-n" style="color:#1A7F37;">2</div>
+                    <div class="sl-layer-body">
+                      <div class="sl-layer-label">Orienting to the field <span class="sl-layer-tag tag-ai">AI</span></div>
+                      <div class="sl-layer-sub">S'orienter dans le domaine — 5 moves: setup · map · gather · build · interrogate</div>
+                    </div>
+                  </div>
+                  <div class="sl-layer" style="border-left-color:#9A6700; background:rgba(154,103,0,0.05);">
+                    <div class="sl-layer-n" style="color:#9A6700;">3</div>
+                    <div class="sl-layer-body">
+                      <div class="sl-layer-label">Identifying the gap <span class="sl-layer-tag tag-you">You</span></div>
+                      <div class="sl-layer-sub">Identifier la lacune — AI maps the landscape; you judge where the gap sits</div>
+                    </div>
+                  </div>
+                  <div class="sl-layer" style="border-left-color:#6E40C9; background:rgba(110,64,201,0.05);">
+                    <div class="sl-layer-n" style="color:#6E40C9;">4</div>
+                    <div class="sl-layer-body">
+                      <div class="sl-layer-label">Scoping &amp; feasibility <span class="sl-layer-tag tag-ai">AI</span></div>
+                      <div class="sl-layer-sub">Cadrage et faisabilité — constraints before suggestions</div>
+                    </div>
+                  </div>
+                  <div class="sl-layer" style="border-left-color:#0969DA; background:rgba(9,105,218,0.03);">
+                    <div class="sl-layer-n" style="color:#0969DA;">5</div>
+                    <div class="sl-layer-body">
+                      <div class="sl-layer-label">Workspace &amp; habits <span class="sl-layer-tag tag-ai">AI</span></div>
+                      <div class="sl-layer-sub">Espace de travail — a configured environment, not just notes</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ░░ SLIDE 4 — CLOSING ░░ -->
+            <div class="slide sl-dark" id="s4">
+              <div class="sl-deco">★</div>
+              <div class="sl-body">
+                <div class="sl-kicker">What you leave with · Ce que vous repartez avec</div>
+                <div class="sl-closing-wrap">
+                  <h2 class="sl-closing-h">What You Leave With</h2>
+                  <div class="sl-closing-list">
+                    <div class="sl-closing-item">
+                      <div class="sl-closing-en">A sharpened research question</div>
+                      <div class="sl-closing-fr">Une question de recherche affinée</div>
+                    </div>
+                    <div class="sl-closing-item">
+                      <div class="sl-closing-en">An organized literature base</div>
+                      <div class="sl-closing-fr">Une base documentaire organisée</div>
+                    </div>
+                    <div class="sl-closing-item">
+                      <div class="sl-closing-en">A configured AI workspace</div>
+                      <div class="sl-closing-fr">Un espace de travail IA configuré</div>
+                    </div>
+                  </div>
+                  <div class="sl-litmus">Always ask: Can you explain and defend this as your own thinking? · Toujours se demander : pouvez-vous l'expliquer et le défendre ?</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /slides-inner -->
+        </div><!-- /slides-stage -->
+      </div><!-- /slides-viewport -->
+
+      <!-- ── CONTROLS (outside the scaled canvas) ── -->
+      <div class="slides-controls">
+        <button class="ctrl-btn" id="prevBtn" onclick="slideGo(-1)" disabled>← Prev</button>
+        <div class="slides-progress" id="progress"></div>
+        <span class="ctrl-count" id="counter">01 / 04</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="slideGo(1)">Next →</button>
+        <button class="ctrl-btn ctrl-fs" id="fsBtn" onclick="toggleFS()" title="Fullscreen">⛶</button>
+      </div>
+
+    </div><!-- /slides-wrap -->
+  </div>
+</details>
+
+<!-- ═══ TAKEAWAYS ══════════════════════════════════════ -->
+<details>
+  <summary>
+    Takeaways — Reference Material
+    <span class="summary-tag tag-ref">4 Tabs</span>
+  </summary>
+  <div class="section-body" style="padding-top:0;">
+    <nav class="inner-tab-nav" role="tablist">
+      <button class="inner-tab-btn active" data-itab="prompts"><span class="tn">01</span>Try These Prompts</button>
+      <button class="inner-tab-btn" data-itab="step2"><span class="tn">02</span>Step 2 in Detail</button>
+      <button class="inner-tab-btn" data-itab="examples"><span class="tn">03</span>Live Examples</button>
+      <button class="inner-tab-btn" data-itab="principles"><span class="tn">04</span>Principles</button>
+    </nav>
+
+    <div class="inner-tab-pane active" id="itab-prompts">
+      <div class="stub-notice">Prompts tab — content from first-steps.html · to be merged in next pass</div>
+    </div>
+    <div class="inner-tab-pane" id="itab-step2">
+      <div class="stub-notice">Step 2 in Detail — 5-move stepper · to be merged in next pass</div>
+    </div>
+    <div class="inner-tab-pane" id="itab-examples">
+      <div class="stub-notice">Live Examples — Manga + Brice worked dialogues · to be merged in next pass</div>
+    </div>
+    <div class="inner-tab-pane" id="itab-principles">
+      <div class="stub-notice">Principles — absorb/preserve framework + litmus test · to be merged in next pass</div>
+    </div>
+  </div>
+</details>
+
+</div><!-- /container -->
+
+<script>
+// ═══ SLIDE ENGINE ═══════════════════════════════════════
+
+const TOTAL = 4;
+let cur = 0;
+
+function pad(n) { return String(n + 1).padStart(2, '0'); }
+
+// ── Scale: fit 1280×720 into whatever space the stage has ──
+function scaleSlides() {
+  const stage = document.getElementById('slidesStage');
+  const inner = document.getElementById('slidesInner');
+  const sw = stage.clientWidth;
+  const sh = stage.clientHeight;
+  if (!sw || !sh) return;
+  const scale = Math.min(sw / 1280, sh / 720);
+  const tx = (sw - 1280 * scale) / 2;
+  const ty = (sh - 720 * scale) / 2;
+  inner.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  inner.style.transformOrigin = '0 0';
+}
+
+// ── Render progress pips ──
+function renderProgress() {
+  const el = document.getElementById('progress');
+  el.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
+    const cls = i === cur ? 'pip active' : i < cur ? 'pip visited' : 'pip';
+    return `<div class="${cls}" onclick="slideGoTo(${i})"></div>`;
+  }).join('');
+}
+
+// ── Show slide ──
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    s.classList.toggle('active', i === n);
+  });
+  document.getElementById('counter').textContent = pad(n) + ' / ' + pad(TOTAL - 1);
+  document.getElementById('prevBtn').disabled = n === 0;
+  document.getElementById('nextBtn').disabled = n === TOTAL - 1;
+  renderProgress();
+}
+
+function slideGo(dir) {
+  const n = cur + dir;
+  if (n >= 0 && n < TOTAL) { cur = n; showSlide(cur); }
+}
+function slideGoTo(i) { cur = i; showSlide(cur); }
+
+// ── Keyboard ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); slideGo(1); }
+  if (e.key === 'ArrowLeft')                     { e.preventDefault(); slideGo(-1); }
+  if (e.key === 'f' || e.key === 'F')            { toggleFS(); }
+  if (e.key === 'Escape' && document.fullscreenElement) { document.exitFullscreen(); }
+});
+
+// ── Fullscreen ──
+function toggleFS() {
+  const vp = document.getElementById('slidesViewport');
+  if (!document.fullscreenElement) {
+    (vp.requestFullscreen || vp.webkitRequestFullscreen).call(vp);
+  } else {
+    (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  }
+}
+document.addEventListener('fullscreenchange', () => setTimeout(scaleSlides, 30));
+document.addEventListener('webkitfullscreenchange', () => setTimeout(scaleSlides, 30));
+
+// ── Resize ──
+window.addEventListener('resize', scaleSlides);
+new ResizeObserver(scaleSlides).observe(document.getElementById('slidesStage'));
+
+// ── Inner tabs ──
+document.querySelectorAll('.inner-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.inner-tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('itab-' + btn.dataset.itab).classList.add('active');
+  });
+});
+
+// ── Init ──
+scaleSlides();
+showSlide(0);
+</script>
+</body>
+</html>
