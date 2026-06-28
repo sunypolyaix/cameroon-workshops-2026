@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: workflow
 title: AI-First Literature Review — Five-Step Workflow
 description: The complete five-step live demo workflow for AI-assisted literature review — from seed bibliography through Zotero verification, NotebookLM synthesis, and per-paper grounded note extraction.

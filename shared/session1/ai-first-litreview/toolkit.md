@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: toolkit
 title: AI-First Literature Review — Toolkit
 description: The five tools needed for the AI-first literature review workflow, with setup links, free-tier notes, and the critical Zotero + Google Drive architecture constraint.

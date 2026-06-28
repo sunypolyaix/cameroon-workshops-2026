@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: closing
 title: AI-First Literature Review — What You Cannot Hand Off
 description: The closing argument — what organized AI-assisted output enables and what it cannot replace, the four things LLMs cannot independently warrant, and links to workshop materials.

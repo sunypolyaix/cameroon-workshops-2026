@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: principles
 title: First Steps — Core Principles
 description: The foundational framework for AI-assisted research — why research has two purposes, what AI should absorb and what the researcher must preserve, and the litmus test for responsible use.

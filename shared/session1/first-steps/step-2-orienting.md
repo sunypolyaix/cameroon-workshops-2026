@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: step-2-orienting
 title: First Steps — Step 2: Orienting to the Field
 description: The five-move workflow for building an organized literature base inside a persistent AI workspace — setup, mapping, gathering, building the corpus, and interrogating it.

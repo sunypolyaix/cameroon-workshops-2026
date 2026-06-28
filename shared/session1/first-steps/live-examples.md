@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: live-examples
 title: First Steps — Live Examples: From Interest to a Question
 description: Two worked examples of the Socratic question-sharpening method from the workshop — Manga (University of Buea) and Brice (Université de Yaoundé I) — showing the full dialogue and the research question each arrived at.

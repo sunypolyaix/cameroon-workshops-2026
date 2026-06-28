@@ -12,14 +12,12 @@
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; padding: 0; font-family: Georgia, serif; font-size: 1rem; line-height: 1.65; color: #1a1a1a; background: #fff; }
 
-    /* ── Site header ── */
     .site-header { background: #0039A6; border-bottom: 3px solid #EDA900; padding: 0 1.5rem; }
     .site-header-inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; min-height: 3rem; }
     .site-title { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .78rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: #fff; text-decoration: none; }
     .site-nav a { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .78rem; color: #c8d8f8; text-decoration: none; padding: .55rem .6rem; }
     .site-nav a:hover { color: #fff; }
 
-    /* ── Selector bar ── */
     .selector-bar { background: #f4f7fb; border-bottom: 1px solid #d0d8e8; padding: 0 1.5rem; position: sticky; top: 0; z-index: 10; }
     .selector-inner { max-width: 760px; margin: 0 auto; display: flex; flex-wrap: wrap; }
     .group-label { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .09em; color: #999; padding: .85rem .6rem .3rem; width: 100%; margin-bottom: -.3rem; }
@@ -29,37 +27,15 @@
     .tab.active { color: #0039A6; border-bottom-color: #0039A6; font-weight: 500; }
     .tab.slides-tab { font-style: italic; }
 
-    /* ── Breadcrumb bar ── */
-    .breadcrumb-bar {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: .7rem 1.5rem .4rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .breadcrumb {
-      font-family: 'DM Sans', Helvetica, sans-serif;
-      font-size: .75rem;
-      color: #888;
-    }
+    .breadcrumb-bar { max-width: 760px; margin: 0 auto; padding: .7rem 1.5rem .4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .breadcrumb { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .75rem; color: #888; }
     .breadcrumb a { color: #1a4a8a; text-decoration: none; }
     .breadcrumb a:hover { text-decoration: underline; }
     .breadcrumb .sep { margin: 0 .3rem; }
-    .open-link {
-      font-family: 'DM Sans', Helvetica, sans-serif;
-      font-size: .75rem;
-      color: #1a4a8a;
-      text-decoration: none;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .open-link { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .75rem; color: #1a4a8a; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
     .open-link:hover { color: #0039A6; }
 
-    /* ── Main content ── */
     .content-area { max-width: 760px; margin: 0 auto; padding: .5rem 1.5rem 4rem; }
-
     .content-area h1 { font-family: 'DM Sans', Helvetica, sans-serif; font-size: 1.45rem; font-weight: 500; color: #0039A6; border-bottom: 1px solid #d0d8e8; padding-bottom: .5rem; margin-top: 0; }
     .content-area h2 { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .82rem; font-weight: 500; text-transform: uppercase; letter-spacing: .09em; color: #4a5568; margin-top: 2.5rem; }
     .content-area h3 { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .95rem; font-weight: 500; }
@@ -76,59 +52,13 @@
     .content-area blockquote { border-left: 3px solid #EDA900; margin: 1rem 0; padding: .5rem 1rem; color: #555; font-style: italic; }
     .loading { color: #aaa; font-style: italic; }
 
-    /* ── Slides preview ── */
-    .slides-preview {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      overflow: hidden;
-      border: 1px solid #d0d8e8;
-      border-radius: 6px;
-      background: #0d1117;
-      margin-bottom: .5rem;
-    }
-    .slides-preview iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      pointer-events: none;
-      transform: scale(0.4);
-      transform-origin: top left;
-      width: 250%;
-    }
-    .slides-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.35);
-      gap: .75rem;
-    }
-    .slides-overlay p {
-      font-family: 'DM Sans', Helvetica, sans-serif;
-      font-size: .8rem;
-      color: rgba(255,255,255,.7);
-      margin: 0;
-      letter-spacing: .03em;
-    }
-    .fullscreen-btn {
-      font-family: 'DM Sans', Helvetica, sans-serif;
-      font-size: .88rem;
-      font-weight: 500;
-      color: #fff;
-      background: #0039A6;
-      border: 2px solid #EDA900;
-      border-radius: 4px;
-      padding: .55rem 1.4rem;
-      text-decoration: none;
-      letter-spacing: .03em;
-      transition: background .15s;
-    }
+    .slides-preview { position: relative; width: 100%; height: 240px; overflow: hidden; border: 1px solid #d0d8e8; border-radius: 6px; background: #0d1117; margin-bottom: .5rem; }
+    .slides-preview iframe { border: none; pointer-events: none; transform: scale(0.4); transform-origin: top left; width: 250%; height: 600px; }
+    .slides-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,.35); gap: .75rem; }
+    .slides-overlay p { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .8rem; color: rgba(255,255,255,.7); margin: 0; }
+    .fullscreen-btn { font-family: 'DM Sans', Helvetica, sans-serif; font-size: .88rem; font-weight: 500; color: #fff; background: #0039A6; border: 2px solid #EDA900; border-radius: 4px; padding: .55rem 1.4rem; text-decoration: none; transition: background .15s; }
     .fullscreen-btn:hover { background: #002a80; color: #fff; }
 
-    /* ── Footer ── */
     .site-footer { border-top: 1px solid #e0e6ef; padding: 1rem 1.5rem; max-width: 760px; margin: 0 auto; font-size: .78rem; color: #666; font-family: 'DM Sans', Helvetica, sans-serif; }
     .site-footer a { color: #1a4a8a; text-decoration: none; }
     .site-footer a:hover { text-decoration: underline; }
@@ -138,12 +68,12 @@
 
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="site-title" href="../">Cameroon Workshops 2026</a>
+    <a class="site-title" href="../../">Cameroon Workshops 2026</a>
     <nav class="site-nav">
-      <a href="../">Home</a>
-      <a href="../buea/">Buea</a>
-      <a href="../yaounde/">Yaoundé I</a>
-      <a href="./">Resources</a>
+      <a href="../../">Home</a>
+      <a href="../../buea/">Buea</a>
+      <a href="../../yaounde/">Yaoundé I</a>
+      <a href="../">Resources</a>
     </nav>
   </div>
 </header>
@@ -158,18 +88,18 @@
 
     <div class="group-label">First Steps</div>
     <div class="tab-group">
-      <button class="tab" data-key="first-steps/principles"    data-src="cameroon-workshops-2026/session1/first-steps/principles.md"     data-label="Core Principles"    data-group="First Steps">Core Principles</button>
-      <button class="tab" data-key="first-steps/prompts"       data-src="cameroon-workshops-2026/session1/first-steps/prompts.md"         data-label="Prompts to Try"     data-group="First Steps">Prompts to Try</button>
-      <button class="tab" data-key="first-steps/step-2"        data-src="cameroon-workshops-2026/session1/first-steps/step-2-orienting.md" data-label="Step 2: Orienting"  data-group="First Steps">Step 2: Orienting</button>
-      <button class="tab" data-key="first-steps/live-examples" data-src="cameroon-workshops-2026/session1/first-steps/live-examples.md"    data-label="Live Examples"      data-group="First Steps">Live Examples</button>
+      <button class="tab" data-key="first-steps/principles"    data-path="first-steps/principles"    data-label="Core Principles"     data-group="First Steps">Core Principles</button>
+      <button class="tab" data-key="first-steps/prompts"       data-path="first-steps/prompts"       data-label="Prompts to Try"      data-group="First Steps">Prompts to Try</button>
+      <button class="tab" data-key="first-steps/step-2"        data-path="first-steps/step-2-orienting" data-label="Step 2: Orienting" data-group="First Steps">Step 2: Orienting</button>
+      <button class="tab" data-key="first-steps/live-examples" data-path="first-steps/live-examples" data-label="Live Examples"       data-group="First Steps">Live Examples</button>
     </div>
 
     <div class="group-label">AI-First Lit Review</div>
     <div class="tab-group">
-      <button class="tab" data-key="litrev/llm-utility" data-src="cameroon-workshops-2026/session1/ai-first-litreview/llm-utility.md" data-label="LLM Utility"           data-group="AI-First Lit Review">LLM Utility</button>
-      <button class="tab" data-key="litrev/workflow"    data-src="cameroon-workshops-2026/session1/ai-first-litreview/workflow.md"    data-label="Five-Step Workflow"     data-group="AI-First Lit Review">Five-Step Workflow</button>
-      <button class="tab" data-key="litrev/toolkit"    data-src="cameroon-workshops-2026/session1/ai-first-litreview/toolkit.md"     data-label="Toolkit"                data-group="AI-First Lit Review">Toolkit</button>
-      <button class="tab" data-key="litrev/closing"    data-src="cameroon-workshops-2026/session1/ai-first-litreview/closing.md"     data-label="What You Can't Hand Off" data-group="AI-First Lit Review">What You Can't Hand Off</button>
+      <button class="tab" data-key="litrev/llm-utility" data-path="ai-first-litreview/llm-utility" data-label="LLM Utility"            data-group="AI-First Lit Review">LLM Utility</button>
+      <button class="tab" data-key="litrev/workflow"    data-path="ai-first-litreview/workflow"    data-label="Five-Step Workflow"      data-group="AI-First Lit Review">Five-Step Workflow</button>
+      <button class="tab" data-key="litrev/toolkit"     data-path="ai-first-litreview/toolkit"     data-label="Toolkit"                 data-group="AI-First Lit Review">Toolkit</button>
+      <button class="tab" data-key="litrev/closing"     data-path="ai-first-litreview/closing"     data-label="What You Can't Hand Off" data-group="AI-First Lit Review">What You Can't Hand Off</button>
     </div>
 
   </div>
@@ -191,77 +121,77 @@
 </footer>
 
 <script>
-  const content   = document.getElementById('content');
-  const bcBar     = document.getElementById('breadcrumb-bar');
-  const bcEl      = document.getElementById('breadcrumb');
-  const openLink  = document.getElementById('open-link');
-  const tabs      = document.querySelectorAll('.tab');
+  // Fetch raw .md from GitHub (Jekyll won't serve raw .md files on Pages)
+  const RAW = 'https://raw.githubusercontent.com/sunypolyaix/cameroon-workshops-2026/main/shared/session1/';
+  // Jekyll-rendered URLs are relative to this page (same-origin)
+  const JEKYLL = './';
+
+  const content  = document.getElementById('content');
+  const bcBar    = document.getElementById('breadcrumb-bar');
+  const bcEl     = document.getElementById('breadcrumb');
+  const openLink = document.getElementById('open-link');
+  const tabs     = document.querySelectorAll('.tab');
 
   function stripFrontMatter(text) {
     return text.replace(/^---[\s\S]*?---\n?/, '').trim();
   }
 
-  function setBreadcrumb(group, label, key) {
+  function setBreadcrumb(group, label, key, jekyllPath) {
     bcBar.style.display = 'flex';
-    bcEl.innerHTML =
-      `<a href="./">Shared</a><span class="sep">›</span>Session 1<span class="sep">›</span>${group}<span class="sep">›</span>${label}`;
+    bcEl.innerHTML = `<a href="../">Shared</a><span class="sep">›</span>Session 1<span class="sep">›</span>${group}<span class="sep">›</span>${label}`;
+    // "Open in new window" goes to the Jekyll-rendered standalone page
+    openLink.href = JEKYLL + jekyllPath + '/';
+    openLink.textContent = '↗ Open in new window';
     const url = new URL(window.location.href);
     url.searchParams.set('tab', key);
-    openLink.href = url.toString();
+    history.pushState({}, '', url);
   }
 
   function showSlides() {
     content.innerHTML = `
       <div class="slides-preview">
-        <iframe src="research-first-steps/first-steps.html" title="First Steps Slides preview" tabindex="-1" aria-hidden="true"></iframe>
+        <iframe src="../../orig/ai-first-litreview.html" title="First Steps Slides preview" tabindex="-1" aria-hidden="true"></iframe>
         <div class="slides-overlay">
           <p>Best viewed fullscreen</p>
-          <a class="fullscreen-btn" href="research-first-steps/first-steps.html" target="_blank" rel="noopener">Open fullscreen ↗</a>
+          <a class="fullscreen-btn" href="../../orig/ai-first-litreview.html" target="_blank" rel="noopener">Open fullscreen ↗</a>
         </div>
       </div>`;
     bcBar.style.display = 'flex';
-    bcEl.innerHTML = `<a href="./">Shared</a><span class="sep">›</span>Session 1<span class="sep">›</span>First Steps Slides`;
+    bcEl.innerHTML = `<a href="../">Shared</a><span class="sep">›</span>Session 1<span class="sep">›</span>First Steps Slides`;
+    openLink.href = '../../orig/ai-first-litreview.html';
+    openLink.textContent = '↗ Open fullscreen';
     const url = new URL(window.location.href);
     url.searchParams.set('tab', 'slides');
-    openLink.href = 'research-first-steps/first-steps.html';
-    openLink.textContent = '↗ Open fullscreen';
+    history.pushState({}, '', url);
   }
 
   async function loadDoc(btn) {
     tabs.forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
 
-    const key   = btn.dataset.key;
-    const group = btn.dataset.group;
-    const label = btn.dataset.label;
+    if (btn.dataset.type === 'slides') { showSlides(); return; }
 
-    // Update URL without reloading
-    const url = new URL(window.location.href);
-    url.searchParams.set('tab', key);
-    history.pushState({}, '', url);
+    const key    = btn.dataset.key;
+    const path   = btn.dataset.path;   // e.g. first-steps/principles
+    const group  = btn.dataset.group;
+    const label  = btn.dataset.label;
 
-    if (btn.dataset.type === 'slides') {
-      showSlides();
-      return;
-    }
-
-    setBreadcrumb(group, label, key);
+    setBreadcrumb(group, label, key, path);
     content.innerHTML = '<p class="loading">Loading…</p>';
 
     try {
-      const res = await fetch(btn.dataset.src);
+      const res = await fetch(RAW + path + '.md');
       if (!res.ok) throw new Error(`${res.status}`);
       const raw = await res.text();
       content.innerHTML = marked.parse(stripFrontMatter(raw));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (e) {
-      content.innerHTML = `<p style="color:#c00">Could not load <code>${btn.dataset.src}</code>: ${e.message}</p>`;
+      content.innerHTML = `<p style="color:#c00">Could not load <code>${path}.md</code>: ${e.message}</p>`;
     }
   }
 
   tabs.forEach(btn => btn.addEventListener('click', () => loadDoc(btn)));
 
-  // On load, check ?tab= param or default to slides
   const params = new URLSearchParams(window.location.search);
   const tabKey = params.get('tab') || 'slides';
   const target = [...tabs].find(t => t.dataset.key === tabKey) || tabs[0];

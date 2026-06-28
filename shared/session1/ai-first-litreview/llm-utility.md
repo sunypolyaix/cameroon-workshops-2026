@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: llm-utility
 title: AI-First Literature Review — What LLMs Are Actually Good For
 description: A precise account of where LLMs add genuine value in a research workflow and where the boundary of human judgment sits — the machine/human distinction applied to literature research.

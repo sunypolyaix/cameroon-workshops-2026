@@ -1,4 +1,5 @@
 ---
+layout: default
 filename: prompts
 title: First Steps — Prompts to Try
 description: Six ready-to-use bilingual prompts, one per research step, designed to keep the thinking with the researcher while AI handles the scaffolding work.
