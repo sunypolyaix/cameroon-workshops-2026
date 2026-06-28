@@ -3,22 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-First Lit Review</title>
+<title>AI-Collaborative Lit Review</title>
 <style>
 
   :root {
-    --bg: #080e1d;
-    --surface: #0d1526;
-    --border: #1c2d4a;
-    --text: #dde2f4;
-    --muted: #8a9ab8;
-    --accent: #2563eb;
-    --accent-hover: #1d4ed8;
+    --bg: #060f08;
+    --surface: #0b1a0e;
+    --border: #173320;
+    --text: #daf0e0;
+    --muted: #7aaa85;
+    --accent: #059669;
+    --accent-hover: #047857;
     --s0-color: #6b46c1;
     --s2-color: #c05621;
     --s3-color: #1d4ed8;
     --s4-color: #065f46;
-    --output-bg: #060b16;
+    --reflect-bg: #1a1200;
+    --reflect-border: #78350f;
+    --reflect-accent: #b45309;
+    --reflect-text: #fde68a;
+    --output-bg: #040c06;
     --mono: 'Courier New', monospace;
   }
 
@@ -96,13 +100,18 @@
   .step-desc strong { color: var(--text); }
 
 
+  .reflect { background: var(--reflect-bg); border: 1px solid var(--reflect-border); border-radius: 6px; padding: 16px 18px; margin-top: 20px; }
+  .reflect-label { font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--reflect-accent); margin-bottom: 10px; font-weight: bold; }
+  .reflect-prompt { font-family: Georgia, serif; font-size: 14px; color: var(--reflect-text); line-height: 1.6; font-style: italic; }
+  .reflect-note { font-family: Arial, sans-serif; font-size: 11px; color: var(--muted); margin-top: 8px; }
+
 </style>
 </head>
 <body>
 
 <header>
-  <h1>AI-First Lit Review</h1>
-  <span class="sub">Buea Demo · AI-Only Pipeline · v2.5</span>
+  <h1>AI-Collaborative Lit Review</h1>
+  <span class="sub">Buea Demo · With Reflection · v2.5</span>
 </header>
 
 <div class="question-bar">
@@ -151,6 +160,11 @@
         <p>"Don't propose a topic. Ask me one question at a time to sharpen my interest into a specific, answerable research question."</p>
         <p style="margin-top:12px;color:var(--muted);font-style:italic;">Gisèle arrived at the NIG–Chad busbar question through this method.</p>
       </div>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — before you read anything</div>
+        <p class="reflect-prompt">What do you already believe about this topic? What answer do you expect to find?</p>
+        <p class="reflect-note">Write a few sentences in Claude. Export the conversation.</p>
+      </div>
     </div>
   </div>
 
@@ -166,11 +180,12 @@
       <div class="output-label">Pre-generated output · 1-perplexity.md</div>
       <div class="output-box">
         <h2>Review focus</h2><p>Three linked questions: where to interconnect, how to operate safely, how to justify economically. Multicriteria approach for busbar selection.</p>
-        <h2>Technical themes</h2><p>Power-flow behavior, voltage stability, frequency deviation, transient performance, contingency analysis, line-loss sensitivity.</p>
-        <h2>Economic themes</h2><p>Capital cost, reinforcement cost, cost of losses, avoided generation cost. Regional studies show 6–20% cost savings.</p>
-        <h2>Strategic themes</h2><p>Energy security, regional integration, resilience, decarbonization. "No-regrets" resource sharing.</p>
-        <h2>AI methods</h2><p>Load forecasting, busbar ranking, loss prediction, voltage/frequency assessment — neural networks, genetic algorithms, particle swarm optimization.</p>
         <h2>Research gap</h2><p>Many studies evaluate interconnection benefits regionally; fewer translate them into a busbar-selection method for a specific cross-border corridor.</p>
+      </div>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — after Perplexity</div>
+        <p class="reflect-prompt">What would you frame differently? What is missing from this structure?</p>
+        <p class="reflect-note">Take five minutes in Claude. Export the conversation.</p>
       </div>
     </div>
   </div>
@@ -190,6 +205,11 @@
         Kelly et al. (2023) <span>— Off-grid PV/Diesel/Wind/Batteries · Heliyon</span><br>
         Wu et al. (2017) <span>— Strategic siting and regional grid interconnections · PNAS</span>
       </div>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — before you read</div>
+        <p class="reflect-prompt">Which source are you most drawn to, and why? What do you expect it to say?</p>
+        <p class="reflect-note">Write a sentence per paper in Claude. Export the conversation.</p>
+      </div>
     </div>
   </div>
 
@@ -200,14 +220,17 @@
       <span class="step-tool">Gemini</span>
     </div>
     <div class="step-body">
-      <p class="step-desc">Upload the three PDFs plus the Perplexity output to Gemini. Gemini's large context window reads all three papers together.</p>
+      <p class="step-desc">Upload the three PDFs plus the Perplexity output to Gemini. Gemini reads all three papers together and maps overlaps, distinctions, and gaps.</p>
       <button class="launch-btn s3" onclick="launch('3-gemini.md')">↗ Open 3-gemini.md</button>
       <div class="output-label">Pre-generated output · 3-gemini.md</div>
       <div class="output-box">
-        <h2>Overlaps</h2><p>All three sources converge on: renewable integration, economic optimization, and strategic siting as foundational themes.</p>
-        <h2>Distinctions</h2><p>Kelly et al. = micro/local (HOMER). Wu et al. = macro/regional (MapRE/GIS). Imdadullah et al. = global hardware review.</p>
         <h2>Gaps</h2><p>Geographic gap (Central Africa omitted). Technical busbar gap (no corridor-level analysis). AI methodological gap (none of the three use AI optimization).</p>
         <p style="margin-top:12px;font-style:italic;color:var(--muted);">"A critical gap remains in combining these dimensions using AI to select the optimal busbar for the Cameroon-Chad corridor."</p>
+      </div>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — after Gemini</div>
+        <p class="reflect-prompt">Do you agree with this gap analysis? Where would you push back? Does the gap Gemini identified match what you expected?</p>
+        <p class="reflect-note">Argue with Gemini. Export the conversation.</p>
       </div>
     </div>
   </div>
@@ -231,6 +254,11 @@
         <h2>The key feature</h2>
         <p>Most AI tools expand outward — connecting your question to everything they know. NotebookLM contracts inward — staying inside the literature you gave it. That constraint is the point.</p>
       </div>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — after NotebookLM</div>
+        <p class="reflect-prompt">What question emerged that you did not have before this session? What did the sources not answer?</p>
+        <p class="reflect-note">Take notes in Claude alongside NotebookLM. Export the conversation.</p>
+      </div>
     </div>
   </div>
 
@@ -243,6 +271,35 @@
     <div class="step-body">
       <p class="step-desc">Bring everything in — the Perplexity framework, the Gemini gap analysis, the NotebookLM notes. Ask Claude to draft the literature review section.</p>
       <button class="launch-btn" onclick="launch('5-claude-draft.md')">↗ Open 5-claude-draft.md</button>
+      <div class="reflect">
+        <div class="reflect-label">Your reflection — after the draft</div>
+        <p class="reflect-prompt">What in this draft is genuinely yours? What would you argue differently from what the model wrote?</p>
+        <p class="reflect-note">Revise the draft in conversation with Claude. Export.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" id="s7">
+    <div class="step-header">
+      <span class="step-num" onclick="toggle('s7')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s7')">7</span>
+      <span class="step-title">Synthesize your conversations</span>
+      <span class="step-tool">Gemini · Long context</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">After 25–35 sources: collect every exported conversation from steps 1–6. Upload them all to Gemini. Ask for synthesis at three scales.</p>
+      <button class="launch-btn s3" onclick="launch('6-gemini-synthesis.md')">↗ Open 6-gemini-synthesis.md</button>
+      <div class="output-label">The synthesis ladder</div>
+      <div class="output-box">
+        <h2>25 words</h2><p>The single most important thing that emerged across all your conversations.</p>
+        <h2>100 words</h2><p>The argument you have been building, in your own terms, with context.</p>
+        <h2>400 words</h2><p>The full shape of your thinking — themes, tensions, where you landed and where you are still uncertain.</p>
+        <p style="margin-top:14px;color:var(--muted);">Then iterate: ask Gemini what changed between your first conversation and your last. Ask it what you kept returning to. Ask it what you never resolved.</p>
+      </div>
+      <div class="reflect">
+        <div class="reflect-label">The question this step answers</div>
+        <p class="reflect-prompt">After all of this — what do <em>you</em> think?</p>
+        <p class="reflect-note">This is the synthesis that belongs in your thesis introduction, not the model's summary of the papers.</p>
+      </div>
     </div>
   </div>
 
