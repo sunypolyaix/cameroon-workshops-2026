@@ -26,16 +26,17 @@ Capacity-building workshops for graduate students and faculty in science and eng
   <div class="meta">July 1 – July 22, 2026 · University of Yaoundé I · 4 sessions · Free</div>
 </div>
 
-## Resources
+## Session 1 Materials
 
 <div class="card">
-  <a href="{{ site.baseurl }}/shared/lit-review/ai-first-litreview.html" target="_blank" rel="noopener">AI First — LLM Literature Review Workflow</a>
-  <div class="desc">Slideshow: a practical workflow for using LLMs in the literature review process.</div>
+  <a href="{{ site.baseurl }}/shared/session1/first-steps/first_steps_sunypoly.pptx">First Steps Slides</a>
+  <div class="desc">Session 1 deck: research foundations, prompt principles, and AI-first literature review workflow.</div>
+  <div class="meta">.pptx · ~4 MB</div>
 </div>
 
 <div class="card">
-  <a href="{{ site.baseurl }}/shared/research-first-steps/first_steps_sunypoly.pptx">Research First Steps</a>
-  <div class="desc">Introductory slides on getting started with AI-assisted research.</div>
+  <a href="{{ site.baseurl }}/shared/session1/ai-first-litreview/buea-demo-conductor.html" target="_blank" rel="noopener">AI-First Lit Review — Live Demo ↗</a>
+  <div class="desc">Step-by-step conductor view: question framing, Perplexity, Zotero, Gemini, NotebookLM, and Claude draft.</div>
 </div>
 
 All materials: [Shared Resources]({{ site.baseurl }}/shared/)
