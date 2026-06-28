@@ -7,6 +7,10 @@ title: "Shared Resources"
 
 Materials shared across both workshops.
 
+## Session 1
+
+- <a href="session1.html" target="_blank" rel="noopener">Session 1 Materials</a> — All session 1 documents in a single tabbed reader
+
 ## Materials
 
 - <a href="lit-review/ai-first-litreview.html" target="_blank" rel="noopener">AI First Lit Review</a> — Slideshow: LLM-assisted literature review workflow
