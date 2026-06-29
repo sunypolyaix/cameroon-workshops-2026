@@ -13,8 +13,8 @@ Before running the pipeline, set up your browser. This takes about ten minutes a
 
 Zotero is your reference manager — it captures sources, stores PDFs, and exports bibliographies. Set it up first; everything else builds on it.
 
-- <a href="../zotero-setup-guide" target="_blank" rel="noopener">Zotero Setup Guide ↗</a> — Installation, Google Drive integration, and folder structure
-- <a href="../zotero-prompt-customizer.html" target="_blank" rel="noopener">Zotero Prompt Customizer ↗</a> — Generate custom export prompts for your research question
+- <a href="zotero-setup-guide" target="_blank" rel="noopener">Zotero Setup Guide ↗</a> — Installation, Google Drive integration, and folder structure
+- <a href="zotero-prompt-customizer.html" target="_blank" rel="noopener">Zotero Prompt Customizer ↗</a> — Generate custom export prompts for your research question
 
 ---
 
@@ -29,7 +29,9 @@ Install these in Chrome. All are free.
 | **Claude QoL** (Export, Fork, Search) | Fork conversations, search within sessions | Chrome Web Store |
 | **Claude Usage Tracker** | Shows your token usage against plan limits | Chrome Web Store |
 | **ChatGPT Exporter** | Exports ChatGPT conversations as Markdown | Chrome Web Store |
+| **ChatGPT Usage Limit Tracker** | Displays usage limits and quotas for all ChatGPT models | Chrome Web Store |
 | **Gemini Chat Exporter** | Exports Gemini conversations as PDF, Text, or CSV | Chrome Web Store |
+| **Gemini Usage Extension** | Monitors your Gemini Pro usage limits and quotas in real-time | Chrome Web Store |
 | **Markdown Reader** | Previews .md files natively in the browser | Chrome Web Store |
 | **Google Docs Offline** | Keeps your documents editable without internet | Chrome Web Store |
 
