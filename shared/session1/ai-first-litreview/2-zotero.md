@@ -54,7 +54,7 @@ At this stage, PDF acquisition was manual. At larger scale (10+ sources), the pi
 
 - Zotero group library with shared folder
 - Bulk BibTeX export
-- Automated PDF-to-text conversion (e.g., Paul Lee's script)
+- Automated PDF-to-text conversion
 - Batch upload to Gemini or equivalent large-context model
 
 For now, the manual approach preserves legibility and control over what enters the synthesis stage.
