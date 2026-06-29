@@ -127,7 +127,7 @@
 
   <div class="step" id="s-toolkit">
     <div class="step-header">
-      <span class="step-num s0" onclick="toggle('s-toolkit'); launch('0-toolkit')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s-toolkit');launch('0-toolkit')}">0</span>
+      <span class="step-num s0" onclick="toggle('s-toolkit')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s-toolkit')">0</span>
       <span class="step-title">Set up your toolkit</span>
       <span class="step-tool">Browser · Extensions · Bookmarks</span>
     </div>
@@ -148,7 +148,7 @@
 
   <div class="step" id="s1">
     <div class="step-header">
-      <span class="step-num s0" onclick="toggle('s1'); launch('0-claude-framing')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s1');launch('0-claude-framing')}">1</span>
+      <span class="step-num s0" onclick="toggle('s1')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s1')">1</span>
       <span class="step-title">Frame the question</span>
       <span class="step-tool">Claude</span>
     </div>
@@ -170,7 +170,7 @@
 
   <div class="step" id="s2">
     <div class="step-header">
-      <span class="step-num" onclick="toggle('s2'); launch('1-perplexity')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s2');launch('1-perplexity')}">2</span>
+      <span class="step-num" onclick="toggle('s2')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s2')">2</span>
       <span class="step-title">Discover the literature</span>
       <span class="step-tool">Perplexity</span>
     </div>
@@ -192,7 +192,7 @@
 
   <div class="step" id="s3">
     <div class="step-header">
-      <span class="step-num s2" onclick="toggle('s3'); launch('2-zotero')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s3');launch('2-zotero')}">3</span>
+      <span class="step-num s2" onclick="toggle('s3')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s3')">3</span>
       <span class="step-title">Capture the sources</span>
       <span class="step-tool">Zotero</span>
     </div>
@@ -215,7 +215,7 @@
 
   <div class="step" id="s4">
     <div class="step-header">
-      <span class="step-num s3" onclick="toggle('s4'); launch('3-gemini')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s4');launch('3-gemini')}">4</span>
+      <span class="step-num s3" onclick="toggle('s4')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s4')">4</span>
       <span class="step-title">Read the sources</span>
       <span class="step-tool">Gemini</span>
     </div>
@@ -237,7 +237,7 @@
 
   <div class="step" id="s5">
     <div class="step-header">
-      <span class="step-num s4" onclick="toggle('s5'); launch('4-notebooklm')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s5');launch('4-notebooklm')}">5</span>
+      <span class="step-num s4" onclick="toggle('s5')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s5')">5</span>
       <span class="step-title">Interrogate the sources</span>
       <span class="step-tool">NotebookLM</span>
     </div>
@@ -264,7 +264,7 @@
 
   <div class="step" id="s6">
     <div class="step-header">
-      <span class="step-num" onclick="toggle('s6'); launch('5-claude-draft')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s6');launch('5-claude-draft')}">6</span>
+      <span class="step-num" onclick="toggle('s6')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s6')">6</span>
       <span class="step-title">Draft the literature review</span>
       <span class="step-tool">Claude</span>
     </div>
@@ -281,7 +281,7 @@
 
   <div class="step" id="s7">
     <div class="step-header">
-      <span class="step-num" onclick="toggle('s7'); launch('6-gemini-synthesis')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s7');launch('6-gemini-synthesis')}">7</span>
+      <span class="step-num" onclick="toggle('s7')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggle('s7')">7</span>
       <span class="step-title">Synthesize your conversations</span>
       <span class="step-tool">Gemini · Long context</span>
     </div>
@@ -312,7 +312,7 @@
   }
 
   function launch(url) {
-    window.open(url, '_blank');
+    // collab version — buttons expand only, no external navigation
   }
 </script>
 </body>
