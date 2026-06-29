@@ -9,12 +9,13 @@ A five-step workflow demonstrated live with a real graduate research project on 
 
 ## Live Demo Notes
 
-- <a href="0-claude-framing" target="_blank" rel="noopener">Step 0 — Frame the Question</a> — Using Claude to sharpen a broad topic into a researchable question
-- <a href="1-perplexity" target="_blank" rel="noopener">Step 1 — Perplexity Search</a> — Initial landscape scan and source discovery
-- <a href="2-zotero" target="_blank" rel="noopener">Step 2 — Zotero Export</a> — Capturing and organizing references
-- <a href="3-gemini" target="_blank" rel="noopener">Step 3 — Gemini Synthesis</a> — Large-context source synthesis across full PDFs
-- <a href="4-notebooklm" target="_blank" rel="noopener">Step 4 — NotebookLM</a> — Interactive Q&A over your reference corpus
-- <a href="5-claude-draft" target="_blank" rel="noopener">Step 5 — Claude Draft</a> — Structured first draft from synthesized notes
+- <a href="0-toolkit" target="_blank" rel="noopener">Step 0 — Toolkit Setup</a> — Extensions, Zotero, and archive folder
+- <a href="1-claude-framing" target="_blank" rel="noopener">Step 1 — Frame the Question</a> — Using Claude to sharpen a broad topic into a researchable question
+- <a href="2-perplexity" target="_blank" rel="noopener">Step 2 — Perplexity Search</a> — Initial landscape scan and source discovery
+- <a href="3-zotero" target="_blank" rel="noopener">Step 3 — Zotero Export</a> — Capturing and organizing references
+- <a href="4-gemini" target="_blank" rel="noopener">Step 4 — Gemini Synthesis</a> — Large-context source synthesis across full PDFs
+- <a href="5-notebooklm" target="_blank" rel="noopener">Step 5 — NotebookLM</a> — Interactive Q&A over your reference corpus
+- <a href="6-claude-draft" target="_blank" rel="noopener">Step 6 — Claude Draft</a> — Structured first draft from synthesized notes
 
 ## Facilitator
 

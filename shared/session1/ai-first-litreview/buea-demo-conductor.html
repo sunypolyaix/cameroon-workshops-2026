@@ -139,13 +139,13 @@
 
   <div class="step" id="s1">
     <div class="step-header">
-      <span class="step-num s0" onclick="toggle('s1'); launch('0-claude-framing')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s1');launch('0-claude-framing')}">1</span>
+      <span class="step-num s0" onclick="toggle('s1'); launch('1-claude-framing')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s1');launch('1-claude-framing')}">1</span>
       <span class="step-title">Frame the question</span>
       <span class="step-tool">Claude</span>
     </div>
     <div class="step-body">
       <p class="step-desc">A broad interest is not yet a research question. Claude asks one question at a time — you answer.</p>
-      <button class="launch-btn s0" onclick="launch('0-claude-framing')">↗ Open 0-claude-framing</button>
+      <button class="launch-btn s0" onclick="launch('1-claude-framing')">↗ Open 1-claude-framing</button>
       <div class="output-label">The prompt</div>
       <div class="output-box">
         <p>"Don't propose a topic. Ask me one question at a time to sharpen my interest into a specific, answerable research question."</p>
@@ -156,13 +156,13 @@
 
   <div class="step" id="s2">
     <div class="step-header">
-      <span class="step-num" onclick="toggle('s2'); launch('1-perplexity')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s2');launch('1-perplexity')}">2</span>
+      <span class="step-num" onclick="toggle('s2'); launch('2-perplexity')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s2');launch('2-perplexity')}">2</span>
       <span class="step-title">Discover the literature</span>
       <span class="step-tool">Perplexity</span>
     </div>
     <div class="step-body">
       <p class="step-desc">Paste the research question into Perplexity. It returns a structured framework and sources with inline citations.</p>
-      <button class="launch-btn" onclick="launch('1-perplexity')">↗ Open 1-perplexity</button>
+      <button class="launch-btn" onclick="launch('2-perplexity')">↗ Open 2-perplexity</button>
       <div class="output-label">Pre-generated output · 1-perplexity.md</div>
       <div class="output-box">
         <h2>Review focus</h2><p>Three linked questions: where to interconnect, how to operate safely, how to justify economically. Multicriteria approach for busbar selection.</p>
@@ -177,13 +177,13 @@
 
   <div class="step" id="s3">
     <div class="step-header">
-      <span class="step-num s2" onclick="toggle('s3'); launch('2-zotero')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s3');launch('2-zotero')}">3</span>
+      <span class="step-num s2" onclick="toggle('s3'); launch('3-zotero')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s3');launch('3-zotero')}">3</span>
       <span class="step-title">Capture the sources</span>
       <span class="step-tool">Zotero</span>
     </div>
     <div class="step-body">
       <p class="step-desc">Use the Zotero Connector to capture each source while on the publisher page. Export the PDFs.</p>
-      <button class="launch-btn s2" onclick="launch('2-zotero')">↗ Open 2-zotero</button>
+      <button class="launch-btn s2" onclick="launch('3-zotero')">↗ Open 3-zotero</button>
       <div class="output-label">Three sources captured</div>
       <div class="file-list">
         Imdadullah et al. (2021) <span>— Electric Power Network Interconnection · Electronics</span><br>
@@ -195,13 +195,13 @@
 
   <div class="step" id="s4">
     <div class="step-header">
-      <span class="step-num s3" onclick="toggle('s4'); launch('3-gemini')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s4');launch('3-gemini')}">4</span>
+      <span class="step-num s3" onclick="toggle('s4'); launch('4-gemini')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s4');launch('4-gemini')}">4</span>
       <span class="step-title">Read the sources</span>
       <span class="step-tool">Gemini</span>
     </div>
     <div class="step-body">
       <p class="step-desc">Upload the three PDFs plus the Perplexity output to Gemini. Gemini's large context window reads all three papers together.</p>
-      <button class="launch-btn s3" onclick="launch('3-gemini')">↗ Open 3-gemini</button>
+      <button class="launch-btn s3" onclick="launch('4-gemini')">↗ Open 4-gemini</button>
       <div class="output-label">Pre-generated output · 3-gemini.md</div>
       <div class="output-box">
         <h2>Overlaps</h2><p>All three sources converge on: renewable integration, economic optimization, and strategic siting as foundational themes.</p>
@@ -214,12 +214,12 @@
 
   <div class="step" id="s5">
     <div class="step-header">
-      <span class="step-num s4" onclick="toggle('s5'); launch('4-notebooklm')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s5');launch('4-notebooklm')}">5</span>
+      <span class="step-num s4" onclick="toggle('s5'); launch('5-notebooklm')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s5');launch('5-notebooklm')}">5</span>
       <span class="step-title">Interrogate the sources</span>
       <span class="step-tool">NotebookLM</span>
     </div>
     <div class="step-body">
-      <button class="launch-btn s4" onclick="launch('4-notebooklm')">↗ Open 4-notebooklm</button>
+      <button class="launch-btn s4" onclick="launch('5-notebooklm')">↗ Open 5-notebooklm</button>
       <div class="output-label">What NotebookLM does</div>
       <div class="output-box">
         <h2>Document-grounded only</h2>
@@ -236,13 +236,13 @@
 
   <div class="step" id="s6">
     <div class="step-header">
-      <span class="step-num" onclick="toggle('s6'); launch('5-claude-draft')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s6');launch('5-claude-draft')}">6</span>
+      <span class="step-num" onclick="toggle('s6'); launch('6-claude-draft')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){toggle('s6');launch('6-claude-draft')}">6</span>
       <span class="step-title">Draft the literature review</span>
       <span class="step-tool">Claude</span>
     </div>
     <div class="step-body">
       <p class="step-desc">Bring everything in — the Perplexity framework, the Gemini gap analysis, the NotebookLM notes. Ask Claude to draft the literature review section.</p>
-      <button class="launch-btn" onclick="launch('5-claude-draft')">↗ Open 5-claude-draft</button>
+      <button class="launch-btn" onclick="launch('6-claude-draft')">↗ Open 6-claude-draft</button>
     </div>
   </div>
 
