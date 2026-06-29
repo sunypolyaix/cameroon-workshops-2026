@@ -9,42 +9,29 @@ Before running the pipeline, set up your browser. This takes about ten minutes a
 
 ---
 
-## Browser Extensions
+## Zotero
 
-Install these six extensions in Chrome. All are free.
+Zotero is your reference manager — it captures sources, stores PDFs, and exports bibliographies. Set it up first; everything else builds on it.
 
-| Extension | What it does | Install |
-|-----------|-------------|---------|
-| **Claude Conversation Exporter** | Exports Claude conversations as Markdown | Chrome Web Store |
-| **Claude QoL** (Export, Fork, Search) | Fork conversations, search within sessions, bookmarks | Chrome Web Store |
-| **Claude Usage Tracker** | Shows your token usage against plan limits | Chrome Web Store |
-| **ChatGPT Exporter** | Exports ChatGPT conversations as Markdown | Chrome Web Store |
-| **Gemini Chat Exporter** | Exports Gemini conversations as PDF, Text, or CSV | Chrome Web Store |
-| **Zotero Connector** | Captures sources from any browser page into Zotero | zotero.org/download |
-| **Markdown Reader** | Previews .md files natively in the browser | Chrome Web Store |
-| **Google Docs Offline** | Keeps your documents editable without internet | Chrome Web Store |
+- <a href="../zotero-setup-guide" target="_blank" rel="noopener">Zotero Setup Guide ↗</a> — Installation, Google Drive integration, and folder structure
+- <a href="../zotero-prompt-customizer.html" target="_blank" rel="noopener">Zotero Prompt Customizer ↗</a> — Generate custom export prompts for your research question
 
 ---
 
-## Bookmarks
+## Browser Extensions
 
-Create a folder called `AI Models` on your bookmarks bar. Add these:
+Install these in Chrome. All are free.
 
-```
-AI Models/
-  Claude           https://claude.ai
-  ChatGPT          https://chatgpt.com
-  Gemini           https://gemini.google.com
-  NotebookLM       https://notebooklm.google.com
-  Perplexity       https://perplexity.ai
-  DeepSeek         https://chat.deepseek.com
-  Mistral          https://chat.mistral.ai
-  Groq             https://groq.com
-  Meta AI          https://meta.ai
-  Copilot          https://copilot.microsoft.com
-```
-
-One click to any model. This is the difference between using the platform habitually and not using it at all.
+| Extension | What it does | Install |
+|-----------|-------------|---------|
+| **Zotero Connector** | Captures sources from any browser page into Zotero | zotero.org/download |
+| **Claude Conversation Exporter** | Exports Claude conversations as Markdown | Chrome Web Store |
+| **Claude QoL** (Export, Fork, Search) | Fork conversations, search within sessions | Chrome Web Store |
+| **Claude Usage Tracker** | Shows your token usage against plan limits | Chrome Web Store |
+| **ChatGPT Exporter** | Exports ChatGPT conversations as Markdown | Chrome Web Store |
+| **Gemini Chat Exporter** | Exports Gemini conversations as PDF, Text, or CSV | Chrome Web Store |
+| **Markdown Reader** | Previews .md files natively in the browser | Chrome Web Store |
+| **Google Docs Offline** | Keeps your documents editable without internet | Chrome Web Store |
 
 ---
 
