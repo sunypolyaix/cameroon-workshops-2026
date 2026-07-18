@@ -23,6 +23,19 @@ title: "Shared Resources"
   <div class="desc">Same pipeline, expand-only. Participants follow along without navigating away.</div>
 </div>
 
+## Session 4 — Research Ethics for AI-Assisted Graduate Research
+
+<div class="card">
+  <a href="session4/research-ethics/slides.html" target="_blank" rel="noopener">Slide Deck ↗</a>
+  <div class="desc">Material awareness as the first obligation, operational principles as friction points, and the closing turn toward directing effort at improving humanity's situation.</div>
+  <div class="meta">Opens in new tab · ~30 min</div>
+</div>
+
+<div class="card">
+  <a href="session4/research-ethics/handout.md">Handout — Full Framework</a>
+  <div class="desc">The complete written framework with the friction-points reference table, Cameroon connectivity data, sources, and reflection questions.</div>
+</div>
+
 ## Literature Review Pipeline — Step by Step
 
 <div class="card">
