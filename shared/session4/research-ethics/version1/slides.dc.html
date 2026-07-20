@@ -101,6 +101,7 @@ class Component extends DCLogic {
       if (line.startsWith('## ')) { branchIdx++; curBranch = { n: branchIdx, title: line.slice(3).trim(), sections: [] }; branches.push(curBranch); curSection = null; return; }
       if (line.startsWith('### ')) { curSection = { kind: 'section', branch: branchIdx, title: line.slice(4).trim(), bullets: [] }; if (curBranch) curBranch.sections.push(curSection); order.push(curSection); return; }
       if (line.startsWith('> ')) { order.push({ kind: 'provocation', branch: branchIdx, text: line.slice(2).trim() }); return; }
+      if (line === '+++') { order.push({ kind: 'blank', branch: branchIdx }); return; }
       if (/^[-*+]\s+/.test(line)) { if (curSection) curSection.bullets.push(line.replace(/^[-*+]\s+/, '')); return; }
       if (line === '---') return;
       if (line.startsWith('*') && line.endsWith('*') && line.length > 2) { colophon = line.replace(/^\*+|\*+$/g, '').trim(); return; }
@@ -115,6 +116,7 @@ class Component extends DCLogic {
     d.branches.forEach(b => slides.push({ type: 'level2', branch: b.n, title: b.title, items: b.sections.map(s => s.title) }));
     d.order.forEach(it => {
       if (it.kind === 'section') slides.push({ type: 'section', branch: it.branch, title: it.title, bullets: it.bullets });
+      else if (it.kind === 'blank') slides.push({ type: 'blank', branch: it.branch });
       else slides.push({ type: 'provocation', branch: it.branch, text: it.text });
     });
     slides.push({ type: 'end', colophon: d.colophon });
@@ -218,6 +220,7 @@ class Component extends DCLogic {
     else if (s.type === 'level2') kicker = (fr ? 'Niveau 2' : 'Level 2') + ' · ' + String(s.branch).padStart(2, '0') + ' ' + this.shortBranch(s.title);
     else if (s.type === 'section') kicker = (fr ? 'Niveau 3' : 'Level 3') + ' · ' + String(s.branch).padStart(2, '0') + ' ' + this.shortBranch((branches[s.branch - 1] || {}).title);
     else if (s.type === 'provocation') kicker = String(s.branch || '').padStart(2, '0');
+    else if (s.type === 'blank') kicker = '';
     else kicker = fr ? 'Fin' : 'Close';
 
     const header = h('div', { style: { display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderBottom: '1px solid ' + th.edge, flex: '0 0 auto' } },
@@ -332,6 +335,13 @@ class Component extends DCLogic {
       return h('div', { style: this.pad({ justifyContent: 'center', alignItems: 'flex-start' }) },
         h('div', { style: { width: 40, height: 3, background: bar, marginBottom: 26 } }),
         h('blockquote', { style: { margin: 0, fontFamily: 'var(--font-display)', fontStyle: 'italic', fontWeight: 400, fontSize: 'clamp(27px,7.8vw,42px)', lineHeight: 1.28, color: th.sub, textWrap: 'pretty' } }, s.text)
+      );
+    }
+
+    // A quiet breather beat between sections — deliberately near-empty.
+    if (s.type === 'blank') {
+      return h('div', { style: this.pad({ justifyContent: 'center', alignItems: 'center' }) },
+        h('div', { style: { width: 28, height: 2, background: this.bbar(s.branch || 1), opacity: 0.5 } })
       );
     }
 
