@@ -5,11 +5,10 @@ author: Steven M. Schneider
 date: 2026-07-20
 canonical: research-ethics.yaml
 context: "Ateliers AIX SUNY Poly Cameroun, 2026"
-link: "tiny.cc/aix-ethics"
 lang: fr
 ---
 
-# La recherche éthique avec les LLM exige
+# La recherche éthique sur l'IA exige :
 
 ## Comprendre les outils : comment et pourquoi ils sont conçus
 

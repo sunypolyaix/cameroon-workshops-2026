@@ -5,11 +5,10 @@ author: Steven M. Schneider
 date: 2026-07-20
 canonical: research-ethics.yaml
 context: "SUNY Poly AIX Cameroon Workshops, 2026"
-link: "tiny.cc/aix-ethics"
 lang: en
 ---
 
-# Ethical research with LLMs requires
+# Ethical research on AI requires:
 
 ## Understanding tools, and how and why they are made
 

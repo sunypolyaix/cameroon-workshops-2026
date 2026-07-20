@@ -14,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <style>
   html,body{margin:0;padding:0;background:#EDEAE3;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -33,7 +32,7 @@
   <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">{{ app }}</sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:400,&quot;height&quot;:720},&quot;surface&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;navy&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Appearance&quot;},&quot;startBullet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;first-shown&quot;,&quot;all-hidden&quot;],&quot;default&quot;:&quot;first-shown&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;link&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tiny.cc/aix-ethics&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;srcEn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;content/research-ethics-en.md&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;srcFr&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;content/research-ethics-fr.md&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:400,&quot;height&quot;:720},&quot;surface&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;navy&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Appearance&quot;},&quot;startBullet&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;first-shown&quot;,&quot;all-hidden&quot;],&quot;default&quot;:&quot;first-shown&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;srcEn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;content/research-ethics-en.md&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;srcFr&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;content/research-ethics-fr.md&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;}}">
 class Component extends DCLogic {
   state = { lang: 'en', i: 0, reveal: {}, menu: false, err: null, w: (typeof window !== 'undefined' ? window.innerWidth : 400) };
 
@@ -221,7 +220,7 @@ class Component extends DCLogic {
     else if (s.type === 'section') kicker = (fr ? 'Niveau 3' : 'Level 3') + ' · ' + String(s.branch).padStart(2, '0') + ' ' + this.shortBranch((branches[s.branch - 1] || {}).title);
     else if (s.type === 'provocation') kicker = String(s.branch || '').padStart(2, '0');
     else if (s.type === 'blank') kicker = '';
-    else kicker = fr ? 'Fin' : 'Close';
+    else kicker = '';
 
     const header = h('div', { style: { display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderBottom: '1px solid ' + th.edge, flex: '0 0 auto' } },
       segs,
@@ -290,7 +289,7 @@ class Component extends DCLogic {
         h('div', {},
           h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: th.meta, lineHeight: 1.9 } },
             (meta.author || ''), h('br'),
-            (meta.date || ''), (meta.link ? h('span', {}, '  ·  ', h('span', { style: { color: th.sub } }, meta.link)) : null)),
+            (meta.date || '')),
           h('div', { style: { animation: 'aixFade 1.4s ease both' } }, this.hint(th, fr ? 'Balayez pour commencer' : 'Swipe to begin'))
         )
       );
@@ -346,17 +345,8 @@ class Component extends DCLogic {
     }
 
     if (s.type === 'end') {
-      let url = (this.props.link || meta.link || '').trim();
-      if (url && !/^https?:\/\//.test(url)) url = 'https://' + url;
-      let svg = '';
-      try { if (url && window.qrcode) { const q = window.qrcode(0, 'M'); q.addData(url); q.make(); svg = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } } catch (e) {}
       return h('div', { style: this.pad({ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }) },
-        this.goldRule(th, null),
-        h('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 'clamp(24px,6.6vw,34px)', color: th.head, lineHeight: 1.18, marginBottom: 24, textWrap: 'balance' } }, meta.headline || ''),
-        svg ? h('div', { style: { width: 148, height: 148, padding: 12, background: '#fff', borderRadius: 10, border: '1px solid ' + th.edge, marginBottom: 16 }, dangerouslySetInnerHTML: { __html: svg.replace('<svg', '<svg width="124" height="124"') } }) : null,
-        (this.props.link || meta.link) ? h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.06em', color: th.sub, marginBottom: 28 } }, (this.props.link || meta.link)) : null,
-        h('button', { onClick: (e) => { e.stopPropagation(); this.goTo(0); }, style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: th.head, background: 'transparent', border: '1px solid ' + th.edge, borderRadius: 20, padding: '9px 18px', cursor: 'pointer', marginBottom: 30 } }, fr ? 'Recommencer' : 'Start over'),
-        s.colophon ? h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.06em', color: th.meta, lineHeight: 1.9, maxWidth: 380 } }, s.colophon) : null
+        h('button', { onClick: (e) => { e.stopPropagation(); this.goTo(0); }, style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: th.head, background: 'transparent', border: '1px solid ' + th.edge, borderRadius: 20, padding: '9px 18px', cursor: 'pointer' } }, fr ? 'Recommencer' : 'Start over')
       );
     }
 
