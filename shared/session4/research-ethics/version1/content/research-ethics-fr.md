@@ -5,40 +5,45 @@ author: Steven M. Schneider
 date: 2026-07-20
 canonical: research-ethics.yaml
 context: "Ateliers AIX SUNY Poly Cameroun, 2026"
-link: "tiny.cc/aix-ethics"
 lang: fr
 ---
 
-# La recherche éthique avec les LLM exige
+# La recherche éthique sur l'IA exige :
 
 ## Comprendre les outils : comment et pourquoi ils sont conçus
 
 ### Que sont les outils LLM ?
 
-- Le modèle
-- Le harnais (harness)
-- L'interface
-- Etc.
+- Le modèle — le système statistique entraîné
+- Les données — la matière à partir de laquelle le modèle apprend
+- Le harnais — le logiciel qui structure les prompts, les outils, la mémoire et les sorties
+- L'interface — l'environnement par lequel les utilisateurs rencontrent le système
+- L'infrastructure — le calcul, les réseaux, les plateformes et les institutions qui le rendent accessible
+- L'organisation — l'entreprise, le laboratoire, le gouvernement ou la communauté qui en contrôle le développement et l'usage
 
-### Comment les outils sont conçus
+### Comment ces outils sont-ils conçus ?
 
-- Le travail humain
-- Les données
-- L'énergie
+- Le travail — travail humain visible et invisible : recherche, annotation, modération, maintenance, extraction
+- Les données — collectées, sous licence, achetées, données, déduites, ou captées
+- L'énergie et les matériaux — électricité, eau, puces, minerais, centres de données, déchets
+- Le capital — investissement concentré qui détermine ce qui peut être construit, et par qui
+- La gouvernance — lois, contrats, normes et décisions institutionnelles qui autorisent le développement
 
-### Pourquoi les outils sont conçus
+### Pourquoi ces outils sont-ils conçus ?
 
-- Le contrôle
-- L'accomplissement
-- Le profit
+- Le savoir et l'accomplissement — étendre la capacité scientifique, créative, administrative ou technique
+- Le profit et la concurrence — capter des marchés, réduire les coûts, s'assurer un avantage stratégique
+- Le contrôle et la coordination — classer, prédire, gérer, surveiller ou influencer des personnes et des systèmes
+- Le bénéfice public — améliorer l'accès, la sécurité, l'éducation, la santé ou la capacité institutionnelle
+- Le prestige et le pouvoir — établir une autorité, une légitimité ou un leadership géopolitique
 
-### Combien faut-il en savoir ? La conscience est un spectre
+### La conscience est un spectre
 
-- Le seuil : trois bons articles sur le travail, l'énergie et l'accès — une littératie minimale
-- Le sommet : un traitement savant complet, comme Atlas of AI de Kate Crawford
-- Situez-vous honnêtement ; ne confondez pas le seuil avec le sommet
+- Niveau débutant — trois articles sérieux sur le travail, l'énergie et l'accès aux données de l'IA
+- Niveau expert — un traitement savant complet, comme Atlas of AI de Kate Crawford
+- Situez-vous honnêtement — ne confondez pas le débutant avec l'expert
 
-> Ne confondez pas le seuil avec le sommet.
++++
 
 ## Expliciter les processus et les procédures
 
@@ -66,15 +71,14 @@ lang: fr
 - L'objectif : qu'une autre personne, ou un autre modèle, puisse reproduire ou améliorer votre travail.
 - La reproductibilité soutient la validation, la vérification et l'évaluation.
 
-> Tout vous appartient. C'est votre établi.
++++
 
 ## Faire des choix et peser les compromis qui honorent nos valeurs et nos obligations
 
 ### Le droit : « public » ne veut pas dire « libre »
 
-- L'accessibilité est technique, la permission est juridique, le consentement est une relation, la légitimité dépend du contexte.
-- Le « fair use » est une doctrine américaine, non une règle universelle.
-- Le Cameroun applique le droit d'auteur — une liste fermée d'exceptions (Loi n° 2000/011 de 2000, modifiée en 2008 ; OAPI/Bangui ; Berne, ADPIC). Si votre usage n'y figure pas, l'accessibilité ne vous sauve pas.
+- L'accessibilité est technique, la permission est juridique, le consentement est relationnel, la légitimité est contextuelle.
+- Le Cameroun applique le droit d'auteur — une liste fermée d'exceptions (Loi n° 2000/011 de 2000, modifiée en 2008 ; Accord de Bangui/OAPI ; Convention de Berne ; ADPIC). Si votre usage n'y figure pas, l'accessibilité ne le rend pas licite.
 
 ### Le personnel
 
@@ -97,7 +101,7 @@ lang: fr
 - L'énergie n'est jamais gratuite — la question n'est pas de savoir si vous la dépensez, mais si ce qui subsiste au bout en valait la peine.
 - Dirigez le calcul vers ce qui vaut les joules dépensés, au service d'autrui au-delà de vous-même.
 
-> Dirigez le calcul vers ce qui vaut les joules.
++++
 
 ---
 

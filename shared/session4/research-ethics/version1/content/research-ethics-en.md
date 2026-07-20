@@ -5,40 +5,45 @@ author: Steven M. Schneider
 date: 2026-07-20
 canonical: research-ethics.yaml
 context: "SUNY Poly AIX Cameroon Workshops, 2026"
-link: "tiny.cc/aix-ethics"
 lang: en
 ---
 
-# Ethical research with LLMs requires
+# Ethical research on AI requires:
 
 ## Understanding tools, and how and why they are made
 
 ### What are LLM tools?
 
-- Model
-- Harness
-- Interface
-- Etc.
+- Model — the trained statistical system
+- Data — the material from which the model learns
+- Harness — the software that structures prompts, tools, memory, and outputs
+- Interface — the environment through which users encounter the system
+- Infrastructure — the compute, networks, platforms, and institutions that make it available
+- Organization — the company, laboratory, government, or community that controls its development and use
 
-### How tools are made
+### How are these tools made?
 
-- Labor
-- Data
-- Energy
+- Labor — visible and hidden human work, including research, annotation, moderation, maintenance, and extraction
+- Data — collected, licensed, purchased, donated, inferred, or appropriated
+- Energy and materials — electricity, water, chips, minerals, data centers, and waste
+- Capital — concentrated investment that shapes what can be built and by whom
+- Governance — laws, contracts, standards, and institutional decisions that authorize development
 
-### Why tools are made
+### Why are these tools made?
 
-- Control
-- Achievement
-- Profit
+- Knowledge and achievement — to expand scientific, creative, administrative, or technical capacity
+- Profit and competition — to capture markets, reduce costs, and secure strategic advantage
+- Control and coordination — to classify, predict, manage, monitor, or influence people and systems
+- Public benefit — to improve access, safety, education, health, or institutional capacity
+- Prestige and power — to establish authority, legitimacy, or geopolitical leadership
 
-### How much must you know? Awareness is a spectrum
+### Awareness is a spectrum
 
-- Floor: three good articles on labor, energy, and access — minimal literacy
-- Ceiling: a full scholarly treatment, such as Kate Crawford's Atlas of AI
-- Locate yourself honestly; do not mistake the floor for the summit
+- Entry level — three grounded articles on AI's labor, energy, and data-access costs
+- Expert level — a full scholarly treatment, such as Kate Crawford's Atlas of AI
+- Locate yourself honestly — don't mistake entry for expert
 
-> Do not mistake the floor for the summit.
++++
 
 ## Making processes and procedures explicit
 
@@ -66,15 +71,14 @@ lang: en
 - The goal is for another person or model to reproduce or improve on your work.
 - Reproducibility supports validation, verification, and evaluation.
 
-> You keep it all. That's your workbench.
++++
 
 ## Making choices and weighing tradeoffs that honor values and obligations
 
 ### Legal: public does not mean unrestricted
 
-- Accessibility is technical, permission is legal, consent is a relationship, legitimacy depends on context.
-- "Fair use" is a US doctrine, not a universal rule.
-- Cameroon uses droit d'auteur — a closed list of exceptions (Law No. 2000/011 of 2000, amended 2008; OAPI/Bangui; Berne, TRIPS). If your use is not on the list, accessibility does not save it.
+- Accessibility is technical, permission is legal, consent is relational, legitimacy is contextual.
+- Cameroon uses droit d'auteur — a closed list of exceptions (Law No. 2000/011 of 2000, amended 2008; OAPI/Bangui Agreement; Berne Convention; TRIPS). If your use is not on the list, accessibility does not save it.
 
 ### Personal
 
@@ -97,7 +101,7 @@ lang: en
 - Energy is never free — the question is never whether you spend it, but whether what stands at the end was worth it.
 - Point the compute somewhere worth the joules, toward people beyond yourself.
 
-> Point the compute somewhere worth the joules.
++++
 
 ---
 
