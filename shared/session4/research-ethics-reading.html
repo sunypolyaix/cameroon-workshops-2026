@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070d1b">
+<title>Research Ethics for AI-Assisted Graduate Research — Read Along</title>
+<style>
+:root{
+  --bg:#070d1b;--bg2:#0a1224;--surface:#0d172b;--surface2:#111e35;
+  --border:#203553;--text:#f0f3fb;--muted:#aab6cf;--faint:#74819d;
+  --blue:#4b93f1;--aqua:#19a77a;--magenta:#d85a8f;--gold:#ef9f27;--red:#ed6a6a;
+  --max:760px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Georgia,'Times New Roman',serif;background:radial-gradient(circle at 15% 5%,#102044 0,#070d1b 34%,#050914 100%);color:var(--text);line-height:1.65}
+a{color:#fff;text-underline-offset:3px}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gold);z-index:100}
+.sitebar{position:sticky;top:0;z-index:90;background:rgba(5,9,20,.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(32,53,83,.7)}
+.sitebar-inner{max-width:var(--max);margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:Arial,Helvetica,sans-serif}
+.sitebar strong{font-size:.86rem}.sitebar span{font-size:.76rem;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+main{max-width:var(--max);margin:0 auto;padding:0 1.15rem 5rem}
+.hero{padding:4.5rem 0 3rem;text-align:left}
+.eyebrow{font-family:Arial,Helvetica,sans-serif;color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;margin-bottom:.9rem}
+h1{font-size:clamp(2.3rem,11vw,4.3rem);line-height:1.03;font-weight:400;margin:0 0 1rem;color:#fff}
+.deck{font-size:1.15rem;color:var(--muted);margin:0;max-width:39rem}
+.notice{margin-top:1.5rem;padding:1rem 1.1rem;border:1px solid var(--border);border-radius:14px;background:rgba(17,30,53,.75);font-family:Arial,Helvetica,sans-serif;color:#dce3f4}
+.toc{margin:0 0 3rem;padding:1rem 1.1rem;border:1px solid var(--border);border-radius:14px;background:rgba(13,23,43,.88)}
+.toc strong{font-family:Arial,Helvetica,sans-serif;display:block;margin-bottom:.45rem}.toc a{display:block;padding:.35rem 0;color:var(--muted)}
+section{padding:3rem 0;border-top:1px solid var(--border);scroll-margin-top:4.5rem}
+section.chapter{padding-top:4rem}
+.kicker{font-family:Arial,Helvetica,sans-serif;color:var(--gold);font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:.7rem}
+h2{font-size:clamp(1.8rem,7vw,2.8rem);line-height:1.12;font-weight:400;margin:.1rem 0 1rem;color:#fff}
+h3{font-family:Arial,Helvetica,sans-serif;font-size:1.08rem;margin:0 0 .45rem;color:#fff}
+p{font-size:1.06rem;margin:.8rem 0;color:#dbe2f2}
+.lede{font-size:1.2rem;line-height:1.6;color:#eef2fb}
+.cards{display:grid;gap:1rem;margin:1.4rem 0}
+.card{padding:1.15rem;border:1px solid var(--border);border-radius:15px;background:linear-gradient(180deg,rgba(17,30,53,.96),rgba(11,20,38,.96));box-shadow:0 14px 32px rgba(0,0,0,.18)}
+ul{padding-left:1.25rem}li{margin:.45rem 0;color:#d5ddf0}
+.label{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);border-radius:999px;padding:.25rem .55rem;margin-bottom:.65rem}
+.flow{display:grid;gap:.7rem;margin:1.4rem 0}.flow-item{padding:1rem;border:1px solid var(--border);border-radius:13px;background:rgba(17,30,53,.8)}
+.flow-item strong{display:block;font-family:Arial,Helvetica,sans-serif;margin-bottom:.15rem}.flow-item span{color:var(--muted);font-size:.96rem}
+.arrow{text-align:center;color:var(--gold);font-family:Arial,Helvetica,sans-serif;font-size:1.25rem}
+.quote{font-size:1.55rem;line-height:1.45;font-style:italic;border-left:3px solid var(--gold);padding-left:1rem;color:#fff;margin:1.5rem 0}
+.sources{margin-top:1.2rem;border-top:1px dashed var(--border);padding-top:.9rem;font-family:Arial,Helvetica,sans-serif;color:var(--muted);font-size:.9rem}
+details{margin-top:1rem;padding:.85rem 1rem;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
+summary{cursor:pointer;font-family:Arial,Helvetica,sans-serif;color:var(--gold);font-weight:600}
+.callout{padding:1rem 1.1rem;border-left:3px solid var(--aqua);background:rgba(25,167,122,.08);margin:1.3rem 0}
+footer{border-top:1px solid var(--border);padding:2.5rem 0 4rem;color:var(--faint);font-family:Arial,Helvetica,sans-serif;font-size:.9rem}
+@media(min-width:720px){.cards.three{grid-template-columns:repeat(3,1fr)}.cards.two{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="sitebar"><div class="sitebar-inner"><strong>Research Ethics</strong><span id="sectionLabel">Read along</span></div></header>
+<main>
+  <header class="hero" id="top">
+    <div class="eyebrow">SUNY Poly AIX · Cameroon Workshops · Session 4</div>
+    <h1>Research Ethics for AI-Assisted Graduate Research</h1>
+    <p class="deck">A reading companion for the workshop: the same argument as the presentation, reorganized for independent reading, reference, and discussion.</p>
+    <div class="notice">You do not need to stay on the same screen as the presenter. Scroll, pause, open sources, and return to sections as needed.</div>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <strong>Contents</strong>
+    <a href="#opening">1. Every tool carries a politics</a>
+    <a href="#understanding">2. Understanding the AI ecosystem</a>
+    <a href="#accountability">3. Making research accountable</a>
+    <a href="#responsibility">4. Responsibility and judgment</a>
+    <a href="#closing">5. Questions to carry forward</a>
+  </nav>
+
+  <section id="opening" class="chapter" data-label="Opening">
+    <div class="kicker">Where we start</div>
+    <h2>Every tool carries a politics.</h2>
+    <p class="lede">To use a tool is to become entangled in who made it, who benefits, and who pays. Artificial intelligence is not an exception to the history of tools. It is a new case within that history.</p>
+    <div class="flow" aria-label="Historical examples">
+      <div class="flow-item"><strong>Loom</strong><span>Mechanized labor and reorganized who controlled production.</span></div>
+      <div class="arrow">↓</div>
+      <div class="flow-item"><strong>Printing press</strong><span>Changed who could publish, distribute, and authorize knowledge.</span></div>
+      <div class="arrow">↓</div>
+      <div class="flow-item"><strong>Smartphone</strong><span>Changed who could connect, observe, record, and participate.</span></div>
+      <div class="arrow">↓</div>
+      <div class="flow-item"><strong>Large language model tools</strong><span>Change who can generate, synthesize, classify, and present knowledge.</span></div>
+    </div>
+    <div class="callout"><strong>Core claim:</strong> understanding the material and institutional system beneath AI is the foundation for accountable research.</div>
+  </section>
+
+  <section id="understanding" class="chapter" data-label="Understanding">
+    <div class="kicker">Movement One</div>
+    <h2>Understanding the AI ecosystem</h2>
+    <p class="lede">When researchers say “I used AI,” the ethical object is rarely a single model. It is an ecosystem.</p>
+
+    <div class="flow">
+      <div class="flow-item"><strong>Organization</strong><span>Company, laboratory, university, state, or consortium.</span></div>
+      <div class="flow-item"><strong>Infrastructure</strong><span>Compute, networks, platforms, data centers, electricity, and water.</span></div>
+      <div class="flow-item"><strong>Interface</strong><span>The environment through which users encounter the system.</span></div>
+      <div class="flow-item"><strong>Harness</strong><span>Prompts, tools, memory, retrieval, moderation, and workflow logic.</span></div>
+      <div class="flow-item"><strong>Model</strong><span>The trained statistical system.</span></div>
+      <div class="flow-item"><strong>Data</strong><span>The material from which the system learns or retrieves.</span></div>
+    </div>
+
+    <h3>Three material realities behind every prompt</h3>
+    <div class="cards three">
+      <article class="card"><h3>People</h3><ul><li>Research and engineering</li><li>Annotation and evaluation</li><li>Content moderation</li><li>Maintenance and support</li></ul></article>
+      <article class="card"><h3>Resources</h3><ul><li>Collected, licensed, inferred, or appropriated data</li><li>Electricity and water</li><li>Chips, minerals, data centers, and waste</li></ul></article>
+      <article class="card"><h3>Institutions</h3><ul><li>Capital investment</li><li>Governance and contracts</li><li>Law, standards, and procurement</li><li>Organizations controlling access</li></ul></article>
+    </div>
+
+    <h3>Why these tools are made</h3>
+    <p>Motives overlap: achievement, public benefit, profit, competition, prestige, coordination, and control. Ethical analysis becomes necessary precisely because these motives cannot be cleanly separated.</p>
+
+    <h3>Awareness is a spectrum</h3>
+    <div class="flow">
+      <div class="flow-item"><strong>1. Entry awareness</strong><span>Basic orientation through reliable introductory sources.</span></div>
+      <div class="flow-item"><strong>2. Serious introductory reading</strong><span>At least one sustained scholarly account of AI’s social and material conditions.</span></div>
+      <div class="flow-item"><strong>3. Current literature</strong><span>Engagement with contemporary research in the relevant field.</span></div>
+      <div class="flow-item"><strong>4. Informed judgment</strong><span>The ability to connect technical choices to ethical and institutional consequences.</span></div>
+    </div>
+
+    <h3>Access is not permission</h3>
+    <div class="cards two">
+      <article class="card"><h3>Accessibility</h3><p>Can I obtain the material?</p></article>
+      <article class="card"><h3>Permission</h3><p>Do I have the legal right to use it?</p></article>
+      <article class="card"><h3>Consent</h3><p>Did affected people meaningfully agree?</p></article>
+      <article class="card"><h3>Legitimacy</h3><p>Is this use appropriate in this relationship and context?</p></article>
+    </div>
+    <p>Cameroon follows <em>droit d’auteur</em>, with statutory copyright exceptions rather than a U.S.-style open-ended fair-use test. Technical accessibility therefore does not itself establish permission.</p>
+
+    <h3>Where you stand matters</h3>
+    <p>AI access is layered on top of uneven connectivity. Graduate researchers using advanced AI systems in Cameroon are not merely users; they are early norm-setters whose practices may influence institutions, disciplines, and later cohorts.</p>
+    <details><summary>Sources and reference points</summary><div class="sources">Law No. 2000/011 of 19 December 2000 on Copyright and Neighbouring Rights; WIPO Lex; OAPI/Bangui Agreement; Berne Convention; TRIPS; ITU and World Bank internet-access data; DataReportal, <em>Digital 2025: Cameroon</em>.</div></details>
+  </section>
+
+  <section id="accountability" class="chapter" data-label="Accountability">
+    <div class="kicker">Movement Two</div>
+    <h2>Making research accountable</h2>
+    <p class="lede">Accountability is not a checklist of commandments. It is a set of practices that make judgment inspectable.</p>
+
+    <article class="card"><span class="label" style="color:var(--blue);border-color:var(--blue)">Practice 1</span><h3>Document what you did</h3><p>Prompting, coding, retrieval, editing, comparison, and synthesis are different activities. Name the activity and preserve the workflow.</p><ul><li>Prompts and major iterations</li><li>Models, tools, harnesses, and interfaces</li><li>Materials ingested for retrieval or analysis</li><li>Points where human judgment changed the output</li><li>What the model claimed and what you independently verified</li></ul></article>
+
+    <article class="card"><span class="label" style="color:var(--aqua);border-color:var(--aqua)">Practice 2</span><h3>Cite so another person can check you</h3><p>A citation is provenance infrastructure: a path back to evidence.</p><ul><li>Prefer DOI, ISBN, URI, and stable identifiers over bare URLs</li><li>Maintain full bibliographic metadata</li><li>Keep Markdown source, not only PDF output</li><li>Preserve conversion provenance when transforming PDFs</li><li>Open cited sources and verify quotations and claims</li></ul></article>
+
+    <article class="card"><span class="label" style="color:var(--magenta);border-color:var(--magenta)">Practice 3</span><h3>Disclose the process, not merely the tool</h3><p>“I used ChatGPT” is rarely sufficient. A useful disclosure explains what the system did, what material it received, how outputs were checked, and what remains the researcher’s responsibility.</p><p><strong>Practical recommendation:</strong> maintain one <code>disclosure.md</code> file for each paper or project.</p></article>
+
+    <article class="card"><span class="label" style="color:var(--gold);border-color:var(--gold)">Practice 4</span><h3>Share so the work can be improved</h3><p>Reproducibility is a form of generosity. Preserve conversations, files, bibliographic records, transformations, and enough workflow detail for another person or model to reproduce, critique, or extend the work.</p></article>
+
+    <h3>The accountability cycle</h3>
+    <div class="flow" aria-label="Accountability cycle">
+      <div class="flow-item"><strong>Document</strong><span>Preserve the workflow.</span></div><div class="arrow">↓</div>
+      <div class="flow-item"><strong>Cite</strong><span>Provide a route back to evidence.</span></div><div class="arrow">↓</div>
+      <div class="flow-item"><strong>Disclose</strong><span>Explain how AI shaped the work.</span></div><div class="arrow">↓</div>
+      <div class="flow-item"><strong>Share</strong><span>Make critique and reproduction possible.</span></div><div class="arrow">↺</div>
+    </div>
+  </section>
+
+  <section id="responsibility" class="chapter" data-label="Responsibility">
+    <div class="kicker">Movement Three</div>
+    <h2>Responsibility and judgment</h2>
+    <p class="lede">Ethical research is not only what you can defend privately. It is what you can defend across contexts.</p>
+    <div class="flow">
+      <div class="flow-item"><strong>Researcher</strong><span>What cognition do you offload, and why?</span></div>
+      <div class="flow-item"><strong>Institution</strong><span>What policies govern your research, data, and tools?</span></div>
+      <div class="flow-item"><strong>Profession</strong><span>What do disciplinary codes and norms require?</span></div>
+      <div class="flow-item"><strong>Society</strong><span>Who bears costs, who gains capacity, and who is excluded?</span></div>
+    </div>
+
+    <h3>Early adopters set the norms</h3>
+    <p>It does not matter only how you arrived at early access—through merit, geography, timing, family, or institution. What matters is that your fluency will shape what other people understand responsible AI research to look like.</p>
+    <p>Someone teaches first. If you are among the first, that someone is you.</p>
+
+    <h3>Direction, not abstinence</h3>
+    <p>Research always spends something: energy, labor, attention, opportunity, and institutional trust. The ethical question is not whether a cost exists. It is whether what stands at the end was worth the cost and whether that judgment can be defended publicly.</p>
+    <blockquote class="quote">Point the compute somewhere worth the joules.</blockquote>
+  </section>
+
+  <section id="closing" class="chapter" data-label="Closing">
+    <div class="kicker">Before you go</div>
+    <h2>Three questions to carry forward</h2>
+    <div class="cards">
+      <article class="card"><h3>Awareness</h3><p>Where are you, honestly, on the awareness spectrum?</p></article>
+      <article class="card"><h3>Documentation</h3><p>Which part of your AI process is least documented?</p></article>
+      <article class="card"><h3>Norm-setting</h3><p>Who is one person you could teach this framework to in the next month?</p></article>
+    </div>
+    <p class="lede">Research ethics begins with understanding. It becomes real through accountable practice.</p>
+  </section>
+
+  <footer>Research Ethics for AI-Assisted Graduate Research · SUNY Poly AIX · Cameroon Workshops · July 2026</footer>
+</main>
+<script>
+const progress=document.getElementById('progress');
+const label=document.getElementById('sectionLabel');
+const sections=[...document.querySelectorAll('section[data-label]')];
+function update(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.width=(max>0?scrollY/max*100:0)+'%';
+  let current=sections[0];
+  for(const s of sections){if(s.getBoundingClientRect().top<120) current=s;}
+  label.textContent=current?.dataset.label||'Read along';
+}
+addEventListener('scroll',update,{passive:true});update();
+</script>
+</body>
+</html>
