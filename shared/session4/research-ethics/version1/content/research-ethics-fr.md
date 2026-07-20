@@ -1,3 +1,4 @@
+<!-- raw data file for the slide deck's own parser — not a Jekyll page -->
 ---
 title: "Éthique de la recherche — Arbre déployable"
 author: Steven M. Schneider

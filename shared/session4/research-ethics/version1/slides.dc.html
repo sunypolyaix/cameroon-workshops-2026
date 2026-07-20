@@ -9,8 +9,8 @@
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<link rel="stylesheet" href="_ds/aix-design-system-nyhima-2026-3ac245ed-ac08-4723-bf00-46ef755c6c41/colors_and_type.css">
-<script src="_ds/aix-design-system-nyhima-2026-3ac245ed-ac08-4723-bf00-46ef755c6c41/_ds_bundle.js"></script>
+<link rel="stylesheet" href="ds/aix-design-system-nyhima-2026-3ac245ed-ac08-4723-bf00-46ef755c6c41/colors_and_type.css">
+<script src="ds/aix-design-system-nyhima-2026-3ac245ed-ac08-4723-bf00-46ef755c6c41/ds_bundle.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
@@ -80,14 +80,17 @@ class Component extends DCLogic {
 
   parse(md) {
     const meta = {};
-    let body = md;
-    const fm = md.match(/^\uFEFF?---\s*\n([\s\S]*?)\n---\s*\n?/);
+    // Leading HTML comment keeps Jekyll (which treats any file starting with `---` as
+    // front matter, even non-.html ones) from swallowing this file into its build.
+    const src = md.replace(/^\uFEFF?(?:<!--[^\n]*-->\s*\n)?/, '');
+    let body = src;
+    const fm = src.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
     if (fm) {
       fm[1].split('\n').forEach(l => {
         const m = l.match(/^([A-Za-z_]+):\s*(.*)$/);
         if (m) { let v = m[2].trim(); v = v.replace(/\s+#.*$/, '').trim(); v = v.replace(/^["']|["']$/g, ''); meta[m[1]] = v; }
       });
-      body = md.slice(fm[0].length);
+      body = src.slice(fm[0].length);
     }
     const branches = [], order = [];
     let branchIdx = 0, curBranch = null, curSection = null, colophon = null;

@@ -1,3 +1,4 @@
+<!-- raw data file for the slide deck's own parser — not a Jekyll page -->
 ---
 title: "Research Ethics — Full-Fold Tree"
 author: Steven M. Schneider
