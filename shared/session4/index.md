@@ -15,3 +15,9 @@ title: "Session 4 — Research Ethics for AI-Assisted Graduate Research"
   <a href="research-ethics/handout.md">Handout — Full Framework</a>
   <div class="desc">The complete written framework with the friction-points reference table, Cameroon connectivity data, sources, and reflection questions to take away.</div>
 </div>
+
+<div class="card">
+  <a href="research-ethics/version0/slides.html" target="_blank" rel="noopener">Slide Deck — OLD ↗</a>
+  <div class="desc">Superseded by the deck above. Kept here temporarily for reference.</div>
+  <div class="meta">Opens in new tab · use ← → or space to navigate</div>
+</div>
