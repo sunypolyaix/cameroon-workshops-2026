@@ -12,7 +12,7 @@ date: 2026-07-20
 
 **Session 4 · University of Buea · SUNY Poly AIX · Monday, July 20, 2026**
 
-<p><a href="slides.html" target="_blank" rel="noopener">Open the slide deck ↗</a> · <a href="../">Back to Session 4</a></p>
+<p><a href="version1/slides.dc.html" target="_blank" rel="noopener">Open the slide deck ↗</a> · <a href="../">Back to Session 4</a></p>
 
 This is not a checklist. It is a way of reasoning, one you'll keep using long after this
 workshop ends. Everything below is contested terrain — friction points to navigate, not
