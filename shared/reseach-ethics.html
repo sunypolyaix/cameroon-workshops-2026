@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Ethics for AI-Assisted Graduate Research</title>
+<style>
+  :root{
+    --bg:#070d1b; --bg2:#0a1224; --surface:#0d172b; --surface2:#111e35;
+    --border:#203553; --text:#f0f3fb; --muted:#9aa9c5; --faint:#64708d;
+    --blue:#4b93f1; --aqua:#19a77a; --magenta:#d85a8f; --gold:#ef9f27;
+    --violet:#9d93f5; --red:#ed6a6a; --green:#6fd08c; --ink:#050914;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:Georgia,'Times New Roman',serif;background:radial-gradient(circle at 15% 10%,#102044 0,#070d1b 42%,#050914 100%);color:var(--text);overflow:hidden}
+  a{color:#fff;text-decoration-thickness:1px;text-underline-offset:3px}
+  .sans{font-family:Arial,Helvetica,sans-serif}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:80;transition:width .25s ease}
+  header.bar{position:fixed;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);background:linear-gradient(rgba(5,9,20,.98),rgba(5,9,20,.72),rgba(5,9,20,0));z-index:70;pointer-events:none}
+  header.bar .movement{color:var(--muted)}
+  .deck{position:relative;width:100%;height:100vh}
+  .slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:88px 7.5vw 72px;opacity:0;transition:opacity .35s ease}
+  .slide.active{display:flex;opacity:1}
+  .slide-inner{width:100%;max-width:1120px}
+  .divider .slide-inner{text-align:center;max-width:980px}
+  .eyebrow{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .divider .eyebrow{justify-content:center}
+  .line{height:1px;width:42px;background:var(--gold);opacity:.55;display:inline-block}
+  h1.big{font-size:clamp(2.2rem,5vw,4rem);font-weight:400;line-height:1.05;color:#fff;margin-bottom:.75rem}
+  h2.slide-title{font-size:clamp(1.75rem,3.2vw,2.65rem);font-weight:400;line-height:1.15;color:#fff;margin-bottom:1.2rem}
+  .kicker{font-size:1.16rem;color:var(--muted);line-height:1.55;max-width:820px}
+  .lede{font-size:1.28rem;color:#dbe2f5;line-height:1.55;max-width:850px}
+  .grid2{display:grid;grid-template-columns:1.02fr 1fr;gap:3.2rem;align-items:center}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;align-items:stretch}
+  .card{background:linear-gradient(180deg,rgba(17,30,53,.96),rgba(11,20,38,.96));border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.35rem;box-shadow:0 16px 40px rgba(0,0,0,.22)}
+  .card h3{font-family:Arial,sans-serif;font-size:1.02rem;color:#fff;margin-bottom:.5rem}
+  .card p,.card li{font-size:.98rem;color:var(--muted);line-height:1.45}
+  ul.clean{list-style:none;margin-top:.5rem}
+  ul.clean li{position:relative;padding-left:20px;margin:.45rem 0;color:#d5ddf0;font-size:1.03rem;line-height:1.42}
+  ul.clean li::before{content:"—";position:absolute;left:0;color:var(--faint)}
+  .small{font-family:Arial,sans-serif;font-size:.82rem;color:var(--faint);line-height:1.35}
+  .footline{margin-top:1.2rem;font-family:Arial,sans-serif;font-size:.86rem;color:var(--faint);line-height:1.45}
+  .badge{display:inline-block;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--border);margin-bottom:.6rem}
+  .quote{font-size:1.7rem;line-height:1.45;color:#fff;border-left:3px solid var(--gold);padding-left:1.35rem;font-style:italic;max-width:900px}
+  svg text{font-family:Arial,Helvetica,sans-serif}
+  nav.ctrl{position:fixed;bottom:18px;right:22px;z-index:75;display:flex;gap:8px;font-family:Arial,sans-serif}
+  nav.ctrl button{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:#fff;font-size:16px;cursor:pointer}
+  nav.ctrl button:hover{background:var(--surface2);border-color:var(--blue)}
+  nav.ctrl button:disabled{opacity:.3;cursor:default}
+  .hint{position:fixed;bottom:24px;left:22px;z-index:75;font-family:Arial,sans-serif;font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .pill{font-family:Arial,sans-serif;font-size:.82rem;color:#fff;border:1px solid var(--border);border-radius:999px;padding:.25rem .65rem;background:rgba(255,255,255,.04);display:inline-block;margin:.15rem}
+  .stack-row{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin:.55rem 0;padding:.8rem 1rem;border:1px solid var(--border);border-radius:12px;background:rgba(17,30,53,.78)}
+  .stack-row strong{font-family:Arial,sans-serif;color:#fff;font-size:1rem}
+  .stack-row span{font-family:Arial,sans-serif;color:var(--muted);font-size:.9rem;text-align:right}
+  @media(max-width:850px){.grid2,.grid3{grid-template-columns:1fr;gap:1.3rem}.slide{padding:74px 6vw 62px}.hint{display:none}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="bar sans"><span class="movement" id="movementLabel">Opening</span><span id="countLabel">1 / 21</span></header>
+<div class="deck" id="deck">
+
+<section class="slide active divider" data-movement="Opening">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>SUNY Poly AIX · Cameroon Workshops · Session 4<span class="line"></span></div>
+    <h1 class="big">Research Ethics for<br>AI-Assisted Graduate Research</h1>
+    <p class="kicker" style="margin:0 auto;">Monday, July 20, 2026 · a conversation, not a checklist</p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Opening">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>Where we start</div>
+    <h2 class="slide-title">Every tool carries a politics.</h2>
+    <p class="lede" style="margin-bottom:1.8rem;">To use a tool is to be entangled in who made it, who benefits, and who pays. AI is not an exception to the history of tools. It is a new case.</p>
+    <svg viewBox="0 0 960 175" width="100%" height="220" aria-label="timeline">
+      <line x1="45" y1="88" x2="915" y2="88" stroke="#203553" stroke-width="2"/>
+      <g><circle cx="95" cy="88" r="8" fill="var(--blue)"/><text x="95" y="56" fill="#fff" font-size="15" text-anchor="middle">Loom</text><text x="95" y="123" fill="#9aa9c5" font-size="12" text-anchor="middle">labor mechanized</text></g>
+      <g><circle cx="350" cy="88" r="8" fill="var(--aqua)"/><text x="350" y="56" fill="#fff" font-size="15" text-anchor="middle">Printing press</text><text x="350" y="123" fill="#9aa9c5" font-size="12" text-anchor="middle">who publishes</text></g>
+      <g><circle cx="610" cy="88" r="8" fill="var(--magenta)"/><text x="610" y="56" fill="#fff" font-size="15" text-anchor="middle">Smartphone</text><text x="610" y="123" fill="#9aa9c5" font-size="12" text-anchor="middle">who connects</text></g>
+      <g><circle cx="870" cy="88" r="10" fill="var(--gold)"/><text x="870" y="56" fill="#fff" font-size="16" font-weight="bold" text-anchor="middle">LLM tools</text><text x="870" y="123" fill="#9aa9c5" font-size="12" text-anchor="middle">you are here</text></g>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-movement="Opening">
+  <div class="slide-inner grid2">
+    <div>
+      <div class="eyebrow"><span class="line"></span>The spine of the talk</div>
+      <h2 class="slide-title">Understanding grounds accountability.</h2>
+      <p class="lede">Ethical research begins by understanding the tool — what it is, how it was made, why it was made, and who governs its use.</p>
+    </div>
+    <svg viewBox="0 0 430 340" width="100%" height="360" aria-label="pyramid">
+      <polygon points="215,20 345,155 85,155" fill="rgba(239,159,39,.12)" stroke="var(--gold)" stroke-width="2"/>
+      <text x="215" y="76" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Accountable</text><text x="215" y="98" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">research</text>
+      <polygon points="85,155 345,155 388,275 42,275" fill="rgba(75,147,241,.10)" stroke="var(--blue)" stroke-width="2"/>
+      <text x="215" y="200" fill="#dde2f4" font-size="15" text-anchor="middle" font-weight="bold">Operational practices</text><text x="215" y="224" fill="#9aa9c5" font-size="12" text-anchor="middle">document · cite · disclose · share</text>
+      <polygon points="42,275 388,275 408,315 22,315" fill="rgba(25,167,122,.22)" stroke="var(--aqua)" stroke-width="2"/>
+      <text x="215" y="300" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Understanding the AI ecosystem</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide divider" data-movement="Understanding">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>Movement One<span class="line"></span></div>
+    <h1 class="big">Understanding the AI Ecosystem</h1>
+    <p class="kicker" style="margin:0 auto;">What is it? How is it made? Why is it made?</p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner grid2">
+    <div>
+      <div class="eyebrow"><span class="line"></span>What are LLM tools?</div>
+      <h2 class="slide-title">Not just a model. A stack.</h2>
+      <p class="lede">When researchers say "I used AI," the ethical object is rarely one thing. It is an ecosystem of data, models, interfaces, infrastructure, and institutional control.</p>
+    </div>
+    <div>
+      <div class="stack-row"><strong>Organization</strong><span>company · lab · university · state</span></div>
+      <div class="stack-row"><strong>Infrastructure</strong><span>compute · network · platforms</span></div>
+      <div class="stack-row"><strong>Interface</strong><span>where users encounter the system</span></div>
+      <div class="stack-row"><strong>Harness</strong><span>prompts · tools · memory · retrieval</span></div>
+      <div class="stack-row"><strong>Model</strong><span>trained statistical system</span></div>
+      <div class="stack-row"><strong>Data</strong><span>material from which the system learns</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>How tools are made</div>
+    <h2 class="slide-title">Three material realities behind every prompt.</h2>
+    <div class="grid3">
+      <div class="card"><h3>People</h3><ul class="clean"><li>Research and engineering</li><li>Annotation and evaluation</li><li>Content moderation</li><li>Maintenance and support</li></ul></div>
+      <div class="card"><h3>Resources</h3><ul class="clean"><li>Data: collected, licensed, inferred, or appropriated</li><li>Electricity and water</li><li>Chips, minerals, data centers, waste</li></ul></div>
+      <div class="card"><h3>Institutions</h3><ul class="clean"><li>Capital investment</li><li>Governance and contracts</li><li>Law, standards, and procurement</li><li>Organizations that control access</li></ul></div>
+    </div>
+    <p class="footline">Labor, data, energy, capital, and governance are not background conditions. They are part of the system.</p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner grid2">
+    <div>
+      <div class="eyebrow"><span class="line"></span>Why tools are made</div>
+      <h2 class="slide-title">Motives overlap. That is the ethical problem.</h2>
+      <p class="lede">AI systems are made for knowledge and public benefit, but also for profit, coordination, competition, prestige, and control. Research ethics requires seeing all of those motives at once.</p>
+    </div>
+    <svg viewBox="0 0 460 360" width="100%" height="365" aria-label="motives diagram">
+      <circle cx="230" cy="175" r="105" fill="rgba(75,147,241,.16)" stroke="var(--blue)" stroke-width="2"/>
+      <circle cx="165" cy="245" r="105" fill="rgba(25,167,122,.16)" stroke="var(--aqua)" stroke-width="2"/>
+      <circle cx="295" cy="245" r="105" fill="rgba(239,159,39,.16)" stroke="var(--gold)" stroke-width="2"/>
+      <text x="230" y="105" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Achievement</text>
+      <text x="130" y="296" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Public benefit</text>
+      <text x="330" y="296" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Profit</text>
+      <text x="230" y="230" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Power</text>
+      <text x="230" y="252" fill="#9aa9c5" font-size="12" text-anchor="middle">control · competition · prestige</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>How much must you know?</div>
+    <h2 class="slide-title">Awareness is a spectrum.</h2>
+    <svg viewBox="0 0 960 230" width="100%" height="250" aria-label="awareness ladder">
+      <defs><linearGradient id="ladder" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#285b9c"/><stop offset="1" stop-color="#ef9f27"/></linearGradient></defs>
+      <rect x="70" y="96" width="820" height="18" rx="9" fill="url(#ladder)"/>
+      <g><circle cx="90" cy="105" r="10" fill="#070d1b" stroke="#fff" stroke-width="2"/><text x="90" y="72" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Entry</text><text x="90" y="145" fill="#cdd6ec" font-size="12" text-anchor="middle">3 Wikipedia</text><text x="90" y="162" fill="#cdd6ec" font-size="12" text-anchor="middle">articles</text></g>
+      <g><circle cx="330" cy="105" r="8" fill="#070d1b" stroke="#fff" stroke-width="1.5"/><text x="330" y="151" fill="#cdd6ec" font-size="12" text-anchor="middle">One serious</text><text x="330" y="168" fill="#cdd6ec" font-size="12" text-anchor="middle">book</text></g>
+      <g><circle cx="570" cy="105" r="8" fill="#070d1b" stroke="#fff" stroke-width="1.5"/><text x="570" y="151" fill="#cdd6ec" font-size="12" text-anchor="middle">Current</text><text x="570" y="168" fill="#cdd6ec" font-size="12" text-anchor="middle">literature</text></g>
+      <g><circle cx="870" cy="105" r="10" fill="#070d1b" stroke="#fff" stroke-width="2"/><text x="870" y="72" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Judgment</text><text x="870" y="145" fill="#cdd6ec" font-size="12" text-anchor="middle">informed</text><text x="870" y="162" fill="#cdd6ec" font-size="12" text-anchor="middle">practice</text></g>
+      <text x="480" y="210" fill="#9aa9c5" font-size="13" text-anchor="middle">Locate yourself honestly. Do not mistake entry-level awareness for expertise.</text>
+    </svg>
+    <p class="footline"><a href="https://www.google.com/search?q=site%3Aen.wikipedia.org+%28%22artificial+intelligence%22+OR+%22generative+AI%22%29+%28labor+OR+energy+OR+water+OR+access+OR+mining+OR+%22critical+minerals%22+OR+%22data+center%22%29">Entry-level Wikipedia search</a> · <a href="https://www.google.com/search?q=%28site%3Ayalebooks.yale.edu+OR+site%3Amitpress.mit.edu+OR+site%3Apress.uchicago.edu+OR+site%3Aoup.com+OR+site%3Acambridge.org+OR+site%3Asagepub.com+OR+site%3Abloomsbury.com+OR+site%3Abooks.google.com%29+%28%22artificial+intelligence%22+OR+%22generative+AI%22%29+%28labor+OR+workers+OR+environment+OR+energy+OR+water+OR+infrastructure+OR+extraction+OR+inequality+OR+access+OR+%22Global+South%22%29+%28book+OR+monograph%29+after%3A2021-01-01">Scholarly book search</a></p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>Access is not permission</div>
+    <h2 class="slide-title">Four questions researchers must not collapse.</h2>
+    <div class="grid2" style="grid-template-columns:1fr 1.15fr;gap:2rem;">
+      <div class="card"><h3>Technical, legal, relational, contextual</h3><ul class="clean"><li><strong>Accessibility</strong> asks: Can I get the material?</li><li><strong>Permission</strong> asks: Do I have the legal right to use it?</li><li><strong>Consent</strong> asks: Did the affected people meaningfully agree?</li><li><strong>Legitimacy</strong> asks: Is this use appropriate here?</li></ul></div>
+      <div class="card"><h3>Cameroon matters</h3><p>Cameroon follows <em>droit d'auteur</em>, with statutory copyright exceptions rather than a U.S.-style open-ended fair-use test. If your intended use is not licensed or covered by an exception, technical accessibility does not create permission.</p><p class="small" style="margin-top:.8rem;">Reference points: Law No. 2000/011 of 19 Dec. 2000 on Copyright and Neighbouring Rights; WIPO Lex; OAPI/Bangui Agreement; Berne; TRIPS.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Understanding">
+  <div class="slide-inner grid2">
+    <div>
+      <div class="eyebrow"><span class="line"></span>Not an anonymous global user</div>
+      <h2 class="slide-title">Where you stand: Cameroon, 2025.</h2>
+      <p class="lede">AI access is layered on top of uneven connectivity. If you are using advanced AI tools in graduate research, you are not just a user. You are an early norm-setter.</p>
+      <p class="footline">Sources: ITU, <em>State of Digital Development and Trends in the Africa Region</em> (2025); DataReportal, <em>Digital 2025: Cameroon</em>; World Bank/ITU internet-user data.</p>
+    </div>
+    <svg viewBox="0 0 460 290" width="100%" height="315" aria-label="connectivity bars">
+      <text x="0" y="30" fill="#dbe2f5" font-size="14">Mobile broadband subscriptions per 100 people</text>
+      <text x="0" y="78" fill="#cdd6ec" font-size="13">Cameroon</text><rect x="140" y="60" width="135" height="25" rx="12" fill="var(--blue)"/><text x="288" y="78" fill="#fff" font-size="15" font-weight="bold">~30</text>
+      <text x="0" y="120" fill="#cdd6ec" font-size="13">Africa avg.</text><rect x="140" y="102" width="234" height="25" rx="12" fill="#2c3d5c"/><text x="386" y="120" fill="#fff" font-size="15" font-weight="bold">52</text>
+      <text x="0" y="180" fill="#dbe2f5" font-size="14">Internet users, % of population</text>
+      <text x="0" y="223" fill="#cdd6ec" font-size="13">Cameroon</text><rect x="140" y="205" width="207" height="25" rx="12" fill="var(--gold)"/><text x="360" y="223" fill="#fff" font-size="15" font-weight="bold">~46%</text>
+    </svg>
+  </div>
+</section>
+
+<section class="slide divider" data-movement="Accountability">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>Movement Two<span class="line"></span></div>
+    <h1 class="big">Making Research Accountable</h1>
+    <p class="kicker" style="margin:0 auto;">Not commandments. Practices that make judgment inspectable.</p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Accountability">
+  <div class="slide-inner grid2">
+    <div>
+      <span class="badge" style="color:var(--blue);border-color:var(--blue);background:rgba(75,147,241,.12);">Practice 1</span>
+      <h2 class="slide-title">Document what you did.</h2>
+      <p class="lede">Prompting, coding, retrieval, editing, comparison, and synthesis are different activities. Name the activity. Preserve the workflow.</p>
+    </div>
+    <div class="card"><h3>Minimum record</h3><ul class="clean"><li>Prompts and major iterations</li><li>Models, tools, harnesses, and interfaces used</li><li>What was ingested for RAG or analysis</li><li>Where human judgment changed the output</li><li>What the model described vs. what you verified</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Accountability">
+  <div class="slide-inner grid2">
+    <div class="card"><h3>Citation is provenance infrastructure</h3><ul class="clean"><li>Prefer DOI, ISBN, URI, and stable identifiers over bare URLs</li><li>Maintain full BibTeX metadata</li><li>Keep Markdown source, not only PDF output</li><li>If transforming PDFs, preserve conversion provenance</li><li>Open cited sources; verify the quotation and the claim</li></ul></div>
+    <div>
+      <span class="badge" style="color:var(--aqua);border-color:var(--aqua);background:rgba(25,167,122,.12);">Practice 2</span>
+      <h2 class="slide-title">Cite so another person can check you.</h2>
+      <p class="lede">A citation is not decorative. It is a path back to evidence. AI raises the standard because fabrication is easy and often plausible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Accountability">
+  <div class="slide-inner grid2">
+    <div>
+      <span class="badge" style="color:var(--magenta);border-color:var(--magenta);background:rgba(216,90,143,.12);">Practice 3</span>
+      <h2 class="slide-title">Disclose the process, not just the tool.</h2>
+      <p class="lede">"I used ChatGPT" is rarely enough. Ethical disclosure explains how AI shaped the research process and where responsibility remained with the researcher.</p>
+    </div>
+    <div class="card"><h3>A disclosure note should say</h3><ul class="clean"><li>What tools were used</li><li>For which activities</li><li>What data or texts were provided</li><li>How outputs were checked</li><li>What remains the author's responsibility</li></ul><p class="small" style="margin-top:.75rem;">Generate one <code>disclosure.md</code> file for each paper or project.</p></div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Accountability">
+  <div class="slide-inner grid2">
+    <div class="card"><h3>Reproducibility is generosity</h3><ul class="clean"><li>Keep the full conversation history when possible</li><li>Store artifacts in a structured workbench</li><li>Use Markdown, BibTeX, and stable files</li><li>Share enough for another person or model to reproduce, critique, or improve the work</li></ul></div>
+    <div>
+      <span class="badge" style="color:var(--gold);border-color:var(--gold);background:rgba(239,159,39,.12);">Practice 4</span>
+      <h2 class="slide-title">Share so the work can be improved.</h2>
+      <p class="lede">The goal is not merely to defend yourself. The goal is to make research legible enough that others can evaluate and extend it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Accountability">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>The operational map</div>
+    <h2 class="slide-title">Accountability is a cycle.</h2>
+    <svg viewBox="0 0 760 460" width="100%" height="455" aria-label="accountability cycle">
+      <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="var(--gold)"/></marker></defs>
+      <circle cx="380" cy="230" r="80" fill="rgba(239,159,39,.11)" stroke="var(--gold)" stroke-width="2"/>
+      <text x="380" y="224" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Accountable</text><text x="380" y="246" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">research</text>
+      <g><rect x="300" y="25" width="160" height="70" rx="16" fill="var(--surface2)" stroke="var(--blue)"/><text x="380" y="56" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Document</text><text x="380" y="77" fill="#9aa9c5" font-size="11" text-anchor="middle">workflow</text></g>
+      <g><rect x="560" y="195" width="160" height="70" rx="16" fill="var(--surface2)" stroke="var(--aqua)"/><text x="640" y="226" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Cite</text><text x="640" y="247" fill="#9aa9c5" font-size="11" text-anchor="middle">evidence</text></g>
+      <g><rect x="300" y="365" width="160" height="70" rx="16" fill="var(--surface2)" stroke="var(--magenta)"/><text x="380" y="396" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Disclose</text><text x="380" y="417" fill="#9aa9c5" font-size="11" text-anchor="middle">AI use</text></g>
+      <g><rect x="40" y="195" width="160" height="70" rx="16" fill="var(--surface2)" stroke="var(--gold)"/><text x="120" y="226" fill="#fff" font-size="15" text-anchor="middle" font-weight="bold">Share</text><text x="120" y="247" fill="#9aa9c5" font-size="11" text-anchor="middle">reproduce</text></g>
+      <path d="M450 75 C540 95 600 135 630 190" fill="none" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+      <path d="M640 265 C610 335 540 385 465 397" fill="none" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+      <path d="M300 397 C220 385 160 335 130 267" fill="none" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+      <path d="M130 195 C160 130 225 88 300 65" fill="none" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+    </svg>
+  </div>
+</section>
+
+<section class="slide divider" data-movement="Responsibility">
+  <div class="slide-inner">
+    <div class="eyebrow"><span class="line"></span>Movement Three<span class="line"></span></div>
+    <h1 class="big">Responsibility and Judgment</h1>
+    <p class="kicker" style="margin:0 auto;">Ethical research is not only what you can defend to yourself. It is what you can defend across contexts.</p>
+  </div>
+</section>
+
+<section class="slide" data-movement="Responsibility">
+  <div class="slide-inner grid2">
+    <svg viewBox="0 0 440 440" width="100%" height="450" aria-label="contexts">
+      <circle cx="220" cy="220" r="195" fill="rgba(75,147,241,.06)" stroke="var(--blue)" stroke-width="2"/><text x="220" y="70" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Society</text>
+      <circle cx="220" cy="240" r="145" fill="rgba(25,167,122,.07)" stroke="var(--aqua)" stroke-width="2"/><text x="220" y="130" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Profession</text>
+      <circle cx="220" cy="260" r="95" fill="rgba(239,159,39,.10)" stroke="var(--gold)" stroke-width="2"/><text x="220" y="205" fill="#fff" font-size="16" text-anchor="middle" font-weight="bold">Institution</text>
+      <circle cx="220" cy="280" r="45" fill="rgba(216,90,143,.22)" stroke="var(--magenta)" stroke-width="2"/><text x="220" y="285" fill="#fff" font-size="13" text-anchor="middle" font-weight="bold">Researcher</text>
+    </svg>
+    <div>
+      <div class="eyebrow"><span class="line"></span>Choices and tradeoffs</div>
+      <h2 class="slide-title">Every AI decision has four audiences.</h2>
+      <ul class="clean"><li><strong>Personal:</strong> what cognition do you offload, and why?</li><li><strong>Institutional:</strong> what policies govern your research and data?</li><li><strong>Professional:</strong> what do your disciplinary codes require?</li><li><strong>Social:</strong> who bears costs, who gains capacity, and who is excluded?</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Responsibility">
+  <div class="slide-inner grid2">
+    <div>
+      <svg viewBox="0 0 320 260" width="100%" height="280" aria-label="top decile pyramid">
+        <polygon points="160,15 300,240 20,240" fill="none" stroke="#2c3d5c" stroke-width="2"/>
+        <polygon points="160,15 207,92 113,92" fill="var(--gold)" opacity=".88"/>
+        <text x="160" y="62" fill="#050914" font-size="13" text-anchor="middle" font-weight="bold">You</text>
+        <text x="160" y="156" fill="#cdd6ec" font-size="14" text-anchor="middle">the many people</text><text x="160" y="176" fill="#cdd6ec" font-size="14" text-anchor="middle">who will inherit</text><text x="160" y="196" fill="#cdd6ec" font-size="14" text-anchor="middle">the norms you set</text>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow"><span class="line"></span>The obligation that follows</div>
+      <h2 class="slide-title">Early adopters set the norms.</h2>
+      <p class="lede">It does not matter only how you got here — merit, geography, timing, family, institution. What matters is that your fluency will shape what others think responsible AI research looks like.</p>
+      <p class="lede" style="margin-top:1rem;">Someone teaches first. If you are among the first, that someone is you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-movement="Responsibility">
+  <div class="slide-inner grid2">
+    <div>
+      <div class="eyebrow"><span class="line"></span>Direction, not abstinence</div>
+      <h2 class="slide-title">Energy is never free.</h2>
+      <p class="lede">The question is not whether research spends energy, labor, attention, or institutional trust. Research always spends something.</p>
+      <p class="lede" style="margin-top:1rem;">The question is whether what stands at the end was worth the cost — and whether you can defend that judgment publicly.</p>
+    </div>
+    <div class="card" style="padding:2rem;">
+      <p class="quote">Point the compute somewhere worth the joules.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-movement="Closing">
+  <div class="slide-inner">
+    <h2 class="slide-title">Before you go, answer three questions.</h2>
+    <div class="card" style="max-width:760px;margin:1rem auto;text-align:left;">
+      <ul class="clean"><li>Where are you, honestly, on the awareness spectrum?</li><li>Which part of your AI process is least documented?</li><li>Who is one person you could teach this framework to in the next month?</li></ul>
+    </div>
+    <p class="kicker" style="margin:1rem auto 0;">Research ethics begins with understanding. It becomes real through accountable practice.</p>
+  </div>
+</section>
+
+</div>
+<nav class="ctrl"><button id="prevBtn" aria-label="Previous slide">←</button><button id="nextBtn" aria-label="Next slide">→</button></nav>
+<div class="hint sans">← → or space to navigate</div>
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+  const countLabel = document.getElementById('countLabel');
+  const movementLabel = document.getElementById('movementLabel');
+  const progress = document.getElementById('progress');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  function render(){
+    slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+    countLabel.textContent = (i+1) + ' / ' + total;
+    movementLabel.textContent = slides[i].dataset.movement || '';
+    progress.style.width = ((i+1)/total*100) + '%';
+    prevBtn.disabled = i===0; nextBtn.disabled = i===total-1;
+  }
+  function go(delta){i=Math.min(total-1,Math.max(0,i+delta));render();}
+  prevBtn.addEventListener('click',()=>go(-1)); nextBtn.addEventListener('click',()=>go(1));
+  window.addEventListener('keydown',(e)=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){go(1);e.preventDefault();} if(['ArrowLeft','PageUp'].includes(e.key)){go(-1);e.preventDefault();}});
+  render();
+</script>
+</body>
+</html>
